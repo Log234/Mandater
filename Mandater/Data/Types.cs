@@ -9,16 +9,4 @@ namespace Mandater.Data
     {
         ModifiedSainteLagues, SainteLagues
     }
-
-    public enum County
-    {
-
-    }
-
-    public enum ElectionType
-    {
-        None = 0,
-        Local,
-        Parliamentary
-    }
 }

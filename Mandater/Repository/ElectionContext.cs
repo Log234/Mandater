@@ -9,9 +9,7 @@ namespace Mandater.Repository
 {
     public class ElectionContext: DbContext
     {
-        public DbSet<Election> Elections { get; set; }
-        public DbSet<Result> Results { get; set; }
-        public DbSet<Party> Parties { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
         public ElectionContext()
         { }

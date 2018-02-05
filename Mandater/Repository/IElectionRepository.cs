@@ -11,7 +11,7 @@ namespace Mandater.Repository
     public interface IElectionRepository
     {
         // Elections
-        IEnumerable<Election> GetElections([Optional] ElectionType electionType);
+        IEnumerable<Election> GetElections(Country country, [Optional] ElectionType electionType);
         Election GetElectionByYear(ElectionType electionType, int year);
 
         // Results
