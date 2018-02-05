@@ -52,10 +52,8 @@ namespace Mandater.Repository
 
         // Add data
         void AddCountry(Country country);
-        void AddCounty(County county);
         void AddElection(Election election);
         void AddElectionType(ElectionType electionType);
-        void AddParty(Party party);
         void AddResult(Result result);
     }
 }
