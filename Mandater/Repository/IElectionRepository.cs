@@ -11,15 +11,17 @@ namespace Mandater.Repository
     public interface IElectionRepository
     {
         // Elections
-        IEnumerable<IElection> GetElections([Optional] ElectionType electionType);
-        IElection GetElectionByYear(ElectionType electionType, int year);
+        IEnumerable<Election> GetElections([Optional] ElectionType electionType);
+        Election GetElectionByYear(ElectionType electionType, int year);
 
         // Results
-        IEnumerable<IResult> GetResults([Optional] ElectionType electionType);
-        IEnumerable<IResult> GetResultsByParty(ElectionType electionType, IParty party);
-        IEnumerable<IResult> GetResultsByElection(IElection election);
-        IEnumerable<IResult> GetResultsByYear(ElectionType electionType, int year);
-        IEnumerable<IResult> GetResultsByCounty(County county);
+        IEnumerable<Result> GetResults([Optional] ElectionType electionType);
+        IEnumerable<Result> GetResultsByParty(ElectionType electionType, Party party);
+        IEnumerable<Result> GetResultsByYear(ElectionType electionType, int year);
+        IEnumerable<Result> GetResultsByCounty(County county);
 
+        // Add data
+        void AddParty(Party party);
+        void AddElection(Election election);
     }
 }

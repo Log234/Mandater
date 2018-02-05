@@ -9,7 +9,14 @@ namespace Mandater.Repository
 {
     public class ElectionContext: DbContext
     {
-        public DbSet<IElection> Elections { get; set; }
-        public DbSet<IResult> Results { get; set; }
+        public DbSet<Election> Elections { get; set; }
+        public DbSet<Result> Results { get; set; }
+        public DbSet<Party> Parties { get; set; }
+
+        public ElectionContext()
+        { }
+
+        public ElectionContext(DbContextOptions<ElectionContext> options): base(options)
+        { }
     }
 }

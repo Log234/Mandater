@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mandater.Models
 {
-    public class Result
+    public class Result: IResult
     {
-        public IElection Election { get; }
-        public Party Party { get; }
-        public int Votes { get; }
+        public int ResultID { get; set; }
+        [Required]
+        public Election Election { get; set; }
+        [Required]
+        public Party Party { get; set; }
+        [Required]
+        public int Votes { get; set; }
+        
     }
 }

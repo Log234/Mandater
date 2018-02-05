@@ -17,42 +17,57 @@ namespace Mandater.Repository
             this.context = context;
         }
 
+
         // Elections
-        public IEnumerable<IElection> GetElections(ElectionType electionType)
+        public IEnumerable<Election> GetElections(ElectionType electionType)
         {
             return context.Elections.Where(e => e.ElectionType == electionType);
         }
 
-        public IElection GetElectionByYear(ElectionType electionType, int year)
+        public Election GetElectionByYear(ElectionType electionType, int year)
         {
             return context.Elections.Single(e => e.ElectionType == electionType && e.Year == year);
         }
 
+
         // Results
-        public IEnumerable<IResult> GetResults(ElectionType electionType)
+        public IEnumerable<Result> GetResults(ElectionType electionType)
         {
             return context.Results.Where(r => r.Election.ElectionType == electionType);
         }
 
-        public IEnumerable<IResult> GetResultsByParty(ElectionType electionType, IParty party)
+        public IEnumerable<Result> GetResultsByParty(ElectionType electionType, Party party)
         {
-            return context.Results.Where(r => r.Party.Name.Equals(party.Name));
+            return context.Results.Where(r => r.Party == party);
         }
 
-        public IEnumerable<IResult> GetResultsByElection(IElection election)
-        {
-            return GetResultsByYear(election.ElectionType, election.Year);
-        }
-
-        public IEnumerable<IResult> GetResultsByYear(ElectionType electionType, int year)
+        public IEnumerable<Result> GetResultsByYear(ElectionType electionType, int year)
         {
             return context.Results.Where(r => r.Election.ElectionType == electionType && r.Election.Year == year);
         }
         
-        public IEnumerable<IResult> GetResultsByCounty(County county)
+        public IEnumerable<Result> GetResultsByCounty(County county)
         {
             throw new NotImplementedException();
         }
 
+
+        // Add data
+        public void AddParty(Party party)
+        {
+            context.Add(party);
+            context.SaveChanges();
+        }
+
+        public void AddElection(Election election)
+        {
+            context.Elections.Add(election);
+            foreach (Result result in election.Results)
+            {
+                context.Results.Add(result);
+            }
+
+            context.SaveChanges();
+        }
     }
 }
