@@ -10,18 +10,52 @@ namespace Mandater.Repository
 {
     public interface IElectionRepository
     {
+        // Countries
+        IEnumerable<Country> GetCountries();
+        Country GetCountry(string country);
+
+        // Counties
+        IEnumerable<County> GetCountiesByCountry(string country);
+        IEnumerable<County> GetCountiesByElection(Election election);
+        County GetCounty(string country, string county);
+
         // Elections
-        IEnumerable<Election> GetElections(Country country, [Optional] ElectionType electionType);
+        IEnumerable<Election> GetElectionsByElectionType(string country, string electionType);
+        IEnumerable<Election> GetElectionsByElectionType(ElectionType electionType);
+
+        Election GetElectionByYear(string country, string electionType, int year);
         Election GetElectionByYear(ElectionType electionType, int year);
+        
+        // Election types
+        IEnumerable<ElectionType> GetElectionTypesByCountry(string country);
+        ElectionType GetElectionType(string country, string electionType);
+
+        // Parties
+        IEnumerable<Party> GetPartiesByCountry(string country);
+        IEnumerable<Party> GetPartiesByElection(Election election);
+        Party GetParty(string country, string party);
 
         // Results
-        IEnumerable<Result> GetResults([Optional] ElectionType electionType);
-        IEnumerable<Result> GetResultsByParty(ElectionType electionType, Party party);
+        IEnumerable<Result> GetResultsByCounty(string country, string electionType, string county);
+        IEnumerable<Result> GetResultsByCounty(ElectionType electionType, string county);
+
+        IEnumerable<Result> GetResultsByParty(string country, string electionType, string party);
+        IEnumerable<Result> GetResultsByParty(ElectionType electionType, string party);
+
+        IEnumerable<Result> GetResultsByYear(string country, string electionType, int year);
         IEnumerable<Result> GetResultsByYear(ElectionType electionType, int year);
-        IEnumerable<Result> GetResultsByCounty(County county);
+
+
+        IEnumerable<Result> GetElectionResults(Election election);
+        IEnumerable<Result> GetElectionResultsByParty(Election election, string party);
+        IEnumerable<Result> GetElectionResultsByCounty(Election election, string county);
 
         // Add data
-        void AddParty(Party party);
+        void AddCountry(Country country);
+        void AddCounty(County county);
         void AddElection(Election election);
+        void AddElectionType(ElectionType electionType);
+        void AddParty(Party party);
+        void AddResult(Result result);
     }
 }
