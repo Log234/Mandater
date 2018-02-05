@@ -26,6 +26,18 @@ namespace Mandater.Controllers
             });
         }
 
+        [HttpGet("[action]")]
+        public WeatherForecast SingleWeatherForecast(int daysFromNow)
+        {
+            Random rng = new Random();
+            return new WeatherForecast
+            {
+                DateFormatted = DateTime.Now.AddDays(daysFromNow).ToString("d"),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            };
+        }
+
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }

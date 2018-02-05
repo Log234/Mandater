@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Mandater
 {
@@ -22,6 +23,11 @@ namespace Mandater
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Swagger generation with default settings
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v0.1.0", new Info { Title = "API for election result data", Version = "v0.1.0", Description = "This API will in the future allow authorized users to update data, and the general public to access data for elections." });
+            });
             services.AddMvc();
         }
 
@@ -41,7 +47,11 @@ namespace Mandater
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(options => 
+            {
+                options.SwaggerEndpoint("/swagger/v0.1.0/swagger.json", "API for election result data");
+            });
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
