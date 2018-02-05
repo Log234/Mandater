@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mandater.Models
 {
-    public class Country
+    public class Country: IComparable<Country>
     {
         [Key]
         public string InternationalName { get; set; }
@@ -17,5 +17,10 @@ namespace Mandater.Models
         public string ShortName { get; set; }
         [Required]
         public virtual List<ElectionType> ElectionTypes { get; set; }
+
+        public int CompareTo(Country other)
+        {
+            return String.Compare(InternationalName, other.InternationalName, StringComparison.Ordinal);
+        }
     }
 }
