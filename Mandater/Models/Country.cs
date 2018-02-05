@@ -10,9 +10,9 @@ namespace Mandater.Models
     public class Country
     {
         [Key]
-        public string Name { get; set; }
-        [Required]
         public string InternationalName { get; set; }
+        [Required]
+        public string Name { get; set; }
         [Required]
         public string ShortName { get; set; }
         [Required]
