@@ -10,7 +10,10 @@ namespace Mandater.Repository
 {
     public interface IElectionRepository
     {
-        // Countries
+        // All data
+        IEnumerable<Country> GetAllData();
+
+            // Countries
         IEnumerable<Country> GetCountries();
         Country GetCountry(string country);
 

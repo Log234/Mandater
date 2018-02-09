@@ -9,6 +9,8 @@ namespace Mandater.Models
 {
     public class Country: IComparable<Country>
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CountryId { get; set; }
         [Key]
         public string InternationalName { get; set; }
         [Required]
@@ -21,6 +23,17 @@ namespace Mandater.Models
         public int CompareTo(Country other)
         {
             return String.Compare(InternationalName, other.InternationalName, StringComparison.Ordinal);
+        }
+
+        public bool ConflictsWith(Country other)
+        {
+            if (CompareTo(other) != 0)
+            {
+                return false;
+            }
+
+            return !(Name.Equals(other.Name) &&
+                   ShortName.Equals(other.ShortName));
         }
     }
 }

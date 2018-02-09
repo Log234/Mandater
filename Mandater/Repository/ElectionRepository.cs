@@ -18,6 +18,13 @@ namespace Mandater.Repository
             this.context = context;
         }
 
+        // Get all data
+        public IEnumerable<Country> GetAllData()
+        {
+            throw new NotImplementedException();
+        }
+
+
         // Countries
         public IEnumerable<Country> GetCountries()
         {
@@ -148,17 +155,15 @@ namespace Mandater.Repository
         // Add data
         public void AddCountry(Country country)
         {
-            Country existing = context.Countries.Find((country.InternationalName));
+            Country existing = context.Countries.Find(country.InternationalName);
             if (existing is null)
             {
                 context.Countries.Add(country);
-            } else if (existing.Name.Equals(country.Name) && existing.ShortName.Equals(country.ShortName))
-            {
-                
+                context.SaveChanges();
             }
-            else
+            else if (existing.ConflictsWith(country))
             {
-                throw new ArgumentException("The supplied country conflicts with an existing entry.");
+                throw new ArgumentException($"{country.InternationalName}, {country.Name}, {country.ShortName} conflicts with the existing country {existing.InternationalName}, {country.Name}, {country.ShortName}.");
             }
         }
 

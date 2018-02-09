@@ -7,9 +7,11 @@ namespace Mandater.Models
 {
     public class County: IComparable<County>
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CountyId { get; set; }
         [Required]
         public int Name { get; set; }
-        [Required]
+        public int CountryId { get; set; }
         public virtual Country Country { get; set; }
 
         public int CompareTo(County other)

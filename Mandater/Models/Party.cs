@@ -7,11 +7,14 @@ namespace Mandater.Models
 {
     public class Party: IComparable<Party>
     {
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int PartyId { get; set; }
+
         public string Name { get; set; }
         public string InternationalName { get; set; }
         public string ShortName { get; set; }
-        [Required]
+
+        public int CountryId { get; set; }
         public virtual Country Country { get; set; }
 
         public int CompareTo(Party other)

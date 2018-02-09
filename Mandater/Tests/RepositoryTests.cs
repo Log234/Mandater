@@ -13,15 +13,15 @@ namespace Mandater.Tests
     public class RepositoryTests
     {
         [Fact]
-        public void AddCountryTest()
+        public void AddCountryRegularTest()
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
-                .UseInMemoryDatabase(databaseName: "AddCountryTest")
+                .UseInMemoryDatabase(databaseName: "AddCountryRegularTest")
                 .Options;
 
             // Testing regular single add
-            Country country = new Country() {Name = "Norge", InternationalName = "Norway", ShortName = "NO", ElectionTypes = new List<ElectionType>()};
-            ElectionType type1 = new ElectionType() {Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election", Elections = new List<Election>()};
+            Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO", ElectionTypes = new List<ElectionType>() };
+            ElectionType type1 = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election", Elections = new List<Election>() };
             country.ElectionTypes.Add(type1);
 
             using (ElectionContext context = new ElectionContext(options))
@@ -35,8 +35,26 @@ namespace Mandater.Tests
                 Assert.Equal(1, context.Countries.Count());
                 Assert.Equal(country, context.Countries.Single());
             }
+        }
+
+        [Fact]
+        public void AddCountryDuplicateTest()
+        {
+            DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
+                .UseInMemoryDatabase(databaseName: "AddCountryDuplicateTest")
+                .Options;
 
             // Testing adding duplicate country
+            Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO", ElectionTypes = new List<ElectionType>() };
+            ElectionType type1 = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election", Elections = new List<Election>() };
+            country.ElectionTypes.Add(type1);
+
+            using (ElectionContext context = new ElectionContext(options))
+            {
+                ElectionRepository repository = new ElectionRepository(context);
+                repository.AddCountry(country);
+            }
+            
             using (ElectionContext context = new ElectionContext(options))
             {
                 ElectionRepository repository = new ElectionRepository(context);
@@ -48,29 +66,27 @@ namespace Mandater.Tests
                 Assert.Equal(1, context.Countries.Count());
                 Assert.Equal(country, context.Countries.Single());
             }
+        }
 
-            // Testing merging two versions of the same country
-            Country country2 = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO", ElectionTypes = new List<ElectionType>() };
-            ElectionType type2 = new ElectionType() { Country = country, Name = "Fylkesvalg", InternationalName = "Local election", Elections = new List<Election>() };
-            country2.ElectionTypes.Add(type2);
-            country2.ElectionTypes.Add(type1);
+        [Fact]
+        public void AddCountryConflictingTest()
+        {
+            DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
+                .UseInMemoryDatabase(databaseName: "AddCountryConflictingTest")
+                .Options;
+            
+            // Testing adding a conflicting entry
+            Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO", ElectionTypes = new List<ElectionType>() };
+            ElectionType type1 = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election", Elections = new List<Election>() };
+            country.ElectionTypes.Add(type1);
 
             using (ElectionContext context = new ElectionContext(options))
             {
                 ElectionRepository repository = new ElectionRepository(context);
-                repository.AddCountry(country2);
+                repository.AddCountry(country);
             }
-
-            using (ElectionContext context = new ElectionContext(options))
-            {
-                Assert.Equal(1, context.Countries.Count());
-                Assert.Equal(2, context.Countries.Single().ElectionTypes.Count);
-                Assert.Contains(type1, context.Countries.Single().ElectionTypes);
-                Assert.Contains(type2, context.Countries.Single().ElectionTypes);
-            }
-
-            // Testing adding a conflicting entry
-            Country conflictCountry = new Country() {Name = "FEIL", InternationalName = "Norway", ShortName = "EN", ElectionTypes = new List<ElectionType>()};
+            
+            Country conflictCountry = new Country() { Name = "FEIL", InternationalName = "Norway", ShortName = "EN", ElectionTypes = new List<ElectionType>() };
             using (ElectionContext context = new ElectionContext(options))
             {
                 ElectionRepository repository = new ElectionRepository(context);

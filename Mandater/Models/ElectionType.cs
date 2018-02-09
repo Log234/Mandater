@@ -7,13 +7,15 @@ namespace Mandater.Models
 {
     public class ElectionType: IComparable<ElectionType>
     {
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ElectionTypeId { get; set; }
+
         public string Name { get; set; }
-        [Required]
         public string InternationalName { get; set; }
-        [Required]
+
+        public int CountryId { get; set; }
         public virtual Country Country { get; set; }
-        [Required]
+        
         public virtual List<Election> Elections { get; set; }
 
         public int CompareTo(ElectionType other)
