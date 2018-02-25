@@ -16,7 +16,7 @@ namespace Mandater.Data
             context.Database.EnsureCreated();
             if (!context.VDModels.Any())
             {
-                VDModel[] entities = VDUtilities.CsvToArray("Data/State/Norway/Parliamentary election/2018-02-10_partifordeling_1_st_2017.csv");
+                VDModel[] entities = VDUtilities.CsvToArray("Data/State/Norway/ParliamentaryElection/2018-02-10_partifordeling_1_st_2017.csv");
                 context.VDModels.AddRange(entities);
                 context.SaveChanges();
             }
