@@ -29,13 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\State\Norway\Norway.csv">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\State\Norway\Parliamentary election\2017.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\State\Norway\Parliamentary election\2018-02-10_partifordeling_1_st_2017.csv">
+    <None Update="Data\State\Norway\ParliamentaryElection\2018-02-10_partifordeling_1_st_2017.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
