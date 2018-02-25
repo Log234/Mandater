@@ -10,13 +10,41 @@
     color: white;
 }
 
+.nav_container {
+    margin:0 10px;
+    padding: 20px 10px;
+    width:calc(100%-20px);
+    padding:0;
+    justify-content:flex-end;
+    background-color:red;
+}
+.nav_container ul {
+    justify-content: flex-end;
+    list-style: none;
+    display: flex;
+}
+.nav_container li:not(:last-child) {
+    margin-right: 10px;
+}
+
 /* Keep the nav menu independent of scrolling and on top of other items */
-.main-nav {
+/*.main-nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1;
+}*/
+
+.settings-menu {
+    background-color: antiquewhite;
+}
+
+.electionTable table, th, td {
+    border-collapse: collapse;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 10px;
 }
 
 @media (max-width: 767px) {
@@ -30,7 +58,7 @@
     /* On small screens, convert the nav menu to a vertical sidebar */
     .main-nav {
         height: 100%;
-        width: calc(25% - 20px);
+        /*width: calc(25% - 20px);*/
     }
     .main-nav .navbar {
         border-radius: 0px;

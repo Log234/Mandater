@@ -3,8 +3,18 @@ import { NavLink, Link } from 'react-router-dom';
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
-        return <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
+        return <div className='nav_container'>
+            <ul className='nav_list'>
+                <li><a href="">Om Mandater</a></li>
+                <li><a href="">Hjelp</a></li>
+            </ul>
+        </div>;
+        /*
+        ------------
+        Old code from setup, only for later ref
+        ------------
+        <div className='main-nav'>
+            <div className='navbar navbar-inverse'>
                 <div className='navbar-header'>
                     <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
                         <span className='sr-only'>Toggle navigation</span>
@@ -12,23 +22,23 @@ export class NavMenu extends React.Component<{}, {}> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    <Link className='navbar-brand' to={ '/' }>Mandater</Link>
+                    <Link className='navbar-brand' to={'/'}>Mandater</Link>
                 </div>
                 <div className='clearfix'></div>
                 <div className='navbar-collapse collapse'>
                     <ul className='nav navbar-nav'>
                         <li>
-                            <NavLink exact to={ '/' } activeClassName='active'>
+                            <NavLink exact to={'/'} activeClassName='active'>
                                 <span className='glyphicon glyphicon-home'></span> Home
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={ '/counter' } activeClassName='active'>
+                            <NavLink to={'/counter'} activeClassName='active'>
                                 <span className='glyphicon glyphicon-education'></span> Counter
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={ '/fetchdata' } activeClassName='active'>
+                            <NavLink to={'/fetchdata'} activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span> Fetch data
                             </NavLink>
                         </li>
@@ -36,5 +46,6 @@ export class NavMenu extends React.Component<{}, {}> {
                 </div>
             </div>
         </div>;
+        */
     }
 }
