@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="6.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
     <PackageReference Include="swashbuckle.aspnetcore.swaggergen" Version="1.1.0" />
     <PackageReference Include="swashbuckle.aspnetcore.swaggerui" Version="1.1.0" />
@@ -26,6 +27,12 @@
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Content Remove="ClientApp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\State\Norway\ParliamentaryElection\2018-02-10_partifordeling_1_st_2017.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
