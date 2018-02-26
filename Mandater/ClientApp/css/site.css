@@ -11,20 +11,29 @@
 }
 
 .nav_container {
+    height:40px;
     margin:0 10px;
     padding: 20px 10px;
     width:calc(100%-20px);
     padding:0;
     justify-content:flex-end;
-    background-color:red;
+    align-self:center;
+    background-color:#20232a;
 }
 .nav_container ul {
     justify-content: flex-end;
+    align-self:center;
     list-style: none;
     display: flex;
 }
-.nav_container li:not(:last-child) {
+
+.nav_container li {
+    margin-top: 10px;
     margin-right: 10px;
+}
+
+.nav_container a {
+    color:white;
 }
 
 /* Keep the nav menu independent of scrolling and on top of other items */
@@ -38,6 +47,9 @@
 
 .settings-menu {
     background-color: antiquewhite;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .electionTable table, th, td {

@@ -13,7 +13,7 @@ export class Layout extends React.Component<{}, {}> {
                 <div className='col-sm-3'>
                     <SettingsMenu />
                 </div>
-                <div className='col-sm-6'>
+                <div className='col-sm-8'>
                     <Graph />
                 </div>
 
