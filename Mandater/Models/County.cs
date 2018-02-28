@@ -7,11 +7,12 @@ namespace Mandater.Models
 {
     public class County
     {
-        public int CountyId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CountyId { get; set; } = -1;
         [Required]
-        public int Name { get; set; }
+        public string Name { get; set; }
 
-        public int CountryId { get; set; } = -1;
+        public int CountryId { get; set; }
         [Required]
         public virtual Country Country { get; set; }
 

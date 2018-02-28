@@ -9,7 +9,9 @@ namespace Mandater.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ElectionId { get; set; }
-        public int Year { get; set; }
+
+        [Required]
+        public int Year { get; set; } = -1;
 
         public int CountryId { get; set; }
         [Required]
@@ -20,6 +22,6 @@ namespace Mandater.Models
         public virtual ElectionType ElectionType { get; set; }
 
         public virtual List<Result> Results { get; set; }
-        
+
     }
 }

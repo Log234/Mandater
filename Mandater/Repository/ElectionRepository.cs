@@ -194,6 +194,12 @@ namespace Mandater.Repository
             context.SaveChanges();
         }
 
+        public void AddParty(Party party)
+        {
+            context.Parties.Add(party);
+            context.SaveChanges();
+        }
+
         public void AddElection(Election election)
         {
             context.Elections.Add(election);

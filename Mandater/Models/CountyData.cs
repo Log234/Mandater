@@ -11,9 +11,10 @@ namespace Mandater.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int Year { get; set; }
-        public int Population { get; set; }
-        public double Areal { get; set; }
+
+        public int Year { get; set; } = -1;
+        public int Population { get; set; } = -1;
+        public double Areal { get; set; } = double.NaN;
 
         public int CountyId { get; set; }
         [Required]

@@ -62,6 +62,7 @@ namespace Mandater.Repository
         void AddCountry(Country country);
         void AddCounty(County county);
         void AddCountyData(CountyData countyData);
+        void AddParty(Party party);
         void AddElection(Election election);
         void AddElectionType(ElectionType electionType);
         void AddResult(Result result);
