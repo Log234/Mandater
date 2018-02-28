@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mandater.Models
 {
-    public class Result: IComparable<Result>
+    public class Result
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ResultId { get; set; }
@@ -25,13 +25,9 @@ namespace Mandater.Models
         [Required]
         public virtual County County { get; set; }
 
-        public int CompareTo(Result other)
-        {
-            int electionComparison = Comparer<Election>.Default.Compare(Election, other.Election);
-            if (electionComparison != 0) return electionComparison;
-            int partyComparison = Comparer<Party>.Default.Compare(Party, other.Party);
-            if (partyComparison != 0) return partyComparison;
-            return Comparer<County>.Default.Compare(County, other.County);
-        }
+        public int CountyDataId { get; set; } = -1;
+        [Required]
+        public virtual CountyData CountyData { get; set; }
+
     }
 }

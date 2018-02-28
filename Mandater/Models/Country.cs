@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mandater.Models
 {
-    public class Country: IComparable<Country>
+    public class Country
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CountryId { get; set; }
@@ -19,21 +19,6 @@ namespace Mandater.Models
         public string ShortName { get; set; }
 
         public virtual List<ElectionType> ElectionTypes { get; set; }
-
-        public int CompareTo(Country other)
-        {
-            return String.Compare(InternationalName, other.InternationalName, StringComparison.Ordinal);
-        }
-
-        public bool ConflictsWith(Country other)
-        {
-            if (CompareTo(other) != 0)
-            {
-                return false;
-            }
-
-            return !(Name.Equals(other.Name) &&
-                   ShortName.Equals(other.ShortName));
-        }
+        
     }
 }
