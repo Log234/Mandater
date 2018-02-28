@@ -21,8 +21,6 @@ namespace Mandater.Tests
 
             // Testing regular single add
             Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO", ElectionTypes = new List<ElectionType>() };
-            ElectionType type1 = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election", Elections = new List<Election>() };
-            country.ElectionTypes.Add(type1);
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -58,13 +56,7 @@ namespace Mandater.Tests
             using (ElectionContext context = new ElectionContext(options))
             {
                 ElectionRepository repository = new ElectionRepository(context);
-                repository.AddCountry(country);
-            }
-
-            using (ElectionContext context = new ElectionContext(options))
-            {
-                Assert.Equal(1, context.Countries.Count());
-                Assert.Equal(country, context.Countries.Single());
+                Assert.Throws<ArgumentException>(() => repository.AddCountry(country));
             }
         }
 
@@ -77,8 +69,6 @@ namespace Mandater.Tests
             
             // Testing adding a conflicting entry
             Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO", ElectionTypes = new List<ElectionType>() };
-            ElectionType type1 = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election", Elections = new List<Election>() };
-            country.ElectionTypes.Add(type1);
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -113,8 +103,9 @@ namespace Mandater.Tests
 
             using (ElectionContext context = new ElectionContext(options))
             {
-                Assert.Single(context.Countries.Single().ElectionTypes);
-                Assert.Equal(electionType, context.Countries.Single().ElectionTypes.Single());
+                Assert.Single(context.Countries);
+                Assert.Single(context.ElectionTypes);
+                Assert.Equal(country.CountryId, context.ElectionTypes.Single().CountryId);
             }
         }
 
@@ -137,9 +128,8 @@ namespace Mandater.Tests
             using (ElectionContext context = new ElectionContext(options))
             {
                 Assert.Single(context.Countries);
-                Assert.Equal(country, context.Countries.Single());
-                Assert.Single(context.Countries.Single().ElectionTypes);
-                Assert.Equal(electionType, context.Countries.Single().ElectionTypes.Single());
+                Assert.Single(context.ElectionTypes);
+                Assert.Equal(country.CountryId, context.ElectionTypes.Single().CountryId);
             }
         }
 
@@ -163,16 +153,9 @@ namespace Mandater.Tests
             using (ElectionContext context = new ElectionContext(options))
             {
                 ElectionRepository repository = new ElectionRepository(context);
-                repository.AddElectionType(electionType);
+                Assert.Throws<ArgumentException>(() => repository.AddCountry(country));
             }
-
-            using (ElectionContext context = new ElectionContext(options))
-            {
-                Assert.Single(context.Countries);
-                Assert.Equal(country, context.Countries.Single());
-                Assert.Single(context.Countries.Single().ElectionTypes);
-                Assert.Equal(electionType, context.Countries.Single().ElectionTypes.Single());
-            }
+            
         }
 
         [Fact]
@@ -193,11 +176,11 @@ namespace Mandater.Tests
                 repository.AddCountry(country);
             }
 
-            Country conflictCountry = new Country() { Name = "FEIL", InternationalName = "Norway", ShortName = "EN", ElectionTypes = new List<ElectionType>() };
+            ElectionType conflictElectionType = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election2", Elections = new List<Election>() };
             using (ElectionContext context = new ElectionContext(options))
             {
                 ElectionRepository repository = new ElectionRepository(context);
-                Assert.Throws<ArgumentException>(() => repository.AddCountry(conflictCountry));
+                Assert.Throws<InvalidOperationException> (() => repository.AddElectionType(conflictElectionType));
             }
         }
     }

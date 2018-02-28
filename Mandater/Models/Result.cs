@@ -11,14 +11,18 @@ namespace Mandater.Models
         public int ResultId { get; set; }
 
         public int Votes { get; set; }
+        public double Percentage { get; set; }
 
-        public int ElectionId { get; set; }
+        public int ElectionId { get; set; } = -1;
+        [Required]
         public virtual Election Election { get; set; }
         
-        public int PartyId { get; set; }
+        public int PartyId { get; set; } = -1;
+        [Required]
         public virtual Party Party { get; set; }
 
-        public int CountyId { get; set; }
+        public int CountyId { get; set; } = -1;
+        [Required]
         public virtual County County { get; set; }
 
         public int CompareTo(Result other)

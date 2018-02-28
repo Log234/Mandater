@@ -10,11 +10,13 @@ namespace Mandater.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PartyId { get; set; }
 
+        [Required]
         public string Name { get; set; }
         public string InternationalName { get; set; }
         public string ShortName { get; set; }
 
         public int CountryId { get; set; }
+        [Required]
         public virtual Country Country { get; set; }
 
         public int CompareTo(Party other)

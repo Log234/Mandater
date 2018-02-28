@@ -17,7 +17,7 @@ namespace Mandater.Models
         public string Name { get; set; }
         [Required]
         public string ShortName { get; set; }
-        [Required]
+
         public virtual List<ElectionType> ElectionTypes { get; set; }
 
         public int CompareTo(Country other)

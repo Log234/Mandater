@@ -53,6 +53,22 @@ namespace Mandater.Repository
             throw new NotImplementedException();
         }
 
+        // CountyData
+        public IEnumerable<CountyData> GetCountyDataByCounty(string county)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<CountyData> GetCountyDataByElection(Election election)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CountyData GetCountyData(string county, int year)
+        {
+            throw new NotImplementedException();
+        }
+
 
         // Election
         public IEnumerable<Election> GetElectionsByElectionType(string country, string electionType)
@@ -155,31 +171,38 @@ namespace Mandater.Repository
         // Add data
         public void AddCountry(Country country)
         {
-            Country existing = context.Countries.Find(country.InternationalName);
-            if (existing is null)
-            {
                 context.Countries.Add(country);
                 context.SaveChanges();
-            }
-            else if (existing.ConflictsWith(country))
-            {
-                throw new ArgumentException($"{country.InternationalName}, {country.Name}, {country.ShortName} conflicts with the existing country {existing.InternationalName}, {country.Name}, {country.ShortName}.");
-            }
+        }
+
+        public void AddCounty(County county)
+        {
+                context.Counties.Add(county);
+                context.SaveChanges();
+        }
+
+        public void AddCountyData(CountyData countyData)
+        {
+            context.CountyData.Add(countyData);
+            context.SaveChanges();
         }
 
         public void AddElection(Election election)
         {
-            throw new NotImplementedException();
+            context.Elections.Add(election);
+            context.SaveChanges();
         }
 
         public void AddElectionType(ElectionType electionType)
         {
-            throw new NotImplementedException();
+            context.ElectionTypes.Add(electionType);
+            context.SaveChanges();
         }
 
         public void AddResult(Result result)
         {
-            throw new NotImplementedException();
+            context.Results.Add(result);
+            context.SaveChanges();
         }
     }
 }

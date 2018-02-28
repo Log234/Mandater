@@ -13,7 +13,7 @@ namespace Mandater.Repository
         // All data
         IEnumerable<Country> GetAllData();
 
-            // Countries
+        // Countries
         IEnumerable<Country> GetCountries();
         Country GetCountry(string country);
 
@@ -21,6 +21,11 @@ namespace Mandater.Repository
         IEnumerable<County> GetCountiesByCountry(string country);
         IEnumerable<County> GetCountiesByElection(Election election);
         County GetCounty(string country, string county);
+        
+        // CountyData
+        IEnumerable<CountyData> GetCountyDataByCounty(string county);
+        IEnumerable<CountyData> GetCountyDataByElection(Election election);
+        CountyData GetCountyData(string county, int year);
 
         // Elections
         IEnumerable<Election> GetElectionsByElectionType(string country, string electionType);
@@ -28,7 +33,7 @@ namespace Mandater.Repository
 
         Election GetElectionByYear(string country, string electionType, int year);
         Election GetElectionByYear(ElectionType electionType, int year);
-        
+
         // Election types
         IEnumerable<ElectionType> GetElectionTypesByCountry(string country);
         ElectionType GetElectionType(string country, string electionType);
@@ -55,6 +60,8 @@ namespace Mandater.Repository
 
         // Add data
         void AddCountry(Country country);
+        void AddCounty(County county);
+        void AddCountyData(CountyData countyData);
         void AddElection(Election election);
         void AddElectionType(ElectionType electionType);
         void AddResult(Result result);

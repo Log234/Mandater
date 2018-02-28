@@ -10,10 +10,13 @@ namespace Mandater.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ElectionTypeId { get; set; }
 
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string InternationalName { get; set; }
 
         public int CountryId { get; set; }
+        [Required]
         public virtual Country Country { get; set; }
         
         public virtual List<Election> Elections { get; set; }
