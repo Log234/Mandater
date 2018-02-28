@@ -5,13 +5,14 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Mandater.Data;
 using Mandater.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Mandater.Repository
 {
-    public class ElectionRepository: IElectionRepository
+    public class ElectionRepository : IElectionRepository
     {
-        private ElectionContext context;
+        private readonly ElectionContext context;
 
         public ElectionRepository(ElectionContext context)
         {
@@ -21,26 +22,32 @@ namespace Mandater.Repository
         // Get all data
         public IEnumerable<Country> GetAllData()
         {
-            throw new NotImplementedException();
+            return context.Countries
+                .Include(c => c.Parties)
+                .Include(c => c.Counties)
+                .ThenInclude(co => co.CountyData)
+                .Include(c => c.ElectionTypes)
+                .ThenInclude(eT => eT.Elections)
+                .ThenInclude(e => e.Results);
         }
 
 
         // Countries
         public IEnumerable<Country> GetCountries()
         {
-            throw new NotImplementedException();
+            return context.Countries;
         }
 
         public Country GetCountry(string country)
         {
-            throw new NotImplementedException();
+            return context.Countries.Find(country);
         }
 
 
         // Counties
         public IEnumerable<County> GetCountiesByCountry(string country)
         {
-            throw new NotImplementedException();
+            return context.Counties.Where(c => c.Country.InternationalName.Equals(country));
         }
 
         public IEnumerable<County> GetCountiesByElection(Election election)
@@ -80,7 +87,7 @@ namespace Mandater.Repository
         {
             throw new NotImplementedException();
         }
-        
+
         public Election GetElectionByYear(string country, string electionType, int year)
         {
             throw new NotImplementedException();
@@ -171,14 +178,14 @@ namespace Mandater.Repository
         // Add data
         public void AddCountry(Country country)
         {
-                context.Countries.Add(country);
-                context.SaveChanges();
+            context.Countries.Add(country);
+            context.SaveChanges();
         }
 
         public void AddCounty(County county)
         {
-                context.Counties.Add(county);
-                context.SaveChanges();
+            context.Counties.Add(county);
+            context.SaveChanges();
         }
 
         public void AddCountyData(CountyData countyData)

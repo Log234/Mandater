@@ -31,7 +31,9 @@ namespace Mandater.Tests
             using (ElectionContext context = new ElectionContext(options))
             {
                 Assert.Equal(1, context.Countries.Count());
-                Assert.Equal(country, context.Countries.Single());
+                Assert.Equal(country.Name, context.Countries.Single().Name);
+                Assert.Equal(country.InternationalName, context.Countries.Single().InternationalName);
+                Assert.Equal(country.ShortName, context.Countries.Single().ShortName);
             }
         }
 
@@ -106,6 +108,9 @@ namespace Mandater.Tests
                 Assert.Single(context.Countries);
                 Assert.Single(context.ElectionTypes);
                 Assert.Equal(country.CountryId, context.ElectionTypes.Single().CountryId);
+                Assert.Equal(electionType.CountryId, context.ElectionTypes.Single().CountryId);
+                Assert.Equal(electionType.Name, context.ElectionTypes.Single().Name);
+                Assert.Equal(electionType.InternationalName, context.ElectionTypes.Single().InternationalName);
             }
         }
 
@@ -129,7 +134,12 @@ namespace Mandater.Tests
             {
                 Assert.Single(context.Countries);
                 Assert.Single(context.ElectionTypes);
-                Assert.Equal(country.CountryId, context.ElectionTypes.Single().CountryId);
+                Assert.Single(context.Countries.Include(c => c.ElectionTypes).Single().ElectionTypes);
+                Assert.Equal(electionType.Name, context.Countries.Include(c => c.ElectionTypes).Single().ElectionTypes.Single().Name);
+                Assert.Equal(context.Countries.Single().CountryId, context.ElectionTypes.Single().CountryId);
+                Assert.Equal(electionType.CountryId, context.ElectionTypes.Single().CountryId);
+                Assert.Equal(electionType.Name, context.ElectionTypes.Single().Name);
+                Assert.Equal(electionType.InternationalName, context.ElectionTypes.Single().InternationalName);
             }
         }
 

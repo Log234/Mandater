@@ -19,6 +19,8 @@ namespace Mandater.Models
         public string ShortName { get; set; }
 
         public virtual List<ElectionType> ElectionTypes { get; set; }
+        public virtual List<County> Counties { get; set; }
+        public virtual List<Party> Parties { get; set; }
         
     }
 }
