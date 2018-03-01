@@ -178,42 +178,49 @@ namespace Mandater.Repository
         // Add data
         public void AddCountry(Country country)
         {
+            CustomValidation.ValidateCountry(country, new HashSet<int>());
             context.Countries.Add(country);
             context.SaveChanges();
         }
 
         public void AddCounty(County county)
         {
+            CustomValidation.ValidateCounty(county, new HashSet<int>());
             context.Counties.Add(county);
             context.SaveChanges();
         }
 
         public void AddCountyData(CountyData countyData)
         {
+            CustomValidation.ValidateCountyData(countyData, new HashSet<int>());
             context.CountyData.Add(countyData);
             context.SaveChanges();
         }
 
         public void AddParty(Party party)
         {
+            CustomValidation.ValidateParty(party, new HashSet<int>());
             context.Parties.Add(party);
             context.SaveChanges();
         }
 
         public void AddElection(Election election)
         {
+            CustomValidation.ValidateElection(election, new HashSet<int>());
             context.Elections.Add(election);
             context.SaveChanges();
         }
 
         public void AddElectionType(ElectionType electionType)
         {
+            CustomValidation.ValidateElectionType(electionType, new HashSet<int>());
             context.ElectionTypes.Add(electionType);
             context.SaveChanges();
         }
 
         public void AddResult(Result result)
         {
+            CustomValidation.ValidateResult(result, new HashSet<int>());
             context.Results.Add(result);
             context.SaveChanges();
         }
