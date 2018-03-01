@@ -39,10 +39,6 @@ namespace Mandater.Tests
 
         [Theory]
         [InlineData(true, null, null, null)]
-        [InlineData(false, null, null, null)]
-        [InlineData(false, "Norge", null, null)]
-        [InlineData(false, null, "Norway", null)]
-        [InlineData(false, null, null, "NO")]
         [InlineData(false, "Norge", "Norway", null)]
         [InlineData(false, "Norge", null, "NO")]
         [InlineData(false, null, "Norway", "NO")]
@@ -190,23 +186,19 @@ namespace Mandater.Tests
         }
 
         [Theory]
-        [InlineData(true, null, null, false)]
-        [InlineData(false, null, null, false)]
-        [InlineData(false, "Stortingsvalg", null, false)]
-        [InlineData(false, null, "Parliamentary election", false)]
-        [InlineData(false, null, null, true)]
-        [InlineData(false, "Stortingsvalg", "Parliamentary election", false)]
-        [InlineData(false, "Stortingsvalg", null, true)]
-        [InlineData(false, null, "Parliamentary election", true)]
-        public void AddElectionTypeMissingDataTest(bool useNull, string name, string internationalName, bool useCountry)
+        [InlineData(true, null, null, 1)]
+        [InlineData(false, "Stortingsvalg", "Parliamentary election", -1)]
+        [InlineData(false, "Stortingsvalg", "Parliamentary election", 0)]
+        [InlineData(false, "Stortingsvalg", null, 1)]
+        [InlineData(false, null, "Parliamentary election", 1)]
+        public void AddElectionTypeMissingDataTest(bool useNull, string name, string internationalName, int useCountry)
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
                 .UseInMemoryDatabase(databaseName: "AddElectionTypeMissingTest")
                 .Options;
 
             // Testing attempt on adding model with missing data
-            Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
-            if (!useCountry) country = null;
+            Country country = GetCountry(useCountry);
 
             ElectionType electionType = new ElectionType { Country = country, Name = name, InternationalName = internationalName };
             if (useNull) electionType = null;
@@ -247,26 +239,21 @@ namespace Mandater.Tests
         }
 
         [Theory]
-        [InlineData(true, -1, false, false)]
-        [InlineData(false, -1, false, false)]
-        [InlineData(false, 2018, false, false)]
-        [InlineData(false, -1, true, false)]
-        [InlineData(false, -1, false, true)]
-        [InlineData(false, 2018, true, false)]
-        [InlineData(false, 2018, false, true)]
-        [InlineData(false, -1, true, true)]
-        public void AddElectionMissingDataTest(bool useNull, int year, bool useElectionType, bool useCountry)
+        [InlineData(true, -1, 1, 1)]
+        [InlineData(false, 2018, 1, -1)]
+        [InlineData(false, 2018, 1, 0)]
+        [InlineData(false, 2018, -1, 1)]
+        [InlineData(false, 2018, 0, 1)]
+        [InlineData(false, -1, 1, 1)]
+        public void AddElectionMissingDataTest(bool useNull, int year, int useElectionType, int useCountry)
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
                 .UseInMemoryDatabase(databaseName: "AddElectionTypeMissingTest")
                 .Options;
 
             // Testing attempt on adding model with missing data
-            Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
-            if (!useCountry) country = null;
-
-            ElectionType electionType = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election" };
-            if (!useElectionType) electionType = null;
+            Country country = GetCountry(useCountry);
+            ElectionType electionType = GetElectionType(useElectionType, country);
 
             Election election = new Election() { Country = country, ElectionType = electionType, Year = year };
             if (useNull) election = null;
@@ -304,19 +291,18 @@ namespace Mandater.Tests
         }
 
         [Theory]
-        [InlineData(true, null, false)]
-        [InlineData(false, null, false)]
-        [InlineData(false, "Akershus", false)]
-        [InlineData(false, null, true)]
-        public void AddCountyMissingDataTest(bool useNull, string name, bool useCountry)
+        [InlineData(true, null, 1)]
+        [InlineData(false, "Akershus", -1)]
+        [InlineData(false, "Akershus", 0)]
+        [InlineData(false, null, 1)]
+        public void AddCountyMissingDataTest(bool useNull, string name, int useCountry)
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
                 .UseInMemoryDatabase(databaseName: "AddCountyMissingTest")
                 .Options;
 
             // Testing attempt on adding model with missing data
-            Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
-            if (!useCountry) country = null;
+            Country country = GetCountry(useCountry);
 
             County county = new County() { Country = country, Name = name };
             if (useNull) county = null;
@@ -357,23 +343,13 @@ namespace Mandater.Tests
         }
 
         [Theory]
-        [InlineData(true, double.NaN, -1, -1, false)]
-        [InlineData(false, double.NaN, -1, -1, false)]
-        [InlineData(false, 24.1, -1, -1, false)]
-        [InlineData(false, double.NaN, 104, -1, false)]
-        [InlineData(false, double.NaN, -1, 2018, false)]
-        [InlineData(false, double.NaN, -1, -1, true)]
-        [InlineData(false, 24.1, 104, -1, false)]
-        [InlineData(false, 24.1, -1, 2018, false)]
-        [InlineData(false, 24.1, -1, -1, true)]
-        [InlineData(false, double.NaN, 104, 2018, false)]
-        [InlineData(false, double.NaN, 104, -1, true)]
-        [InlineData(false, double.NaN, -1, 2018, true)]
-        [InlineData(false, 24.1, 104, 2018, false)]
-        [InlineData(false, 24.1, 104, -1, true)]
-        [InlineData(false, 24.1, -1, 2018, true)]
-        [InlineData(false, double.NaN, 104, 2018, true)]
-        public void AddCountyDataMissingDataTest(bool useNull, double areal, int population, int year, bool useCounty)
+        [InlineData(true, double.NaN, -1, -1, 1)]
+        [InlineData(false, 24.1, 104, 2018, -1)]
+        [InlineData(false, 24.1, 104, 2018, 0)]
+        [InlineData(false, 24.1, 104, -1, 1)]
+        [InlineData(false, 24.1, -1, 2018, 1)]
+        [InlineData(false, double.NaN, 104, 2018, 1)]
+        public void AddCountyDataMissingDataTest(bool useNull, double areal, int population, int year, int useCounty)
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
                 .UseInMemoryDatabase(databaseName: "AddElectionTypeMissingTest")
@@ -381,8 +357,7 @@ namespace Mandater.Tests
 
             // Testing attempt on adding model with missing data
             Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
-            County county = new County() { Country = country, Name = "Akershus" };
-            if (!useCounty) county = null;
+            County county = GetCounty(useCounty, country);
 
             CountyData countyData = new CountyData() { Areal = areal, Population = population, Year = year, County = county };
             if (useNull) countyData = null;
@@ -419,19 +394,18 @@ namespace Mandater.Tests
             }
         }
         [Theory]
-        [InlineData(true, null, false)]
-        [InlineData(false, null, false)]
-        [InlineData(false, "Studentene", false)]
-        [InlineData(false, null, true)]
-        public void AddPartyMissingDataTest(bool useNull, string name, bool useCountry)
+        [InlineData(true, null, 1)]
+        [InlineData(false, "Studentene", -1)]
+        [InlineData(false, "Studentene", 0)]
+        [InlineData(false, null, 1)]
+        public void AddPartyMissingDataTest(bool useNull, string name, int useCountry)
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
                 .UseInMemoryDatabase(databaseName: "AddCountyMissingTest")
                 .Options;
 
             // Testing attempt on adding model with missing data
-            Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
-            if (!useCountry) country = null;
+            Country country = GetCountry(useCountry);
 
             Party party = new Party { Country = country, Name = name };
             if (useNull) party = null;
@@ -481,39 +455,16 @@ namespace Mandater.Tests
         }
 
         [Theory]
-        [InlineData(true, false, false, false, double.NaN, -1)]
-        [InlineData(false, false, false, false, double.NaN, -1)]
-        [InlineData(false, false, false, false, double.NaN, 104)]
-        [InlineData(false, false, false, false, 24.1, -1)]
-        [InlineData(false, false, false, false, 24.1, 104)]
-        [InlineData(false, false, false, true, double.NaN, -1)]
-        [InlineData(false, false, false, true, double.NaN, 104)]
-        [InlineData(false, false, false, true, 24.1, -1)]
-        [InlineData(false, false, false, true, 24.1, 104)]
-        [InlineData(false, false, true, false, double.NaN, -1)]
-        [InlineData(false, false, true, false, double.NaN, 104)]
-        [InlineData(false, false, true, false, 24.1, -1)]
-        [InlineData(false, false, true, false, 24.1, 104)]
-        [InlineData(false, false, true, true, double.NaN, -1)]
-        [InlineData(false, false, true, true, double.NaN, 104)]
-        [InlineData(false, false, true, true, 24.1, -1)]
-        [InlineData(false, false, true, true, 24.1, 104)]
-        [InlineData(false, true, false, false, double.NaN, -1)]
-        [InlineData(false, true, false, false, double.NaN, 104)]
-        [InlineData(false, true, false, false, 24.1, -1)]
-        [InlineData(false, true, false, false, 24.1, 104)]
-        [InlineData(false, true, false, true, double.NaN, -1)]
-        [InlineData(false, true, false, true, double.NaN, 104)]
-        [InlineData(false, true, false, true, 24.1, -1)]
-        [InlineData(false, true, false, true, 24.1, 104)]
-        [InlineData(false, true, true, false, double.NaN, -1)]
-        [InlineData(false, true, true, false, double.NaN, 104)]
-        [InlineData(false, true, true, false, 24.1, -1)]
-        [InlineData(false, true, true, false, 24.1, 104)]
-        [InlineData(false, true, true, true, double.NaN, -1)]
-        [InlineData(false, true, true, true, double.NaN, 104)]
-        [InlineData(false, true, true, true, 24.1, -1)]
-        public void AddResultMissingDataTest(bool useNull, bool useCounty, bool useElection, bool useParty, double percentage, int votes)
+        [InlineData(true, 1, 1, 1, double.NaN, -1)]
+        [InlineData(false, -1, 1, 1, 24.1, 104)]
+        [InlineData(false, 0, 1, 1, 24.1, 104)]
+        [InlineData(false, 1, -1, 1, 24.1, 104)]
+        [InlineData(false, 1, 0, 1, 24.1, 104)]
+        [InlineData(false, 1, 1, -1, 24.1, 104)]
+        [InlineData(false, 1, 1, 0, 24.1, 104)]
+        [InlineData(false, 1, 1, 1, double.NaN, 104)]
+        [InlineData(false, 1, 1, 1, 24.1, -1)]
+        public void AddResultMissingDataTest(bool useNull, int useCounty, int useElection, int useParty, double percentage, int votes)
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
                 .UseInMemoryDatabase(databaseName: "AddResultRegularTest")
@@ -521,14 +472,9 @@ namespace Mandater.Tests
 
             Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
             ElectionType electionType = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election" };
-            Election election = new Election() { Country = country, ElectionType = electionType, Year = 2018 };
-            if (!useElection) election = null;
-
-            County county = new County { Country = country, CountyId = 1, Name = "Akershus" };
-            if (!useCounty) county = null;
-
-            Party party = new Party { Country = country, Name = "Studentene" };
-            if (!useParty) party = null;
+            Election election = GetElection(useElection, country, electionType);
+            County county = GetCounty(useCounty, country);
+            Party party = GetParty(useParty, country);
 
             Result result = new Result { County = county, Election = election, Party = party, Percentage = percentage, Votes = votes };
             if (useNull) result = null;
@@ -537,6 +483,71 @@ namespace Mandater.Tests
             {
                 ElectionRepository repository = new ElectionRepository(context);
                 Assert.Throws<ArgumentException>(() => repository.AddResult(result));
+            }
+        }
+
+        private static Country GetCountry(int useCountry)
+        {
+            switch (useCountry)
+            {
+                case 1:
+                    return new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
+                case 0:
+                    return new Country() { Name = "Norge", InternationalName = "Norway", ShortName = null };
+                default:
+                    return null;
+            }
+        }
+
+        private static County GetCounty(int useCounty, Country country)
+        {
+            switch (useCounty)
+            {
+                case 1:
+                    return new County { Country = country, CountyId = 1, Name = "Akershus" };
+                case 0:
+                    return new County { Country = country, CountyId = 1, Name = null };
+                default:
+                    return null;
+            }
+        }
+
+        private static ElectionType GetElectionType(int useElectionType, Country country)
+        {
+            switch (useElectionType)
+            {
+                case 1:
+                    return new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election" };
+                case 0:
+                    return new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = null };
+                default:
+                    return null;
+            }
+        }
+
+        private static Election GetElection(int useElection, Country country, ElectionType electionType)
+        {
+            switch (useElection)
+            {
+                case 1:
+                    return new Election() { Country = country, ElectionType = electionType, Year = 2018 };
+                case 0:
+                    return new Election() { Country = country, ElectionType = electionType, Year = -1 };
+                default:
+                    return null;
+            }
+        }
+
+        private static Party GetParty(int useParty, Country country)
+        {
+            switch (useParty)
+            {
+                case 1:
+                    return new Party { Country = country, Name = "Studentene" };
+                case 0:
+                    return new Party { Country = country, Name = null };
+                default:
+                    return null;
             }
         }
     }
