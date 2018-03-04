@@ -31,7 +31,7 @@ namespace Mandater.Data
                             try
                             {
                                 VDModel[] entities = VDUtilities.CsvToArray(election);
-                                Country electionModel = ElectionModelBuilder(countryName, electionType, entities);
+                                Country electionModel = ElectionModelBuilder(context, countryName, electionType, entities);
                                 CustomValidation.ValidateCountry(electionModel, new HashSet<int>());
                                 context.Countries.Add(electionModel);
                             }
@@ -50,7 +50,7 @@ namespace Mandater.Data
             }
         }
 
-        public static Country ElectionModelBuilder(string countryName, string electionType, VDModel[] entities)
+        public static Country ElectionModelBuilder(ElectionContext context, string countryName, string electionType, VDModel[] entities)
         {
             switch (electionType)
             {
@@ -60,6 +60,13 @@ namespace Mandater.Data
                 default:
                     throw new ArgumentException($"{electionType} is an unknown election type and will be ignored.");
             }
+
+            Country country = context.Countries.Find(countryName);
+            if (country == null)
+            {
+                country = new Country();
+            }
+
             return null;
         }
     }

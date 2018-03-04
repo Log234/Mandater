@@ -9,9 +9,7 @@ namespace Mandater.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ElectionTypeId { get; set; }
-
-        [Required]
-        public string Name { get; set; }
+        
         [Required]
         public string InternationalName { get; set; }
 
