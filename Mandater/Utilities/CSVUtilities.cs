@@ -58,10 +58,6 @@ namespace Mandater.Utilities
             while ((currentLine = file.ReadLine()) != null)
             {
                 string[] objectFields = currentLine.Split(";");
-                if (objectFields.Length != 17)
-                {
-                    return null;
-                }
                 VDModel currentObject = new VDModel
                 {
                     Fylkenummer = objectFields[0],
