@@ -14,30 +14,14 @@ namespace Mandater.Repository
             {
                 throw new ArgumentException("Country cannot be null.");
             }
-
-            if (country.Name == null)
-            {
-                throw new ArgumentException("Country.Name cannot be null.");
-            }
+            
             if (country.InternationalName == null)
             {
                 throw new ArgumentException("Country.InternationalName cannot be null.");
             }
-            if (country.ShortName == null)
-            {
-                throw new ArgumentException("Country.ShortName cannot be null.");
-            }
-            if (country.Name.Length < 3)
-            {
-                throw new ArgumentException("Country.Name cannot be shorter than 3 characters.");
-            }
             if (country.InternationalName.Length < 3)
             {
                 throw new ArgumentException("Country.InternationalName cannot be shorter than 3 characters.");
-            }
-            if (country.ShortName.Length < 2)
-            {
-                throw new ArgumentException("Country.ShortName cannot be shorter than 2 characters.");
             }
 
             checkedModels.Add(country.GetHashCode());
@@ -228,15 +212,6 @@ namespace Mandater.Repository
             if (electionType == null)
             {
                 throw new ArgumentException("ElectionType cannot be null.");
-            }
-
-            if (electionType.Name == null)
-            {
-                throw new ArgumentException("ElectionType.Name cannot be null.");
-            }
-            if (electionType.Name.Length < 2)
-            {
-                throw new ArgumentException("ElectionType.Name cannot be shorter than 3 characters.");
             }
 
             if (electionType.InternationalName == null)
