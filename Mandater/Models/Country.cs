@@ -13,6 +13,8 @@ namespace Mandater.Models
         public int CountryId { get; set; }
         [Key]
         public string InternationalName { get; set; }
+        [Required]
+        public string ShortName { get; set; }
 
         public virtual List<ElectionType> ElectionTypes { get; set; }
         public virtual List<County> Counties { get; set; }

@@ -23,6 +23,14 @@ namespace Mandater.Repository
             {
                 throw new ArgumentException("Country.InternationalName cannot be shorter than 3 characters.");
             }
+            if (country.ShortName == null)
+            {
+                throw new ArgumentException("Country.ShortName cannot be null.");
+            }
+            if (country.ShortName.Length < 2)
+            {
+                throw new ArgumentException("Country.ShortName cannot be shorter than 2 characters.");
+            }
 
             checkedModels.Add(country.GetHashCode());
 

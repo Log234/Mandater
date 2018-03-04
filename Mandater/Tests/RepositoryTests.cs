@@ -20,7 +20,7 @@ namespace Mandater.Tests
                 .Options;
 
             // Testing regular single add
-            Country country = new Country() { InternationalName = "Norway", };
+            Country country = GetCountry(1);
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -36,16 +36,17 @@ namespace Mandater.Tests
         }
 
         [Theory]
-        [InlineData(true, null)]
-        [InlineData(false, null)]
-        public void AddCountryMissingDataTest(bool useNull, string internationalName)
+        [InlineData(true, "Norway", "NO")]
+        [InlineData(false, null, "NO")]
+        [InlineData(false, "Norway", null)]
+        public void AddCountryMissingDataTest(bool useNull, string internationalName, string shortName)
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
                 .UseInMemoryDatabase(databaseName: "AddCountryMissingTest")
                 .Options;
 
             // Testing attempt on adding model with missing data
-            Country country = new Country() { InternationalName = internationalName, };
+            Country country = new Country() { InternationalName = internationalName, ShortName = shortName };
             if (useNull) country = null;
 
             using (ElectionContext context = new ElectionContext(options))
@@ -63,7 +64,7 @@ namespace Mandater.Tests
                 .Options;
 
             // Testing adding duplicate country
-            Country country = new Country() { InternationalName = "Norway", };
+            Country country = GetCountry(1);
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -86,7 +87,7 @@ namespace Mandater.Tests
                 .Options;
 
             // Testing adding a conflicting entry
-            Country country = new Country() { InternationalName = "Norway", };
+            Country country = GetCountry(1);
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -94,7 +95,7 @@ namespace Mandater.Tests
                 repository.AddCountry(country);
             }
 
-            Country conflictCountry = new Country() { InternationalName = "Norway" };
+            Country conflictCountry = new Country() { InternationalName = "Norway", ShortName = "EN" };
             using (ElectionContext context = new ElectionContext(options))
             {
                 ElectionRepository repository = new ElectionRepository(context);
@@ -109,8 +110,8 @@ namespace Mandater.Tests
                 .UseInMemoryDatabase(databaseName: "AddElectionTypeRegularTest")
                 .Options;
 
-            Country country = new Country() { InternationalName = "Norway", };
-            ElectionType electionType = new ElectionType() { Country = country, InternationalName = "Parliamentary election" };
+            Country country = GetCountry(1);
+            ElectionType electionType = GetElectionType(1, country);
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -139,8 +140,8 @@ namespace Mandater.Tests
                 .Options;
 
             // Testing adding duplicate country
-            Country country = new Country() { InternationalName = "Norway", };
-            ElectionType electionType = new ElectionType() { Country = country, InternationalName = "Parliamentary election" };
+            Country country = GetCountry(1);
+            ElectionType electionType = GetElectionType(1, country);
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -154,31 +155,6 @@ namespace Mandater.Tests
                 Assert.Throws<ArgumentException>(() => repository.AddCountry(country));
             }
 
-        }
-
-        [Fact]
-        public void AddElectionTypeConflictingTest()
-        {
-            DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
-                .UseInMemoryDatabase(databaseName: "AddElectionTypeConflictingTest")
-                .Options;
-
-            // Testing adding a conflicting entry
-            Country country = new Country() { InternationalName = "Norway", };
-            ElectionType type1 = new ElectionType() { Country = country, InternationalName = "Parliamentary election" };
-
-            using (ElectionContext context = new ElectionContext(options))
-            {
-                ElectionRepository repository = new ElectionRepository(context);
-                repository.AddElectionType(type1);
-            }
-
-            ElectionType conflictElectionType = new ElectionType() { Country = country, InternationalName = "Parliamentary election2" };
-            using (ElectionContext context = new ElectionContext(options))
-            {
-                ElectionRepository repository = new ElectionRepository(context);
-                Assert.Throws<InvalidOperationException>(() => repository.AddElectionType(conflictElectionType));
-            }
         }
 
         [Theory]
@@ -212,9 +188,9 @@ namespace Mandater.Tests
                 .UseInMemoryDatabase(databaseName: "AddElectionRegularTest")
                 .Options;
 
-            Country country = new Country() { InternationalName = "Norway", };
+            Country country = GetCountry(1);
             ElectionType electionType = new ElectionType() { Country = country, InternationalName = "Parliamentary election" };
-            Election election = new Election() { Country = country, ElectionType = electionType, Year = 2018, Algorithm = "Sainte Laguës", FirstDivisor = 1.4, Threshold = 4.0, Seats = 19, LevelingSeats = 150};
+            Election election = new Election() { Country = country, ElectionType = electionType, Year = 2018, Algorithm = "Sainte Laguës", FirstDivisor = 1.4, Threshold = 4.0, Seats = 19, LevelingSeats = 150 };
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -272,8 +248,8 @@ namespace Mandater.Tests
                 .UseInMemoryDatabase(databaseName: "AddCountyRegularTest")
                 .Options;
 
-            Country country = new Country() { InternationalName = "Norway", };
-            County county = new County() { Country = country, Name = "Akershus" };
+            Country country = GetCountry(1);
+            County county = GetCounty(1, country);
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -321,8 +297,8 @@ namespace Mandater.Tests
                 .UseInMemoryDatabase(databaseName: "AddCountyDataRegularTest")
                 .Options;
 
-            Country country = new Country() { InternationalName = "Norway", };
-            County county = new County() { Country = country, Name = "Akershus" };
+            Country country = GetCountry(1);
+            County county = GetCounty(1, country);
             CountyData countyData = new CountyData() { Areal = 29542.3, Population = 999394, Year = 2018, County = county };
 
             using (ElectionContext context = new ElectionContext(options))
@@ -356,7 +332,7 @@ namespace Mandater.Tests
                 .Options;
 
             // Testing attempt on adding model with missing data
-            Country country = new Country() { InternationalName = "Norway", };
+            Country country = GetCountry(1);
             County county = GetCounty(useCounty, country);
 
             CountyData countyData = new CountyData() { Areal = areal, Population = population, Year = year, County = county };
@@ -376,7 +352,7 @@ namespace Mandater.Tests
                 .UseInMemoryDatabase(databaseName: "AddPartyRegularTest")
                 .Options;
 
-            Country country = new Country { InternationalName = "Norway", };
+            Country country = GetCountry(1);
             Party party = new Party { Country = country, Name = "Studentene" };
 
             using (ElectionContext context = new ElectionContext(options))
@@ -424,10 +400,10 @@ namespace Mandater.Tests
                 .UseInMemoryDatabase(databaseName: "AddResultRegularTest")
                 .Options;
 
-            Country country = new Country() { InternationalName = "Norway" };
+            Country country = GetCountry(1);
             ElectionType electionType = new ElectionType() { Country = country, InternationalName = "Parliamentary election" };
             Election election = new Election() { Country = country, ElectionType = electionType, Year = 2018, Algorithm = "Sainte Laguës", FirstDivisor = 1.4, Threshold = 4.0, Seats = 19, LevelingSeats = 150 };
-            County county = new County { Country = country, CountyId = 1, Name = "Akershus" };
+            County county = GetCounty(1, country);
             Party party = new Party { Country = country, Name = "Studentene" };
             Result result = new Result { County = county, Election = election, Party = party, Percentage = 23.4, Votes = 42 };
 
@@ -470,8 +446,8 @@ namespace Mandater.Tests
                 .UseInMemoryDatabase(databaseName: "AddResultRegularTest")
                 .Options;
 
-            Country country = new Country() { InternationalName = "Norway", };
-            ElectionType electionType = new ElectionType() { Country = country, InternationalName = "Parliamentary election" };
+            Country country = GetCountry(1);
+            ElectionType electionType = GetElectionType(1, country);
             Election election = GetElection(useElection, country, electionType);
             County county = GetCounty(useCounty, country);
             Party party = GetParty(useParty, country);
@@ -491,7 +467,7 @@ namespace Mandater.Tests
             switch (useCountry)
             {
                 case 1:
-                    return new Country() { InternationalName = "Norway", };
+                    return new Country() { InternationalName = "Norway", ShortName = "NO"};
                 case 0:
                     return new Country() { InternationalName = null };
                 default:

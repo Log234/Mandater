@@ -14,60 +14,90 @@ namespace Mandater.Data
     {
         public static void Initialize(ElectionContext context, ILogger logger)
         {
+            // Make sure the DB is ready and empty
             context.Database.EnsureCreated();
             if (!context.Countries.Any())
             {
-                string[] countries = Directory.GetDirectories("Data/State");
+                Dictionary<string, string> countryNames = CSVUtilities.CsvToDictionary("Data/States/States.csv");
+                if (countryNames == null)
+                {
+                    logger.LogError("States.csv is malformed and could not be parsed.");
+                    return;
+                }
+
+                // Iterate through countries
+                string[] countries = Directory.GetDirectories("Data/States");
                 foreach (string country in countries)
                 {
-                    string countryName = Path.GetDirectoryName(country);
+                    // Check if the countryId is valid
+                    string countryId = Path.GetDirectoryName(country);
+                    bool found = countryNames.TryGetValue(countryId, out string countryName);
+                    if (!found)
+                    {
+                        logger.LogError($"The CountryID {countryId} was not found in the dictionary.");
+                        break;
+                    }
+
+                    // Create a model based on the InternationalName and ShortName
+                    Country countryModel = new Country() { InternationalName = countryName, ShortName = countryId };
+
+                    // Get a list of ElectionTypeIDs and their names
+                    Dictionary<string, string> electionTypeNames = CSVUtilities.CsvToDictionary(country + "/ElectionTypes.csv");
+                    if (electionTypeNames == null)
+                    {
+                        logger.LogError($"{country + "/ElectionTypes.csv"} is malformed and could not be parsed.");
+                        break;
+                    }
+
+                    // Iterate through the country's election types
                     string[] electionTypes = Directory.GetDirectories(country);
                     foreach (string electionType in electionTypes)
                     {
-                        string electionTypeName = Path.GetDirectoryName(electionType);
+                        // Check if the electionTypeId is valid
+                        string electionTypeId = Path.GetDirectoryName(electionType);
+                        found = electionTypeNames.TryGetValue(electionTypeId, out string electionTypeName);
+                        if (!found)
+                        {
+                            logger.LogError($"The ElectionTypeID {electionTypeId} was not found in the dictionary.");
+                            break;
+                        }
+
+                        // Create a model based on the Country and InternationalName
+                        ElectionType electionTypeModel = new ElectionType() { Country = countryModel, InternationalName = electionTypeName };
+                        countryModel.ElectionTypes.Add(electionTypeModel);
+
+                        // Iterate through the elections
                         string[] elections = Directory.GetFiles(electionType);
                         foreach (string election in elections)
                         {
-                            try
+                            VDModel[] entities = CSVUtilities.CsvToVdArray(election);
+                            if (entities == null)
                             {
-                                VDModel[] entities = VDUtilities.CsvToArray(election);
-                                Country electionModel = ElectionModelBuilder(context, countryName, electionType, entities);
-                                CustomValidation.ValidateCountry(electionModel, new HashSet<int>());
-                                context.Countries.Add(electionModel);
+                                logger.LogError($"{election} is malformed and could not be parsed.");
+                                break;
                             }
-                            catch (IndexOutOfRangeException indexOutOfRangeException)
-                            {
-                                logger.LogError(indexOutOfRangeException, $"{election} has a malformed format and could not be parsed.");
-                            }
-                            catch (ArgumentException argumentException)
-                            {
-                                logger.LogError(argumentException, $"{election} results in an illegal model and could not be built.");
-                            }
+                            ElectionModelBuilder(context, electionTypeModel, entities);
                         }
+                    }
+
+                    try
+                    {
+                        CustomValidation.ValidateCountry(countryModel, new HashSet<int>());
+                        context.Countries.Add(countryModel);
+                    }
+                    catch (ArgumentException argumentException)
+                    {
+                        logger.LogError(argumentException,
+                            $"{country} results in an illegal model and could not be built.");
                     }
                 }
                 context.SaveChanges();
             }
         }
 
-        public static Country ElectionModelBuilder(ElectionContext context, string countryName, string electionType, VDModel[] entities)
+        private static void ElectionModelBuilder(ElectionContext context, ElectionType electionType, VDModel[] entities)
         {
-            switch (electionType)
-            {
-                case "ParliamentaryElection":
-                    break;
 
-                default:
-                    throw new ArgumentException($"{electionType} is an unknown election type and will be ignored.");
-            }
-
-            Country country = context.Countries.Find(countryName);
-            if (country == null)
-            {
-                country = new Country();
-            }
-
-            return null;
         }
     }
 }

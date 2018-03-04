@@ -11,7 +11,7 @@ namespace Mandater.Tests
 {
     public class UtilityTests
     {
-        string filePath = "../../../Data/State/Norway/ParliamentaryElection/2018-02-10_partifordeling_1_st_2017.csv";
+        string filePath = "../../../Data/States/NO/ParliamentaryElection/2018-02-10_partifordeling_1_st_2017.csv";
         string expectedHeaderString = "Fylkenummer;Fylkenavn;Kommunenummer;Kommunenavn;Stemmekretsnummer;Stemmekretsnavn;Partikode;Partinavn;Oppslutning prosentvis;Antall stemmeberettigede;Antall forhåndsstemmer;Antall valgtingstemmer;Antall stemmer totalt;Endring % siste tilsvarende valg;Endring % siste ekvivalente valg;Antall mandater;Antall utjevningsmandater;";
         [Fact]
         public void ReadFileTest()
@@ -64,7 +64,7 @@ namespace Mandater.Tests
         public void ReadAllTest()
         {
             int expectedNumberOfVotes = 800947; // from VDs own site
-            List<VDModel> objects = Utilities.VDUtilities.CsvToList(filePath);
+            List<VDModel> objects = Utilities.CSVUtilities.CsvToList(filePath);
             var APResults = objects.FindAll(a => a.Partinavn == "Arbeiderpartiet");
             int actualNumberOfVotes = 0;
             foreach (VDModel element in APResults)

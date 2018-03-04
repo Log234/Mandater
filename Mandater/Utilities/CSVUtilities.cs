@@ -8,7 +8,7 @@ using Mandater.Models;
 
 namespace Mandater.Utilities
 {
-    public static class VDUtilities
+    public static class CSVUtilities
     {
         /// <summary>
         /// Reads any .csv file in the default format specified at https://www.valgresultat.no and creates a list of simple string objects based on the schema.
@@ -49,7 +49,7 @@ namespace Mandater.Utilities
             return objects;
         }
 
-        public static VDModel[] CsvToArray(string filePath)
+        public static VDModel[] CsvToVdArray(string filePath)
         {
             List<VDModel> objects = new List<VDModel>();
             StreamReader file = new StreamReader(filePath);
@@ -58,6 +58,10 @@ namespace Mandater.Utilities
             while ((currentLine = file.ReadLine()) != null)
             {
                 string[] objectFields = currentLine.Split(";");
+                if (objectFields.Length != 17)
+                {
+                    return null;
+                }
                 VDModel currentObject = new VDModel
                 {
                     Fylkenummer = objectFields[0],
@@ -81,6 +85,29 @@ namespace Mandater.Utilities
                 objects.Add(currentObject);
             }
             return objects.ToArray<VDModel>();
+        }
+
+        /// <summary>
+        /// Reads any .csv file with exactly two fields per line and returns them as a dictionary using the first field as key and second as value.
+        /// </summary>
+        /// <param name="filePath">The relative or absolute path of the file being read, has to be .csv and cannot contain semicolon (;) in any of its fields as that is the delimiter used.</param>
+        /// <returns>A dictionary over the entries in the csv file.</returns>
+        public static Dictionary<string, string> CsvToDictionary(string filePath)
+        {
+            Dictionary<string, string> entries = new Dictionary<string, string>();
+            StreamReader file = new StreamReader(filePath);
+            string actualHeaderString = file.ReadLine(); // Skip
+            string currentLine;
+            while ((currentLine = file.ReadLine()) != null)
+            {
+                string[] entryFields = currentLine.Split(";");
+                if (entryFields.Length != 2)
+                {
+                    return null;
+                }
+                entries.Add(entryFields[0], entryFields[1]);
+            }
+            return entries;
         }
     }
 }
