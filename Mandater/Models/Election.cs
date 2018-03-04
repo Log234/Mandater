@@ -12,6 +12,16 @@ namespace Mandater.Models
 
         [Required]
         public int Year { get; set; } = -1;
+        [Required]
+        public string Algorithm { get; set; }
+        [Required]
+        public double FirstDivisor { get; set; } = double.NaN;
+        [Required]
+        public double Threshold { get; set; } = double.NaN;
+        [Required]
+        public int Seats { get; set; } = -1;
+        [Required]
+        public int LevelingSeats { get; set; } = -1;
 
         public int CountryId { get; set; }
         [Required]

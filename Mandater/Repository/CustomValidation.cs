@@ -160,10 +160,29 @@ namespace Mandater.Repository
             {
                 throw new ArgumentException("Election cannot be null.");
             }
-
             if (election.Year == -1)
             {
-                throw new ArgumentException("Election.Year cannot be the defaul value.");
+                throw new ArgumentException("Election.Year cannot be the default value.");
+            }
+            if (election.Algorithm == null)
+            {
+                throw new ArgumentException("Election.Algorithm cannot be null.");
+            }
+            if (double.IsNaN(election.FirstDivisor))
+            {
+                throw new ArgumentException("Election.FirstDivisor cannot be null.");
+            }
+            if (double.IsNaN(election.Threshold))
+            {
+                throw new ArgumentException("Election.Threshold cannot be null.");
+            }
+            if (election.Seats == -1)
+            {
+                throw new ArgumentException("Election.Seats cannot be the default value.");
+            }
+            if (election.LevelingSeats == -1)
+            {
+                throw new ArgumentException("Election.LevelingSeats cannot be the default value.");
             }
 
             checkedModels.Add(election.GetHashCode());

@@ -219,7 +219,7 @@ namespace Mandater.Tests
 
             Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
             ElectionType electionType = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election" };
-            Election election = new Election() { Country = country, ElectionType = electionType, Year = 2018 };
+            Election election = new Election() { Country = country, ElectionType = electionType, Year = 2018, Algorithm = "Sainte Laguës", FirstDivisor = 1.4, Threshold = 4.0, Seats = 19, LevelingSeats = 150};
 
             using (ElectionContext context = new ElectionContext(options))
             {
@@ -239,13 +239,18 @@ namespace Mandater.Tests
         }
 
         [Theory]
-        [InlineData(true, -1, 1, 1)]
-        [InlineData(false, 2018, 1, -1)]
-        [InlineData(false, 2018, 1, 0)]
-        [InlineData(false, 2018, -1, 1)]
-        [InlineData(false, 2018, 0, 1)]
-        [InlineData(false, -1, 1, 1)]
-        public void AddElectionMissingDataTest(bool useNull, int year, int useElectionType, int useCountry)
+        [InlineData(true, -1, "Sainte Laguës", 1.4, 4.0, 150, 19, 1, 1)]
+        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, 19, 1, -1)]
+        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, 19, 1, 0)]
+        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, 19, -1, 1)]
+        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, 19, 0, 1)]
+        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, -1, 1, 1)]
+        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, -1, 19, 1, 1)]
+        [InlineData(false, 2018, "Sainte Laguës", 1.4, double.NaN, 150, 19, 1, 1)]
+        [InlineData(false, 2018, "Sainte Laguës", double.NaN, 4.0, 150, 19, 1, 1)]
+        [InlineData(false, 2018, null, 1.4, 4.0, 150, 19, 1, 1)]
+        [InlineData(false, -1, "Sainte Laguës", 1.4, 4.0, 150, 19, 1, 1)]
+        public void AddElectionMissingDataTest(bool useNull, int year, string algorithm, double firstDivisor, double threshold, int seats, int levelingSeats, int useElectionType, int useCountry)
         {
             DbContextOptions<ElectionContext> options = new DbContextOptionsBuilder<ElectionContext>()
                 .UseInMemoryDatabase(databaseName: "AddElectionTypeMissingTest")
@@ -255,7 +260,7 @@ namespace Mandater.Tests
             Country country = GetCountry(useCountry);
             ElectionType electionType = GetElectionType(useElectionType, country);
 
-            Election election = new Election() { Country = country, ElectionType = electionType, Year = year };
+            Election election = new Election() { Country = country, ElectionType = electionType, Year = year, Algorithm = algorithm, FirstDivisor = firstDivisor, Threshold = threshold, Seats = seats, LevelingSeats = levelingSeats };
             if (useNull) election = null;
 
             using (ElectionContext context = new ElectionContext(options))
@@ -426,7 +431,7 @@ namespace Mandater.Tests
 
             Country country = new Country() { Name = "Norge", InternationalName = "Norway", ShortName = "NO" };
             ElectionType electionType = new ElectionType() { Country = country, Name = "Stortingsvalg", InternationalName = "Parliamentary election" };
-            Election election = new Election() { Country = country, ElectionType = electionType, Year = 2018 };
+            Election election = new Election() { Country = country, ElectionType = electionType, Year = 2018, Algorithm = "Sainte Laguës", FirstDivisor = 1.4, Threshold = 4.0, Seats = 19, LevelingSeats = 150 };
             County county = new County { Country = country, CountyId = 1, Name = "Akershus" };
             Party party = new Party { Country = country, Name = "Studentene" };
             Result result = new Result { County = county, Election = election, Party = party, Percentage = 23.4, Votes = 42 };
