@@ -30,8 +30,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\States\NO\ElectionTypes.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\States\NO\ParliamentaryElection\2018-02-10_partifordeling_1_st_2017.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\States\NO\ParliamentaryElection\Elections.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\States\States.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
