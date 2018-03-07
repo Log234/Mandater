@@ -2,7 +2,7 @@
 
 ![Build status](https://mandater.visualstudio.com/_apis/public/build/definitions/27b4c679-f471-4605-89b8-7e40d6b9c0eb/2/badge)
 
-Test server: http://mandater-testing.azurewebsites.net
+Test server: https://mandater-testing.azurewebsites.net
 
 
 Dette er et prosjekt for Universitet i Oslo, med et mål om å utvikle en nettside for å simulere utvalget av mandater gitt et valgresultat og et sett med parametere.
