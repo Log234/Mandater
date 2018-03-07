@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Mandater.Models;
+﻿using Mandater.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Mandater.Repository
+namespace Mandater.Data
 {
     public class ElectionContext: DbContext
     {

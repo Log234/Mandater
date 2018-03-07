@@ -11,6 +11,11 @@ namespace Mandater.Data
 {
     public class ElectionInitializer
     {
+        /// <summary>
+        /// Initializes the database, if the db is empty this model will seed it.
+        /// </summary>
+        /// <param name="context">The context to be initialized.</param>
+        /// <param name="logger">Where to log any issues.</param>
         public static void Initialize(ElectionContext context, ILogger logger)
         {
             // Make sure the DB is ready and empty
@@ -104,6 +109,14 @@ namespace Mandater.Data
             }
         }
 
+        /// <summary>
+        /// Constructs a series of results, counties and parties for an election based on an array of VDModels,
+        /// checks that the models are valid and adds them to the context.
+        /// </summary>
+        /// <param name="context">The context where the resulting models should be added.</param>
+        /// <param name="election">The election that the results should be connected to.</param>
+        /// <param name="entities">The data on which the models should be built.</param>
+        /// <param name="validationSet">A set of already checked models.</param>
         private static void ElectionModelBuilder(ElectionContext context, Election election, VDModel[] entities, HashSet<int> validationSet)
         {
             foreach (VDModel entity in entities)
