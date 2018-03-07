@@ -81,5 +81,25 @@ namespace Mandater.Utilities
                    || SainteLaguesSet.Contains(name)
                    || DHondtSet.Contains(name);
         }
+
+        /// <summary>
+        /// Attempts to convert the name to an algorithm.
+        /// If it is successful it returns true and pushes the Algorithm to the algorithm variable.
+        /// Otherwise it returns false and pushes Algorithm.Undefined to the algorithm variable.
+        /// </summary>
+        /// <param name="name">The name of the algorithm.</param>
+        /// <param name="algorithm">Where the algorithm should be returned.</param>
+        /// <returns>True if successful, false otherwise.</returns>
+        public static bool TryParse(string name, out Algorithm algorithm)
+        {
+            if (IsAlgorithm(name))
+            {
+                algorithm = StringToAlgorithm(name);
+                return true;
+            }
+
+            algorithm = Algorithm.Undefined;
+            return false;
+        }
     }
 }

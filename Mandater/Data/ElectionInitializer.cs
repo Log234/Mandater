@@ -70,7 +70,7 @@ namespace Mandater.Data
                                     Country = countryModel,
                                     ElectionType = electionTypeModel,
                                     Year = 2017,
-                                    Algorithm = "Sainte Laguës (modified)",
+                                    Algorithm = Algorithm.ModifiedSainteLagues,
                                     FirstDivisor = 1.4,
                                     Threshold = 4.0,
                                     Seats = 150,

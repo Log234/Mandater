@@ -155,6 +155,10 @@ namespace Mandater.Utilities
                 {
                     throw new CsvFileFormatException("The field Year is not a valid integer.", filePath, currentLine);
                 }
+                if (!AlgorithmUtilities.TryParse(objectFields[1], out Algorithm algorithm))
+                {
+                    throw new CsvFileFormatException("The field Algorithm is not a valid algorithm name.", filePath, currentLine);
+                }
                 if (!double.TryParse(objectFields[2], out double firstDivisor))
                 {
                     throw new CsvFileFormatException("The field FirstDivisor is not a valid double.", filePath, currentLine);
@@ -177,7 +181,7 @@ namespace Mandater.Utilities
                     Country = country,
                     ElectionType = electionType,
                     Year = year,
-                    Algorithm = objectFields[1],
+                    Algorithm = algorithm,
                     FirstDivisor = firstDivisor,
                     Threshold = threshold,
                     Seats = seats,
