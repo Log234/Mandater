@@ -210,7 +210,7 @@ namespace Mandater.Tests
                 case 1:
                     return new Country() { InternationalName = "Norway", ShortName = "NO" };
                 case 0:
-                    return new Country() { InternationalName = null };
+                    return new Country() { InternationalName = "Norway" };
                 default:
                     return null;
             }
@@ -221,9 +221,9 @@ namespace Mandater.Tests
             switch (useCounty)
             {
                 case 1:
-                    return new County { Country = country, CountyId = 1, Name = "Akershus" };
+                    return new County { Country = country, Name = "Akershus" };
                 case 0:
-                    return new County { Country = country, CountyId = 1, Name = null };
+                    return new County { Country = country };
                 default:
                     return null;
             }
@@ -236,7 +236,7 @@ namespace Mandater.Tests
                 case 1:
                     return new ElectionType() { Country = country, InternationalName = "Parliamentary election" };
                 case 0:
-                    return new ElectionType() { Country = country, InternationalName = null };
+                    return new ElectionType() { Country = country };
                 default:
                     return null;
             }
@@ -262,7 +262,7 @@ namespace Mandater.Tests
                 case 1:
                     return new Party { Country = country, Name = "Studentene" };
                 case 0:
-                    return new Party { Country = country, Name = null };
+                    return new Party { Country = country };
                 default:
                     return null;
             }
