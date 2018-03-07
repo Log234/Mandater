@@ -12,7 +12,7 @@ namespace Mandater.Data
     public class ElectionInitializer
     {
         /// <summary>
-        /// Initializes the database, if the db is empty this model will seed it.
+        /// Initializes the database, if the db is empty this method will build a model to seed it.
         /// </summary>
         /// <param name="context">The context to be initialized.</param>
         /// <param name="logger">Where to log any issues.</param>
@@ -29,6 +29,11 @@ namespace Mandater.Data
 
                     // Iterate through countries
                     string[] countries = Directory.GetDirectories("Data/States");
+                    if (countries.Length != countryNames.Count)
+                    {
+                        throw new ArgumentException("The number of directories in Data/States does not match the number found in States.csv");
+                    }
+
                     foreach (string country in countries)
                     {
 
@@ -49,6 +54,11 @@ namespace Mandater.Data
 
                         // Iterate through the country's election types
                         string[] electionTypes = Directory.GetDirectories(country);
+                        if (electionTypes.Length != electionTypeNames.Count)
+                        {
+                            throw new ArgumentException($"The number of directories in {country} does not match the number found in ElectionTypes.csv.");
+                        }
+
                         foreach (string electionType in electionTypes)
                         {
                             // Check if the electionTypeId is valid
@@ -65,26 +75,25 @@ namespace Mandater.Data
                             context.ElectionTypes.Add(electionTypeModel);
 
                             // Iterate through the elections
-                            string[] elections = Directory.GetFiles(electionType);
-                            foreach (string election in elections)
+                            string[] electionFiles = Directory.GetFiles(electionType);
+                            Election[] elections = CSVUtilities.CsvToElectionArray(electionType + "/Elections.csv", countryModel, electionTypeModel);
+                            if (electionFiles.Length != elections.Length + 1)
                             {
-                                VDModel[] entities = CSVUtilities.CsvToVdArray(election);
-                                // TODO Need to implement a way to retrieve this data
-                                Election electionModel = new Election
-                                {
-                                    Country = countryModel,
-                                    ElectionType = electionTypeModel,
-                                    Year = 2017,
-                                    Algorithm = Algorithm.ModifiedSainteLagues,
-                                    FirstDivisor = 1.4,
-                                    Threshold = 4.0,
-                                    Seats = 150,
-                                    LevelingSeats = 19
-                                };
-                                CustomValidation.ValidateElection(electionModel, validationSet);
-                                context.Elections.Add(electionModel);
+                                throw new ArgumentException($"The number of elections in {electionType} does not match the number found in Elections.csv.");
+                            }
 
-                                ElectionModelBuilder(context, electionModel, entities, validationSet);
+                            foreach (string electionFile in electionFiles)
+                            {
+                                if (!Path.GetFileName(electionFile).Equals("Elections.csv"))
+                                {
+                                    VDModel[] entities = CSVUtilities.CsvToVdArray(electionFile);
+                                    int year = int.Parse(Path.GetFileNameWithoutExtension(electionFile));
+                                    Election electionModel = elections.Single(e => e.Year == year);
+                                    CustomValidation.ValidateElection(electionModel, validationSet);
+                                    context.Elections.Add(electionModel);
+
+                                    ElectionModelBuilder(context, electionModel, entities, validationSet);
+                                }
                             }
                         }
 
