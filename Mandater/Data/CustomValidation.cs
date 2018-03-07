@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mandater.Models;
+using Mandater.Utilities;
 
 namespace Mandater.Repository
 {
@@ -156,9 +157,9 @@ namespace Mandater.Repository
             {
                 throw new ArgumentException("Election.Year cannot be the default value.");
             }
-            if (election.Algorithm == null)
+            if (election.Algorithm == Algorithm.Undefined)
             {
-                throw new ArgumentException("Election.Algorithm cannot be null.");
+                throw new ArgumentException("Election.Algorithm cannot be the default value.");
             }
             if (double.IsNaN(election.FirstDivisor))
             {

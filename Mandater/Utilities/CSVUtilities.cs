@@ -130,5 +130,62 @@ namespace Mandater.Utilities
             }
             return entries;
         }
+
+        /// <summary>
+        /// Reads any csv file following the format "Year;Algorithm;FirstDivisor;Threshold;Seats;LevelingSeats".
+        /// </summary>
+        /// <param name="filePath">The relative or absolute path of the file being read, has to be .csv and cannot contain semicolon (;) in any of its fields as that is the delimiter used.</param>
+        /// <param name="country">The country the election was held in.</param>
+        /// <param name="electionType">The type of election it was.</param>
+        /// <returns>An array of VDModel objects that can be used for simple in-memory queries or populating a database.</returns>
+        public static Election[] CsvToElectionArray(string filePath, Country country, ElectionType electionType)
+        {
+            List<Election> objects = new List<Election>();
+            StreamReader file = new StreamReader(filePath);
+            string actualHeaderString = file.ReadLine(); // Skip
+            string currentLine;
+            while ((currentLine = file.ReadLine()) != null)
+            {
+                string[] objectFields = currentLine.Split(";");
+                if (objectFields.Length != 6)
+                {
+                    throw new CsvFileFormatException($"Found a line with length {objectFields.Length} instead of the required 18.", filePath, currentLine);
+                }
+                if (!int.TryParse(objectFields[0], out int year))
+                {
+                    throw new CsvFileFormatException("The field Year is not a valid integer.", filePath, currentLine);
+                }
+                if (!double.TryParse(objectFields[2], out double firstDivisor))
+                {
+                    throw new CsvFileFormatException("The field FirstDivisor is not a valid double.", filePath, currentLine);
+                }
+                if (!double.TryParse(objectFields[3], out double threshold))
+                {
+                    throw new CsvFileFormatException("The field Threshold is not a valid double.", filePath, currentLine);
+                }
+                if (!int.TryParse(objectFields[4], out int seats))
+                {
+                    throw new CsvFileFormatException("The field Seats is not a valid integer.", filePath, currentLine);
+                }
+                if (!int.TryParse(objectFields[5], out int levelingSeats))
+                {
+                    throw new CsvFileFormatException("The field LevelingSeats is not a valid integer.", filePath, currentLine);
+                }
+
+                Election currentObject = new Election
+                {
+                    Country = country,
+                    ElectionType = electionType,
+                    Year = year,
+                    Algorithm = objectFields[1],
+                    FirstDivisor = firstDivisor,
+                    Threshold = threshold,
+                    Seats = seats,
+                    LevelingSeats = levelingSeats
+                };
+                objects.Add(currentObject);
+            }
+            return objects.ToArray<Election>();
+        }
     }
 }

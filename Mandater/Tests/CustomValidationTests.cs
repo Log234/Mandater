@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Mandater.Data;
 using Mandater.Models;
 using Mandater.Repository;
+using Mandater.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -66,18 +67,18 @@ namespace Mandater.Tests
         }
 
         [Theory]
-        [InlineData(true, -1, "Sainte Laguës", 1.4, 4.0, 150, 19, 1, 1)]
-        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, 19, 1, -1)]
-        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, 19, 1, 0)]
-        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, 19, -1, 1)]
-        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, 19, 0, 1)]
-        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, 150, -1, 1, 1)]
-        [InlineData(false, 2018, "Sainte Laguës", 1.4, 4.0, -1, 19, 1, 1)]
-        [InlineData(false, 2018, "Sainte Laguës", 1.4, double.NaN, 150, 19, 1, 1)]
-        [InlineData(false, 2018, "Sainte Laguës", double.NaN, 4.0, 150, 19, 1, 1)]
-        [InlineData(false, 2018, null, 1.4, 4.0, 150, 19, 1, 1)]
-        [InlineData(false, -1, "Sainte Laguës", 1.4, 4.0, 150, 19, 1, 1)]
-        public void ValidateElectionMissingDataTest(bool useNull, int year, string algorithm, double firstDivisor, double threshold, int seats, int levelingSeats, int useElectionType, int useCountry)
+        [InlineData(true, -1, Algorithm.ModifiedSainteLagues, 1.4, 4.0, 150, 19, 1, 1)]
+        [InlineData(false, 2018, Algorithm.ModifiedSainteLagues, 1.4, 4.0, 150, 19, 1, -1)]
+        [InlineData(false, 2018, Algorithm.ModifiedSainteLagues, 1.4, 4.0, 150, 19, 1, 0)]
+        [InlineData(false, 2018, Algorithm.ModifiedSainteLagues, 1.4, 4.0, 150, 19, -1, 1)]
+        [InlineData(false, 2018, Algorithm.ModifiedSainteLagues, 1.4, 4.0, 150, 19, 0, 1)]
+        [InlineData(false, 2018, Algorithm.ModifiedSainteLagues, 1.4, 4.0, 150, -1, 1, 1)]
+        [InlineData(false, 2018, Algorithm.ModifiedSainteLagues, 1.4, 4.0, -1, 19, 1, 1)]
+        [InlineData(false, 2018, Algorithm.ModifiedSainteLagues, 1.4, double.NaN, 150, 19, 1, 1)]
+        [InlineData(false, 2018, Algorithm.ModifiedSainteLagues, double.NaN, 4.0, 150, 19, 1, 1)]
+        [InlineData(false, 2018, Algorithm.Undefined, 1.4, 4.0, 150, 19, 1, 1)]
+        [InlineData(false, -1, Algorithm.ModifiedSainteLagues, 1.4, 4.0, 150, 19, 1, 1)]
+        public void ValidateElectionMissingDataTest(bool useNull, int year, Algorithm algorithm, double firstDivisor, double threshold, int seats, int levelingSeats, int useElectionType, int useCountry)
         {
             // Testing attempt on adding model with missing data
             Country country = GetCountry(useCountry);
@@ -246,7 +247,7 @@ namespace Mandater.Tests
             switch (useElection)
             {
                 case 1:
-                    return new Election() { Country = country, ElectionType = electionType, Year = 2018, Algorithm = "Sainte Laguës (modified)", FirstDivisor = 1.4, Threshold = 4.0, Seats = 150, LevelingSeats = 19};
+                    return new Election() { Country = country, ElectionType = electionType, Year = 2018, Algorithm = Algorithm.ModifiedSainteLagues, FirstDivisor = 1.4, Threshold = 4.0, Seats = 150, LevelingSeats = 19};
                 case 0:
                     return new Election() { Country = country, ElectionType = electionType, Year = 2018, FirstDivisor = 1.4, Threshold = 4.0, Seats = 150, LevelingSeats = 19 };
                 default:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Mandater.Utilities;
 
 namespace Mandater.Models
 {
@@ -13,7 +14,7 @@ namespace Mandater.Models
         [Required]
         public int Year { get; set; } = -1;
         [Required]
-        public string Algorithm { get; set; }
+        public Algorithm Algorithm { get; set; }
         [Required]
         public double FirstDivisor { get; set; } = double.NaN;
         [Required]

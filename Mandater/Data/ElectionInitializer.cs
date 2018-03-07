@@ -64,7 +64,22 @@ namespace Mandater.Data
                             foreach (string election in elections)
                             {
                                 VDModel[] entities = CSVUtilities.CsvToVdArray(election);
-                                ElectionModelBuilder(context, electionTypeModel, entities, validationSet);
+                                // TODO Need to implement a way to retrieve this data
+                                Election electionModel = new Election
+                                {
+                                    Country = countryModel,
+                                    ElectionType = electionTypeModel,
+                                    Year = 2017,
+                                    Algorithm = "Sainte Laguës (modified)",
+                                    FirstDivisor = 1.4,
+                                    Threshold = 4.0,
+                                    Seats = 150,
+                                    LevelingSeats = 19
+                                };
+                                CustomValidation.ValidateElection(electionModel, validationSet);
+                                context.Elections.Add(electionModel);
+
+                                ElectionModelBuilder(context, electionModel, entities, validationSet);
                             }
                         }
 
@@ -89,37 +104,22 @@ namespace Mandater.Data
             }
         }
 
-        private static void ElectionModelBuilder(ElectionContext context, ElectionType electionType, VDModel[] entities, HashSet<int> validationSet)
+        private static void ElectionModelBuilder(ElectionContext context, Election election, VDModel[] entities, HashSet<int> validationSet)
         {
-            // TODO Need to implement a way to retrieve this data
-            Election election = new Election
-            {
-                Country = electionType.Country,
-                ElectionType = electionType,
-                Year = 2017,
-                Algorithm = "Sainte Laguës (modified)",
-                FirstDivisor = 1.4,
-                Threshold = 4.0,
-                Seats = 150,
-                LevelingSeats = 19
-            };
-            CustomValidation.ValidateElection(election, validationSet);
-            context.Elections.Add(election);
-
             foreach (VDModel entity in entities)
             {
-                County county = context.Counties.Find(electionType.CountryId, entity.Fylkenavn);
+                County county = context.Counties.Find(election.CountryId, entity.Fylkenavn);
                 if (county == null)
                 {
-                    county = new County { Country = electionType.Country, Name = entity.Fylkenavn };
+                    county = new County { Country = election.Country, Name = entity.Fylkenavn };
                     CustomValidation.ValidateCounty(county, validationSet);
                     context.Counties.Add(county);
                 }
 
-                Party party = context.Parties.Find(electionType.CountryId, entity.Partinavn);
+                Party party = context.Parties.Find(election.CountryId, entity.Partinavn);
                 if (party == null)
                 {
-                    party = new Party { Country = electionType.Country, Name = entity.Partinavn, ShortName = entity.Partikode };
+                    party = new Party { Country = election.Country, Name = entity.Partinavn, ShortName = entity.Partikode };
                     CustomValidation.ValidateParty(party, validationSet);
                     context.Parties.Add(party);
                 }
