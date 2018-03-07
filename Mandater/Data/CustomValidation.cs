@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Mandater.Models;
 using Mandater.Utilities;
 
-namespace Mandater.Repository
+namespace Mandater.Data
 {
-    public class CustomValidation
+    public static class CustomValidation
     {
+        /// <summary>
+        /// Checks whether the given country is a valid model, and then proceeds to look through any connected models
+        /// that are not in the checkedModels set and ensure that they all result in a valid model.
+        /// </summary>
+        /// <param name="country">The model to check.</param>
+        /// <param name="checkedModels">A set of models that has been checked already.</param>
         public static void ValidateCountry(Country country, HashSet<int> checkedModels)
         {
             if (country == null)
             {
                 throw new ArgumentException("Country cannot be null.");
             }
-            
+
             if (country.InternationalName == null)
             {
                 throw new ArgumentException("Country.InternationalName cannot be null.");
@@ -69,6 +73,13 @@ namespace Mandater.Repository
             }
         }
 
+
+        /// <summary>
+        /// Checks whether the given county is a valid model, and then proceeds to look through any connected models
+        /// that are not in the checkedModels set and ensure that they all result in a valid model.
+        /// </summary>
+        /// <param name="county">The model to check.</param>
+        /// <param name="checkedModels">A set of models that have already been checked.</param>
         public static void ValidateCounty(County county, HashSet<int> checkedModels)
         {
             if (county == null)
@@ -111,6 +122,12 @@ namespace Mandater.Repository
             }
         }
 
+        /// <summary>
+        /// Checks whether the given county data is a valid model, and then proceeds to look through any connected models
+        /// that are not in the checkedModels set and ensure that they all result in a valid model.
+        /// </summary>
+        /// <param name="countyData">The model to check.</param>
+        /// <param name="checkedModels">A set of models that have already been checked.</param>
         public static void ValidateCountyData(CountyData countyData, HashSet<int> checkedModels)
         {
             if (countyData == null)
@@ -147,6 +164,12 @@ namespace Mandater.Repository
             }
         }
 
+        /// <summary>
+        /// Checks whether the given election is a valid model, and then proceeds to look through any connected models
+        /// that are not in the checkedModels set and ensure that they all result in a valid model.
+        /// </summary>
+        /// <param name="election">The model to check.</param>
+        /// <param name="checkedModels">A set of already checked models.</param>
         public static void ValidateElection(Election election, HashSet<int> checkedModels)
         {
             if (election == null)
@@ -216,6 +239,12 @@ namespace Mandater.Repository
             }
         }
 
+        /// <summary>
+        /// Checks whether the given election type is a valid model, and then proceeds to look through any connected models
+        /// that are not in the checkedModels set and ensure that they all result in a valid model.
+        /// </summary>
+        /// <param name="electionType">The model to check.</param>
+        /// <param name="checkedModels">A set of already checked models.</param>
         public static void ValidateElectionType(ElectionType electionType, HashSet<int> checkedModels)
         {
             if (electionType == null)
@@ -259,6 +288,12 @@ namespace Mandater.Repository
             }
         }
 
+        /// <summary>
+        /// Checks whether the given party is a valid model, and then proceeds to look through any connected models
+        /// that are not in the checkedModels set and ensure that they all result in a valid model.
+        /// </summary>
+        /// <param name="party">The model to check.</param>
+        /// <param name="checkedModels">A set of already checked models.</param>
         public static void ValidateParty(Party party, HashSet<int> checkedModels)
         {
             if (party == null)
@@ -298,7 +333,13 @@ namespace Mandater.Repository
                 throw new ArgumentException("Party.Country cannot be null.");
             }
         }
-        
+
+        /// <summary>
+        /// Checks whether the given result is a valid model, and then proceeds to look through any connected models
+        /// that are not in the checkedModels set and ensure that they all result in a valid model.
+        /// </summary>
+        /// <param name="result">The model to check.</param>
+        /// <param name="checkedModels">A set of already checked models.</param>
         public static void ValidateResult(Result result, HashSet<int> checkedModels)
         {
             if (result == null)
@@ -314,7 +355,7 @@ namespace Mandater.Repository
             {
                 throw new ArgumentException("Result.Percentage cannot be the default value.");
             }
-            
+
             checkedModels.Add(result.GetHashCode());
 
             if (result.Election != null)
