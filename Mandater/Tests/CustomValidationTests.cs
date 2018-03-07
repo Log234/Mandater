@@ -143,7 +143,7 @@ namespace Mandater.Tests
         }
 
         [Fact]
-        public void ValidatePartyDataTest()
+        public void ValidatePartyTest()
         {
             Country country = GetCountry(1);
             Party party = GetParty(1, country);
