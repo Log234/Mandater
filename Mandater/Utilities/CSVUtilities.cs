@@ -8,6 +8,18 @@ using Mandater.Models;
 
 namespace Mandater.Utilities
 {
+    public class CsvFileFormatException : System.FormatException
+    {
+        public string Path { get; set; }
+        public string Line { get; set; }
+
+        public CsvFileFormatException(string exText, string path, string line) : base(exText)
+        {
+            Path = path;
+            Line = line;
+        }
+    }
+
     public static class CSVUtilities
     {
         /// <summary>
@@ -104,7 +116,7 @@ namespace Mandater.Utilities
                 string[] entryFields = currentLine.Split(";");
                 if (entryFields.Length != 2)
                 {
-                    return null;
+                    throw new CsvFileFormatException($"Found a line with length {entryFields.Length} instead of the required 2.", filePath, currentLine);
                 }
                 entries.Add(entryFields[0], entryFields[1]);
             }
