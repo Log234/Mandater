@@ -75,6 +75,11 @@ namespace Mandater.Utilities
             while ((currentLine = file.ReadLine()) != null)
             {
                 string[] objectFields = currentLine.Split(";");
+                if (objectFields.Length != 18)
+                {
+                    throw new CsvFileFormatException($"Found a line with length {objectFields.Length} instead of the required 18.", filePath, currentLine);
+                }
+
                 VDModel currentObject = new VDModel
                 {
                     Fylkenummer = objectFields[0],
