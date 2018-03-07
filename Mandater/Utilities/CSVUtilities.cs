@@ -49,6 +49,11 @@ namespace Mandater.Utilities
             return objects;
         }
 
+        /// <summary>
+        /// Reads any .csv file in the default format specified at https://www.valgresultat.no and creates an array of VDModel objects based on the schema.
+        /// </summary>
+        /// <param name="filePath">The relative or absolute path of the file being read, has to be .csv and cannot contain semicolon (;) in any of its fields as that is the delimiter used.</param>
+        /// <returns>An array of VDModel objects that can be used for simple in-memory queries or populating a database.</returns>
         public static VDModel[] CsvToVdArray(string filePath)
         {
             List<VDModel> objects = new List<VDModel>();
