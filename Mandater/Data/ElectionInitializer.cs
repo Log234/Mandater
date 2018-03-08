@@ -38,8 +38,11 @@ namespace Mandater.Data
                     {
 
                         // Check if the countryId is valid
-                        string countryId = Path.GetDirectoryName(country);
-                        string countryName = countryNames[countryId];
+                        string countryId = Path.GetFileName(country);
+                        if (!countryNames.TryGetValue(countryId, out string countryName))
+                        {
+                            throw new KeyNotFoundException($"Could not find any entry with the countryId: {countryId}");
+                        }
 
                         // Create a model based on the InternationalName and ShortName
                         HashSet<int> validationSet = new HashSet<int>();
@@ -62,7 +65,7 @@ namespace Mandater.Data
                         foreach (string electionType in electionTypes)
                         {
                             // Check if the electionTypeId is valid
-                            string electionTypeId = Path.GetDirectoryName(electionType);
+                            string electionTypeId = Path.GetFileName(electionType);
                             string electionTypeName = electionTypeNames[electionTypeId];
 
                             // Create an election type model based on the Country and InternationalName
@@ -92,7 +95,7 @@ namespace Mandater.Data
                                     CustomValidation.ValidateElection(electionModel, validationSet);
                                     context.Elections.Add(electionModel);
 
-                                    ElectionModelBuilder(context, electionModel, entities, validationSet);
+                                    ElectionModelBuilder(context, electionModel, entities, validationSet, logger);
                                 }
                             }
                         }
@@ -126,8 +129,11 @@ namespace Mandater.Data
         /// <param name="election">The election that the results should be connected to.</param>
         /// <param name="entities">The data on which the models should be built.</param>
         /// <param name="validationSet">A set of already checked models.</param>
-        private static void ElectionModelBuilder(ElectionContext context, Election election, VDModel[] entities, HashSet<int> validationSet)
+        private static void ElectionModelBuilder(ElectionContext context, Election election, VDModel[] entities, HashSet<int> validationSet, ILogger logger)
         {
+            Dictionary<string, County> counties = new Dictionary<string, County>();
+            Dictionary<string, Party> parties = new Dictionary<string, Party>();
+
             foreach (VDModel entity in entities)
             {
                 County county = context.Counties.Find(election.CountryId, entity.Fylkenavn);
@@ -158,12 +164,16 @@ namespace Mandater.Data
                 Result result = new Result
                 {
                     County = county,
+                    CountyId = county.CountyId,
                     Election = election,
+                    ElectionId = election.ElectionId,
                     Party = party,
+                    PartyId = party.PartyId,
                     Percentage = percentage,
                     Votes = votes
                 };
                 CustomValidation.ValidateResult(result, validationSet);
+                logger.LogDebug($"Election: {election.Year} - {election.ElectionId}, County: {county.Name} - {county.CountyId}, Party: {party.Name} - {party.PartyId}");
                 context.Results.Add(result);
             }
         }

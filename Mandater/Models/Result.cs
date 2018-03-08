@@ -7,7 +7,6 @@ namespace Mandater.Models
 {
     public class Result
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ResultId { get; set; }
 
         public int Votes { get; set; } = -1;

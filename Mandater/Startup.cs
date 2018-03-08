@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mandater.Data;
 using Mandater.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,7 +45,7 @@ namespace Mandater
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, VDContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ElectionContext context)
         {
             if (env.IsDevelopment())
             {
@@ -81,7 +82,8 @@ namespace Mandater
 
         public void SetUpDatabase(IServiceCollection services)
         {
-            services.AddDbContext<VDContext>(options => options.UseInMemoryDatabase("Testing"));
+            //services.AddDbContext<VDContext>(options => options.UseInMemoryDatabase("Testing"));
+            services.AddDbContext<ElectionContext>(options => options.UseInMemoryDatabase("ModelDB"));
         }
     }
 }
