@@ -97,7 +97,7 @@ namespace Mandater.Data
                                 CustomValidation.ValidateElection(electionModel, validationSet);
                                 context.Elections.Add(electionModel);
 
-                                ElectionModelBuilder(context, electionModel, entities, validationSet, logger);
+                                ElectionModelBuilder(context, electionModel, entities, validationSet);
                             }
                         }
                     }
@@ -130,11 +130,8 @@ namespace Mandater.Data
         /// <param name="election">The election that the results should be connected to.</param>
         /// <param name="entities">The data on which the models should be built.</param>
         /// <param name="validationSet">A set of already checked models.</param>
-        private static void ElectionModelBuilder(ElectionContext context, Election election, VDModel[] entities, HashSet<int> validationSet, ILogger logger)
+        private static void ElectionModelBuilder(ElectionContext context, Election election, VDModel[] entities, HashSet<int> validationSet)
         {
-            Dictionary<string, County> counties = new Dictionary<string, County>();
-            Dictionary<string, Party> parties = new Dictionary<string, Party>();
-
             foreach (VDModel entity in entities)
             {
                 County county = context.Counties.Find(election.CountryId, entity.Fylkenavn);
@@ -176,6 +173,11 @@ namespace Mandater.Data
                 CustomValidation.ValidateResult(result, validationSet);
                 context.Results.Add(result);
             }
+        }
+
+        private static void CountyDataModelBuilder(ElectionContext context, CountyData[] countyDataModels)
+        {
+
         }
     }
 }
