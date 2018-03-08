@@ -17,6 +17,7 @@ namespace Mandater.Utilities
         {
             Path = path;
             Line = line;
+            exText += "\nPath: " + path + "\nLine: " + line;
         }
     }
 
