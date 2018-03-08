@@ -28,39 +28,16 @@ namespace Mandater.Utilities
         /// </summary>
         /// <param name="filePath">The relative or absolute path of the file being read, has to be .csv and cannot contain semicolon (;) in any of its fields as that is the delimiter used.</param>
         /// <returns>A list of VDModel objects that can be used for simple in-memory queries or populating a database.</returns>
-        public static List<VDModel> CsvToList(string filePath)
+        public static List<T> CsvToList<T>(string filePath) where T : ICsvFormat, new()
         {
-            List<VDModel> objects = new List<VDModel>();
+            List<T> objects = new List<T>();
             StreamReader file = new StreamReader(filePath);
             string actualHeaderString = file.ReadLine(); // Skip
             string currentLine;
             while ((currentLine = file.ReadLine()) != null)
             {
-                string[] objectFields = currentLine.Split(";");
-                if (objectFields.Length != 18)
-                {
-                    throw new CsvFileFormatException($"Found a line with length {objectFields.Length} instead of the required 18.", filePath, currentLine);
-                }
-                VDModel currentObject = new VDModel
-                {
-                    Fylkenummer = objectFields[0],
-                    Fylkenavn = objectFields[1],
-                    Kommunenummer = objectFields[2],
-                    Kommunenavn = objectFields[3],
-                    Stemmekretsnummer = objectFields[4],
-                    Stemmekretsnavn = objectFields[5],
-                    Partikode = objectFields[6],
-                    Partinavn = objectFields[7],
-                    OppslutningProsentvis = objectFields[8],
-                    AntallStemmeberettigede = objectFields[9],
-                    AntallForhåndsstemmer = objectFields[10],
-                    AntallValgtingstemmer = objectFields[11],
-                    AntallStemmerTotalt = objectFields[12],
-                    EndringProsentSisteTilsvarendeValg = objectFields[13],
-                    EndringProsentSisteEkvivalenteValg = objectFields[14],
-                    AntallMandater = objectFields[15],
-                    AntallUtjevningsmandater = objectFields[16]
-                };
+                T currentObject = new T();
+                currentObject.Parse(filePath, currentLine);
                 objects.Add(currentObject);
             }
             return objects;
