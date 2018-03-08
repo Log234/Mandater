@@ -8,7 +8,6 @@ namespace Mandater.Models
 {
     public class Election
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ElectionId { get; set; }
 

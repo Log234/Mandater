@@ -7,7 +7,6 @@ namespace Mandater.Models
 {
     public class County
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CountyId { get; set; }
         [Required]

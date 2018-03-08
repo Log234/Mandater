@@ -7,7 +7,6 @@ namespace Mandater.Models
 {
     public class Party
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PartyId { get; set; }
 
