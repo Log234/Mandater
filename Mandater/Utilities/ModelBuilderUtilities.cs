@@ -24,7 +24,12 @@ namespace Mandater.Utilities
                 County county = context.Counties.Find(election.CountryId, entity.Fylkenavn);
                 if (county == null)
                 {
-                    county = new County { Country = election.Country, Name = entity.Fylkenavn };
+                    county = new County
+                    {
+                        Country = election.Country,
+                        CountryId = election.CountryId,
+                        Name = entity.Fylkenavn
+                    };
                     CustomValidation.ValidateCounty(county, validationSet);
                     context.Counties.Add(county);
                 }
@@ -32,7 +37,13 @@ namespace Mandater.Utilities
                 Party party = context.Parties.Find(election.CountryId, entity.Partinavn);
                 if (party == null)
                 {
-                    party = new Party { Country = election.Country, Name = entity.Partinavn, ShortName = entity.Partikode };
+                    party = new Party
+                    {
+                        Country = election.Country,
+                        CountryId = election.CountryId,
+                        Name = entity.Partinavn,
+                        ShortName = entity.Partikode
+                    };
                     CustomValidation.ValidateParty(party, validationSet);
                     context.Parties.Add(party);
                 }
@@ -59,12 +70,8 @@ namespace Mandater.Utilities
                 };
                 CustomValidation.ValidateResult(result, validationSet);
                 context.Results.Add(result);
+                context.SaveChanges();
             }
-        }
-
-        public static void CountyDataModelBuilder(ElectionContext context, CountyData[] countyDataModels)
-        {
-
         }
     }
 }

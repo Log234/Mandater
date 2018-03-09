@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using CsvHelper;
 using System.IO;
 using Mandater.Models;
+using Mandater.Data;
+using Microsoft.Extensions.Logging;
 
 namespace Mandater.Utilities
 {
@@ -13,11 +15,10 @@ namespace Mandater.Utilities
         public string Path { get; set; }
         public string Line { get; set; }
 
-        public CsvFileFormatException(string exText, string path, string line) : base(exText)
+        public CsvFileFormatException(string exText, string path, string line) : base(exText + "\nPath: " + path + "\nLine: " + line)
         {
             Path = path;
             Line = line;
-            exText += "\nPath: " + path + "\nLine: " + line;
         }
     }
 
@@ -150,7 +151,7 @@ namespace Mandater.Utilities
                 string[] objectFields = currentLine.Split(";");
                 if (objectFields.Length != 6)
                 {
-                    throw new CsvFileFormatException($"Found a line with length {objectFields.Length} instead of the required 18.", filePath, currentLine);
+                    throw new CsvFileFormatException($"Found a line with length {objectFields.Length} instead of the required 6.", filePath, currentLine);
                 }
                 if (!int.TryParse(objectFields[0], out int year))
                 {
@@ -180,7 +181,10 @@ namespace Mandater.Utilities
                 Election currentObject = new Election
                 {
                     Country = country,
+                    CountryId = country.CountryId,
                     ElectionType = electionType,
+                    ElectionTypeId = electionType.ElectionTypeId,
+                    CountyData = new List<CountyData>(),
                     Year = year,
                     Algorithm = algorithm,
                     FirstDivisor = firstDivisor,
@@ -191,6 +195,63 @@ namespace Mandater.Utilities
                 objects.Add(currentObject);
             }
             return objects.ToArray<Election>();
+        }
+        
+        /// <summary>
+         /// Reads any csv file following the format "Year;County;Areal;Population".
+         /// Will be phased out in v1.1.0 to be replaced with a more generic system.
+         /// </summary>
+         /// <param name="filePath">The relative or absolute path of the file being read, has to be .csv and cannot contain semicolon (;) in any of its fields as that is the delimiter used.</param>
+         /// <param name="country">The country the election was held in.</param>
+         /// <param name="electionType">The type of election it was.</param>
+         /// <returns>An array of VDModel objects that can be used for simple in-memory queries or populating a database.</returns>
+        public static void CsvToCountyData(string filePath, Country country, ElectionContext context)
+        {
+            List<CountyData> objects = new List<CountyData>();
+            StreamReader file = new StreamReader(filePath);
+            string actualHeaderString = file.ReadLine(); // Skip
+            string currentLine;
+            while ((currentLine = file.ReadLine()) != null)
+            {
+                string[] objectFields = currentLine.Split(";");
+                if (objectFields.Length != 4)
+                {
+                    throw new CsvFileFormatException($"Found a line with length {objectFields.Length} instead of the required 4.", filePath, currentLine);
+                }
+                if (!int.TryParse(objectFields[0], out int year))
+                {
+                    throw new CsvFileFormatException("The field Year is not a valid integer.", filePath, currentLine);
+                }
+                if (!double.TryParse(objectFields[2], out double areal))
+                {
+                    throw new CsvFileFormatException("The field Areal is not a valid double.", filePath, currentLine);
+                }
+                if (!int.TryParse(objectFields[3], out int population))
+                {
+                    throw new CsvFileFormatException("The field Population is not a valid integer.", filePath, currentLine);
+                }
+
+                IEnumerable<Election> elections = context.Elections.Where(e => e.Year == year);
+                County county = context.Counties.Single(c => c.CountryId == country.CountryId && c.Name.Equals(objectFields[1]));
+                if (county == null)
+                {
+                    throw new CsvFileFormatException($"The field County does not match any known counties.", filePath, currentLine);
+                }
+                CountyData countyData = new CountyData
+                {
+                    Year = year,
+                    Areal = areal,
+                    Population = population,
+                    County = county,
+                    CountyId = county.CountyId
+                };
+
+                foreach (Election election in elections)
+                {
+                    election.CountyData.Add(countyData);
+                }
+                context.CountyData.Add(countyData);
+            }
         }
     }
 }

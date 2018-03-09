@@ -48,7 +48,11 @@ namespace Mandater.Data
 
                     // Create a model based on the InternationalName and ShortName
                     HashSet<int> validationSet = new HashSet<int>();
-                    Country countryModel = new Country {InternationalName = countryName, ShortName = countryId};
+                    Country countryModel = new Country
+                    {
+                        InternationalName = countryName,
+                        ShortName = countryId
+                    };
                     CustomValidation.ValidateCountry(countryModel, validationSet);
                     context.Countries.Add(countryModel);
 
@@ -74,6 +78,7 @@ namespace Mandater.Data
                         ElectionType electionTypeModel = new ElectionType
                         {
                             Country = countryModel,
+                            CountryId = countryModel.CountryId,
                             InternationalName = electionTypeName
                         };
                         CustomValidation.ValidateElectionType(electionTypeModel, validationSet);
@@ -101,6 +106,8 @@ namespace Mandater.Data
                             }
                         }
                     }
+                    context.SaveChanges();
+                    CSVUtilities.CsvToCountyData(country + "/CountyData.csv", countryModel, context);
 
                     CustomValidation.ValidateCountry(countryModel, new HashSet<int>());
                 }
