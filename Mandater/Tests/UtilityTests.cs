@@ -11,7 +11,7 @@ namespace Mandater.Tests
 {
     public class UtilityTests
     {
-        string filePath = "../../../Data/States/NO/ParliamentaryElection/2017.csv";
+        string filePath = "../../../Data/Countries/NO/ParliamentaryElection/2017.csv";
         string expectedHeaderString = "Fylkenummer;Fylkenavn;Kommunenummer;Kommunenavn;Stemmekretsnummer;Stemmekretsnavn;Partikode;Partinavn;Oppslutning prosentvis;Antall stemmeberettigede;Antall forhåndsstemmer;Antall valgtingstemmer;Antall stemmer totalt;Endring % siste tilsvarende valg;Endring % siste ekvivalente valg;Antall mandater;Antall utjevningsmandater;";
         [Fact]
         public void ReadFileTest()
