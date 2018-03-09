@@ -30,13 +30,13 @@ namespace Mandater.Data
                 Dictionary<string, string> countryNames = CSVUtilities.CsvToDictionary(root + "/Countries.csv");
 
                 // Iterate through countries
-                string[] countryPaths = Directory.GetDirectories(root);
-                if (countryPaths.Length != countryNames.Count)
+                string[] countries = Directory.GetDirectories(root);
+                if (countries.Length != countryNames.Count)
                 {
                     throw new ArgumentException("The number of directories in Data/States does not match the number found in States.csv");
                 }
 
-                foreach (string country in countryPaths)
+                foreach (string country in countries)
                 {
 
                     // Check if the countryId is valid
