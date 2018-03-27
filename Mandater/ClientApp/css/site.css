@@ -12,8 +12,7 @@
 
 .nav_container {
     height:40px;
-    margin:0 10px;
-    padding: 20px 10px;
+    margin-bottom: 20px;
     width:calc(100%-20px);
     padding:0;
     justify-content:flex-end;
