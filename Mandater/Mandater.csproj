@@ -30,6 +30,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\PresentationSelection.tsx" />
+    <None Remove="ClientApp\components\PresentationSettings.tsx" />
+    <None Remove="ClientApp\components\PresentationSettingsContainer.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\PresentationSelection.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\PresentationSettings.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\PresentationSettingsContainer.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\Countries\NO\CountyData.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

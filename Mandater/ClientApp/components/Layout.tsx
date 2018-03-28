@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NavMenu } from './NavMenu';
 import { SettingsMenu } from './SettingsMenu';
 import { Graph } from './Graph'
+import { PresentationSettingsContainer } from './PresentationSettingsContainer';
 
 export class Layout extends React.Component<{}, {}> {
     public render() {
@@ -13,8 +14,11 @@ export class Layout extends React.Component<{}, {}> {
                 <div className='col-sm-3'>
                     <SettingsMenu />
                 </div>
-                <div className='col-sm-8'>
+                <div className='col-sm-6'>
                     <Graph />
+                </div>
+                <div className='col-sm-3'>
+                    <PresentationSettingsContainer />
                 </div>
 
                 {/*
