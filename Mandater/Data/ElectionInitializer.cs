@@ -51,7 +51,8 @@ namespace Mandater.Data
                     Country countryModel = new Country
                     {
                         InternationalName = countryName,
-                        ShortName = countryId
+                        CountryCode = countryId,
+                        ElectionTypes = new List<ElectionType>()
                     };
                     CustomValidation.ValidateCountry(countryModel, validationSet);
                     context.Countries.Add(countryModel);
@@ -77,21 +78,24 @@ namespace Mandater.Data
                         // Create an election type model based on the Country and InternationalName
                         ElectionType electionTypeModel = new ElectionType
                         {
-                            Country = countryModel,
                             CountryId = countryModel.CountryId,
-                            InternationalName = electionTypeName
+                            InternationalName = electionTypeName,
+                            Elections = new List<Election>()
                         };
                         CustomValidation.ValidateElectionType(electionTypeModel, validationSet);
                         context.ElectionTypes.Add(electionTypeModel);
+                        countryModel.ElectionTypes.Add(electionTypeModel);
 
                         // Iterate through the elections
                         string[] electionFiles = Directory.GetFiles(electionType);
                         Election[] elections = CSVUtilities.CsvToElectionArray(electionType + "/Elections.csv", countryModel, electionTypeModel);
+                        context.Elections.AddRange(elections);
+                        electionTypeModel.Elections.AddRange(elections);
                         if (electionFiles.Length != elections.Length + 1)
                         {
                             throw new ArgumentException($"The number of elections in {electionType} does not match the number found in Elections.csv.");
                         }
-
+                        
                         foreach (string electionFile in electionFiles)
                         {
                             if (!Path.GetFileName(electionFile).Equals("Elections.csv"))
@@ -100,8 +104,6 @@ namespace Mandater.Data
                                 int year = int.Parse(Path.GetFileNameWithoutExtension(electionFile));
                                 Election electionModel = elections.Single(e => e.Year == year);
                                 CustomValidation.ValidateElection(electionModel, validationSet);
-                                context.Elections.Add(electionModel);
-
                                 ModelBuilderUtilities.ResultModelBuilder(context, electionModel, entities, validationSet);
                             }
                         }

@@ -25,12 +25,8 @@ namespace Mandater.Models
         public int LevelingSeats { get; set; } = -1;
 
         public int CountryId { get; set; }
-        [Required]
-        public virtual Country Country { get; set; }
 
         public int ElectionTypeId { get; set; }
-        [Required]
-        public virtual ElectionType ElectionType { get; set; }
 
         public virtual List<Result> Results { get; set; }
 

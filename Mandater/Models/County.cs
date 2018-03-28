@@ -13,10 +13,9 @@ namespace Mandater.Models
         public string Name { get; set; }
 
         public int CountryId { get; set; }
-        [Required]
-        public virtual Country Country { get; set; }
 
-        public virtual List<CountyData> CountyData { get; set; }
+        [Required]
+        public List<CountyData> CountyData { get; set; }
         
     }
 }
