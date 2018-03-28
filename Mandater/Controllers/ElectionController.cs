@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mandater.Data;
+using Mandater.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,17 @@ namespace Mandater.Controllers
         {
             _context = context;
             _logger = logger;
+        }
+
+        /// <summary>
+        /// Default path method that returns a shallow Country object, showing which countries the API has data on.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<Country> GetCountries()
+        {
+            return _context
+                .Countries;
         }
     }
 }
