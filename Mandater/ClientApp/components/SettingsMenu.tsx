@@ -37,6 +37,7 @@ export class SettingsMenu extends React.Component<{}, {}> {
                     </div>
                 </div> 
                 <div className="form-group row">
+                    {/*Utjevningsmandat = Leveling seat as of https://www.dinordbok.no/norsk-engelsk/?q=utjevningsmandat */}
                     <label htmlFor="levelingSeat" className="col-sm-5 col-form-label">Utjevningsmandater</label>
                     <div className="col-sm-7">
                         <input className="form-control" classID="levelingSeat" type="number" name="levelingSeat" placeholder="1.4" min="0.0" step="0.1" max="15.0" />
