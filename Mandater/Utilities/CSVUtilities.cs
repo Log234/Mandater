@@ -180,18 +180,16 @@ namespace Mandater.Utilities
 
                 Election currentObject = new Election
                 {
-                    Country = country,
-                    CountryId = country.CountryId,
-                    ElectionType = electionType,
-                    ElectionTypeId = electionType.ElectionTypeId,
                     CountyData = new List<CountyData>(),
                     Year = year,
                     Algorithm = algorithm,
                     FirstDivisor = firstDivisor,
                     Threshold = threshold,
                     Seats = seats,
-                    LevelingSeats = levelingSeats
+                    LevelingSeats = levelingSeats,
+                    Results = new List<Result>()
                 };
+                System.Console.Write("Year" + currentObject.Year);
                 objects.Add(currentObject);
             }
             return objects.ToArray<Election>();
