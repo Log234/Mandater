@@ -10,7 +10,7 @@ namespace Mandater.Models
     public class CountyData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int CountyDataId { get; set; }
 
         public int Year { get; set; } = -1;
         public int Population { get; set; } = -1;

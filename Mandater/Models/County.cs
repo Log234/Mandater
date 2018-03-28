@@ -8,7 +8,7 @@ namespace Mandater.Models
     public class County
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CountyId { get; set; } = -1;
+        public int CountyId { get; set; }
         [Required]
         public string Name { get; set; }
 

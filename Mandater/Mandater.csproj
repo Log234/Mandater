@@ -30,16 +30,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\States\NO\ElectionTypes.csv">
+    <None Update="Data\Countries\NO\CountyData.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\States\NO\ParliamentaryElection\2018-02-10_partifordeling_1_st_2017.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\States\NO\ParliamentaryElection\Elections.csv">
+    <None Update="Data\Countries\NO\ElectionTypes.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\States\States.csv">
+    <None Update="Data\Countries\NO\ParliamentaryElection\2017.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Countries\NO\ParliamentaryElection\Elections.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Countries\Countries.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

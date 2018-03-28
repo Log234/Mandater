@@ -11,7 +11,6 @@ namespace Mandater.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CountryId { get; set; }
-        [Key]
         public string InternationalName { get; set; }
         [Required]
         public string ShortName { get; set; }

@@ -34,5 +34,7 @@ namespace Mandater.Models
 
         public virtual List<Result> Results { get; set; }
 
+        public virtual List<CountyData> CountyData { get; set; }
+
     }
 }
