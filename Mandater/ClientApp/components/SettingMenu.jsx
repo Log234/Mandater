@@ -22,7 +22,6 @@ export class SettingMenu extends React.Component {
 
 
     handleYearChange(event) {
-        alert('Year changed to ' + event.target.value);
         this.setState({ year: event.target.value });
         console.log(this.state)
     }
