@@ -7,6 +7,7 @@ using Mandater.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Mandater.Controllers
@@ -33,6 +34,29 @@ namespace Mandater.Controllers
         {
             return _context
                 .Countries;
+        }
+
+        [HttpGet("{countryCode}")]
+        public IEnumerable<ElectionType> GetElectionTypes(string countryCode)
+        {
+            return _context
+                .Countries
+                .Include(c => c.ElectionTypes)
+                .First(c => c.CountryCode == countryCode.ToUpper())
+                .ElectionTypes;
+        }
+
+        [HttpGet("{countryCode}/{electionCode}")]
+        public IEnumerable<Election> GetElections(string countryCode, string electionCode)
+        {
+            return _context
+                .Countries
+                .Include(c => c.ElectionTypes)
+                .ThenInclude(c => c.Elections)
+                .First(c => c.CountryCode == countryCode.ToUpper())
+                .ElectionTypes
+                .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
+                .Elections;
         }
     }
 }
