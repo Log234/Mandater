@@ -53,7 +53,7 @@ const unloadedState: ParliamentElectionState = {
 }
 
 
-// NB: Reducer definition changes as of redux 4.0.0
+// NB: BaseReducer Typescript (Reducer<State>) definition changes as of redux 4.0.0
 // https://github.com/rt2zz/redux-persist/pull/778
 
 export const reducer: Reducer<ParliamentElectionState> = (state: ParliamentElectionState, incomingAction: Action) => {
