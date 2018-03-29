@@ -17,6 +17,7 @@
     "aspnet-webpack": "^2.0.1",
     "aspnet-webpack-react": "^3.0.0",
     "awesome-typescript-loader": "3.2.1",
+    "babel-plugin-transform-react-jsx": "https://registry.npmjs.org/babel-plugin-transform-react-jsx/-/babel-plugin-transform-react-jsx-6.24.1.tgz",
     "bootstrap": "3.3.7",
     "css-loader": "0.28.4",
     "domain-task": "^3.0.3",
@@ -40,5 +41,6 @@
     "webpack": "2.5.1",
     "webpack-hot-middleware": "2.18.2",
     "webpack-merge": "4.1.0"
-  }
+  },
+  "dependencies": {}
 }

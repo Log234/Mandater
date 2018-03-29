@@ -3,17 +3,21 @@
     "baseUrl": ".",
     "module": "es2015",
     "moduleResolution": "node",
+    "allowJs": true,
     "target": "es5",
     "jsx": "react",
     "experimentalDecorators": true,
     "sourceMap": true,
     "skipDefaultLibCheck": true,
     "strict": true,
-    "lib": ["es6", "dom"],
-    "types": ["webpack-env"]
+    "lib": [ "es6", "dom" ],
+    "types": [ "webpack-env" ]
   },
   "exclude": [
       "bin",
-      "node_modules"
+      "node_modules",
+      // To avoid [HMR] rebuilding to re-run forever
+      "ClientApp/dist",
+      "wwwroot"
   ]
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
-import { SettingsMenu } from './SettingsMenu';
+import { SettingMenu } from './SettingMenu';
 import { Graph } from './Graph'
 
 export class Layout extends React.Component<{}, {}> {
@@ -11,7 +11,7 @@ export class Layout extends React.Component<{}, {}> {
                     <NavMenu />
                 </div>
                 <div className='col-sm-3'>
-                    <SettingsMenu />
+                    <SettingMenu />
                 </div>
                 <div className='col-sm-8'>
                     <Graph />
