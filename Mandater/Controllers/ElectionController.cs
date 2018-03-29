@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Mandater.Data;
@@ -29,34 +30,54 @@ namespace Mandater.Controllers
         /// Default path method that returns a shallow Country object, showing which countries the API has data on.
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public IEnumerable<Country> GetCountries()
+        [HttpGet("{deep?}")]
+        public IEnumerable<Country> GetCountries(bool deep = false)
         {
-            return _context
-                .Countries;
+            if (deep)
+            {
+                return _context.Countries
+                        .Include(c => c.ElectionTypes)
+                            .ThenInclude(c => c.Elections)
+                                .ThenInclude(c => c.Results);
+            }
+            return _context.Countries;
         }
 
         [HttpGet("{countryCode}")]
         public IEnumerable<ElectionType> GetElectionTypes(string countryCode)
         {
-            return _context
-                .Countries
-                .Include(c => c.ElectionTypes)
-                .First(c => c.CountryCode == countryCode.ToUpper())
-                .ElectionTypes;
+            return _context.Countries
+                    .Include(c => c.ElectionTypes)
+                    .First(c => c.CountryCode == countryCode.ToUpper())
+                    .ElectionTypes;
         }
 
         [HttpGet("{countryCode}/{electionCode}")]
         public IEnumerable<Election> GetElections(string countryCode, string electionCode)
         {
-            return _context
-                .Countries
-                .Include(c => c.ElectionTypes)
-                .ThenInclude(c => c.Elections)
-                .First(c => c.CountryCode == countryCode.ToUpper())
-                .ElectionTypes
-                .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
-                .Elections;
+            return _context.Countries
+                    .Include(c => c.ElectionTypes)
+                        .ThenInclude(c => c.Elections)
+                    .First(c => c.CountryCode == countryCode.ToUpper())
+                    .ElectionTypes
+                        .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
+                        .Elections;
         }
+
+        [HttpGet("{countryCode}/{electionCode}/{year}")]
+        public IEnumerable<Result> GetResults(string countryCode, string electionCode, int year)
+        {
+            return _context.Countries
+                    .Include(c => c.ElectionTypes)
+                        .ThenInclude(c => c.Elections)
+                            .ThenInclude(c => c.Results)
+                    .First(c => c.CountryCode == countryCode.ToUpper())
+                    .ElectionTypes
+                        .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
+                        .Elections
+                            .First(c => c.Year == year)
+                            .Results;
+        }
+
     }
 }

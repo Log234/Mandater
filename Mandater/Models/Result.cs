@@ -19,5 +19,11 @@ namespace Mandater.Models
         
         public int CountyId { get; set; }
 
+        public string CountyName { get; set; }
+
+        public string PartyCode { get; set; }
+        
+        public string PartyName { get; set; }
+
     }
 }

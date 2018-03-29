@@ -61,7 +61,10 @@ namespace Mandater.Utilities
                     ElectionId = election.ElectionId,
                     PartyId = party.PartyId,
                     Percentage = percentage,
-                    Votes = votes
+                    Votes = votes,
+                    PartyName = party.Name,
+                    PartyCode = party.ShortName,
+                    CountyName = county.Name
                 };
                 CustomValidation.ValidateResult(result, validationSet);
                 election.Results.Add(result);
