@@ -6,13 +6,13 @@ namespace Mandater.Utilities
     public class ETNameUtilities
     {
         // Our internal textual ElectionType IDs
-        private const string parliamentaryElectionId = "pe";
+        private const string PARLIAMENTARY_ELECTION_CODE = "pe";
 
         // Our printable ElectionType names
-        private const string parliamentaryElectioName = "Parliamentary Election";
+        private const string PARLIAMENTARY_ELECTION_NAME = "Parliamentary Election";
 
         // Our accepted names for the different algorithms
-        private static readonly string[] ParliamentaryElectionSet = { parliamentaryElectionId.ToLower(), parliamentaryElectioName.ToLower(), "stortingsvalg" };
+        private static readonly string[] ParliamentaryElectionSet = { PARLIAMENTARY_ELECTION_CODE.ToLower(), PARLIAMENTARY_ELECTION_NAME.ToLower(), "stortingsvalg" };
 
         /// <summary>
         /// Accepts a string and returns the matching ID.
@@ -26,7 +26,7 @@ namespace Mandater.Utilities
 
             if (ParliamentaryElectionSet.Contains(name))
             {
-                return parliamentaryElectionId;
+                return PARLIAMENTARY_ELECTION_CODE;
             }
 
             throw new ArgumentException($"{name} is not a valid ElectionType name.");
@@ -42,8 +42,8 @@ namespace Mandater.Utilities
         {
             switch (id)
             {
-                case parliamentaryElectionId:
-                    return parliamentaryElectioName;
+                case PARLIAMENTARY_ELECTION_CODE:
+                    return PARLIAMENTARY_ELECTION_NAME;
                 default:
                     throw new ArgumentException($"{id} is not recognized.");
             }
