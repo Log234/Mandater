@@ -5,7 +5,7 @@ namespace Mandater.Utilities
 {
     public class ETNameUtilities
     {
-        // Our internal textual ElectionType IDs
+        // Our internal textual ElectionType codes
         private const string PARLIAMENTARY_ELECTION_CODE = "pe";
 
         // Our printable ElectionType names
@@ -15,12 +15,12 @@ namespace Mandater.Utilities
         private static readonly string[] ParliamentaryElectionSet = { PARLIAMENTARY_ELECTION_CODE.ToLower(), PARLIAMENTARY_ELECTION_NAME.ToLower(), "stortingsvalg" };
 
         /// <summary>
-        /// Accepts a string and returns the matching ID.
+        /// Accepts a string and returns the matching code.
         /// If no matching enum can be found it throws an ArgumentException.
         /// </summary>
-        /// <param name="name">The name of the ElectionType ID.</param>
-        /// <returns>An ID</returns>
-        public static string NameToId(string name)
+        /// <param name="name">The name of the ElectionType code.</param>
+        /// <returns>A string code</returns>
+        public static string NameToCode(string name)
         {
             name = name.ToLower();
 
@@ -33,19 +33,19 @@ namespace Mandater.Utilities
         }
 
         /// <summary>
-        /// Accepts an ElectionType ID and returns the full name.
-        /// If the ID is not recognized an ArgumentException is thrown.
+        /// Accepts an ElectionType code and returns the full name.
+        /// If the code is not recognized an ArgumentException is thrown.
         /// </summary>
-        /// <param name="id">The ElectionType ID to be converted.</param>
+        /// <param name="code">The ElectionType code to be converted.</param>
         /// <returns>The full name of the ElectionType</returns>
-        public static string IdToName(string id)
+        public static string CodeToName(string code)
         {
-            switch (id)
+            switch (code)
             {
                 case PARLIAMENTARY_ELECTION_CODE:
                     return PARLIAMENTARY_ELECTION_NAME;
                 default:
-                    throw new ArgumentException($"{id} is not recognized.");
+                    throw new ArgumentException($"{code} is not recognized.");
             }
         }
 
@@ -60,22 +60,22 @@ namespace Mandater.Utilities
         }
 
         /// <summary>
-        /// Attempts to convert the name to an ID.
-        /// If it is successful it returns true and pushes the ID to the id variable.
-        /// Otherwise it returns false and pushes null to the id variable.
+        /// Attempts to convert the name to a code.
+        /// If it is successful it returns true and pushes the code to the code variable.
+        /// Otherwise it returns false and pushes null to the code variable.
         /// </summary>
         /// <param name="name">The name of the ElectionType.</param>
-        /// <param name="id">Where the ID should be returned.</param>
+        /// <param name="code">Where the code should be returned.</param>
         /// <returns>True if successful, false otherwise.</returns>
-        public static bool TryParse(string name, out string id)
+        public static bool TryParse(string name, out string code)
         {
             if (IsElectionType(name))
             {
-                id = NameToId(name);
+                code = NameToCode(name);
                 return true;
             }
 
-            id = null;
+            code = null;
             return false;
         }
     }
