@@ -187,7 +187,8 @@ namespace Mandater.Utilities
                     Threshold = threshold,
                     Seats = seats,
                     LevelingSeats = levelingSeats,
-                    Results = new List<Result>()
+                    Results = new List<Result>(),
+                    CountryId = country.CountryId
                 };
                 System.Console.Write("Year" + currentObject.Year);
                 objects.Add(currentObject);
@@ -230,10 +231,10 @@ namespace Mandater.Utilities
                 }
 
                 IEnumerable<Election> elections = context.Elections.Where(e => e.Year == year);
-                County county = context.Counties.Single(c => c.CountryId == country.CountryId && c.Name.Equals(objectFields[1]));
+                County county = context.Counties.Find(country.CountryId, objectFields[1]);
                 if (county == null)
                 {
-                    throw new CsvFileFormatException($"The field County does not match any known counties.", filePath, currentLine);
+                    throw new CsvFileFormatException($"The field County does not match any known counties. {country.CountryId} - {objectFields[1]}", filePath, currentLine);
                 }
                 CountyData countyData = new CountyData
                 {
