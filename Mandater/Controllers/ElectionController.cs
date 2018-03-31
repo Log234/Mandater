@@ -39,7 +39,10 @@ namespace Mandater.Controllers
                 return _context.Countries
                         .Include(c => c.ElectionTypes)
                             .ThenInclude(c => c.Elections)
-                                .ThenInclude(c => c.Results);
+                                .ThenInclude(c => c.Results)
+                        .Include(c => c.ElectionTypes)
+                            .ThenInclude(c => c.Elections)
+                                .ThenInclude(c => c.CountyData);
             }
             return _context.Countries;
         }
