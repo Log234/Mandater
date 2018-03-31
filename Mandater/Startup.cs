@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Mandater.Data;
@@ -12,11 +13,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Mandater
 {
     public class Startup
     {
+        IHostingEnvironment _env;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,7 +41,15 @@ namespace Mandater
             // Swagger generation with default settings
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v0.1.0", new Info { Title = "API for election result data", Version = "v0.1.0", Description = "This API will in the future allow authorized users to update data, and the general public to access data for elections." });
+                var xmlDocFile = Path.Combine(AppContext.BaseDirectory, $"{_env.ApplicationName}.xml");
+                if (File.Exists(xmlDocFile))
+                {
+                    options.IncludeXmlComments(xmlDocFile);
+                }
+                options.SwaggerDoc("v1.0.0", new Info {
+                    Title = "API for election result data",
+                    Version = "v1.0.0",
+                    Description = "This API provides the back-end for calculating seats and data for the Mandater project." });
             });
             services.AddMvc();
             SetUpDatabase(services);
@@ -47,6 +58,7 @@ namespace Mandater
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ElectionContext context)
         {
+            _env = env;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -61,10 +73,14 @@ namespace Mandater
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseSwagger();
-            app.UseSwaggerUI(options => 
+            app.UseSwagger(options =>
             {
-                options.SwaggerEndpoint("/swagger/v0.1.0/swagger.json", "API for election result data");
+                
+            });
+            app.UseSwaggerUI(options =>
+            {
+                //options.SwaggerEndpoint("/swagger/v0.1.0/swagger.json", "API for election result data");
+                options.SwaggerEndpoint("/swagger/v1.0.0/swagger.json", "API for election result data");
             });
             app.UseStaticFiles();
 
