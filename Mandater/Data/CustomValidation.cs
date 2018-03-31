@@ -116,18 +116,6 @@ namespace Mandater.Data
 
 
             checkedModels.Add(countyData.GetHashCode());
-
-            if (countyData.County != null)
-            {
-                if (!checkedModels.Contains(countyData.County.GetHashCode()))
-                {
-                    ValidateCounty(countyData.County, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("CountyData.County cannot be null.");
-            }
         }
 
         /// <summary>

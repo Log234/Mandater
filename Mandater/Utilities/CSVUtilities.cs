@@ -241,7 +241,6 @@ namespace Mandater.Utilities
                     Year = year,
                     Areal = areal,
                     Population = population,
-                    County = county,
                     CountyId = county.CountyId
                 };
 

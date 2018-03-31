@@ -27,9 +27,10 @@ namespace Mandater.Controllers
         }
 
         /// <summary>
-        /// Default path method that returns a shallow Country object, showing which countries the API has data on.
+        /// Default path method that returns a list of shallow Country objects, showing which countries the API has data on.
+        /// If deep is specified it returns all data.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of countries</returns>
         [HttpGet("{deep?}")]
         public IEnumerable<Country> GetCountries(bool deep = false)
         {
@@ -42,7 +43,11 @@ namespace Mandater.Controllers
             }
             return _context.Countries;
         }
-
+        
+        /// <summary>
+        /// Default path method that returns a list of shallow ElectionType objects, showing which election types for the specified country the API has data on.
+        /// </summary>
+        /// <returns>List of election types</returns>
         [HttpGet("{countryCode}")]
         public IEnumerable<ElectionType> GetElectionTypes(string countryCode)
         {
@@ -52,6 +57,10 @@ namespace Mandater.Controllers
                     .ElectionTypes;
         }
 
+        /// <summary>
+        /// Default path method that returns a list of shallow election objects, showing which elections for the specified country and election type the API has data on.
+        /// </summary>
+        /// <returns>List of elections</returns>
         [HttpGet("{countryCode}/{electionCode}")]
         public IEnumerable<Election> GetElections(string countryCode, string electionCode)
         {
@@ -64,6 +73,10 @@ namespace Mandater.Controllers
                         .Elections;
         }
 
+        /// <summary>
+        /// Default path method that returns a list of Result objects, showing which Results for the specified election the API has data on.
+        /// </summary>
+        /// <returns>List of results</returns>
         [HttpGet("{countryCode}/{electionCode}/{year}")]
         public IEnumerable<Result> GetResults(string countryCode, string electionCode, int year)
         {
