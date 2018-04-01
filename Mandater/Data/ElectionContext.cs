@@ -20,7 +20,7 @@ namespace Mandater.Data
             modelBuilder.Entity<Country>()
                 .HasAlternateKey(c => c.CountryId);
             modelBuilder.Entity<County>()
-                .HasKey(c => new {c.CountryId, c.Name});
+                .HasKey(c => new {c.CountryId, c.ElectionId, c.Name});
             modelBuilder.Entity<County>()
                 .HasAlternateKey(c => c.CountyId);
             modelBuilder.Entity<Election>()

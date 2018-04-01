@@ -11,11 +11,13 @@ namespace Mandater.Models
         public int CountyId { get; set; }
         [Required]
         public string Name { get; set; }
+        public int Seats { get; set; }
 
         public int CountryId { get; set; }
+        public int ElectionId { get; set; }
 
         [Required]
-        public List<CountyData> CountyData { get; set; }
+        public List<Result> Results { get; set; }
         
     }
 }
