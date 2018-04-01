@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import * as ParliamentElectionsStore from '../store/ParliamentElections';
+import axios from 'axios';
 
 
 
@@ -10,20 +11,38 @@ export class SettingMenu extends React.Component {
         super(props);
 
         this.state = {
-            year: 2017,
-            calcMethod: "Sainte Lagues",
-            firstDivisor: 1.0,
-            electionThreshold: 1.4,
-            levelingSeat: 1.4
+            selectedValue: null,
+            selectOptions: []
         }
 
         this.handleYearChange = this.handleYearChange.bind(this)
     }
 
 
+    componentWillMount = function () {
+        const self = this;
+        axios
+            .get('http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true')
+            .then(function (response) {
+                // console.log(response.data[0].elections);
+                let parliamentElections = response.data[0].elections;
+                let peYears = [];
+                for (let i = 0; i < parliamentElections.length; i++) {
+                    peYears.push(parliamentElections[i].year);
+                }
+                //console.log(JSON.stringify(peYears));
+                //console.log(pe)
+                self.setState({
+                    selectedValue: peYears[0],
+                    selectOptions: peYears
+                });
+            }).catch(function (error) { console.log(error) });
+            
+    }
+
     handleYearChange(event) {
-        this.setState({ year: event.target.value });
-        console.log(this.state)
+        console.log("Event fired");
+        this.setState({ selectedValue: event.target.value });
     }
 
 
@@ -35,10 +54,16 @@ export class SettingMenu extends React.Component {
                     <label className="col-sm-5 col-form-label">År</label>
                     <div className="col-sm-7">
                         <select id="year" onChange={this.handleYearChange} className="form-control" name='year'>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
+                            {
+                                this.state.selectOptions.map(function (item, index) {
+                                    return (
+                                        <option
+                                            key={index} // By convention all children should have a unique key prop
+                                            value={item}
+                                        > {item} </option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                 </div>
@@ -66,6 +91,12 @@ export class SettingMenu extends React.Component {
                     <label htmlFor="levelingSeat" className="col-sm-5 col-form-label">Utjevningsmandater</label>
                     <div className="col-sm-7">
                         <input className="form-control" classID="levelingSeat" type="number" name="levelingSeat" placeholder="1.4" min="0.0" step="0.1" max="15.0" />
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <label htmlFor="districtSeat" className="col-sm-5 col-form-label">Distriksmandater</label>
+                    <div className="col-sm-7">
+                        <input className="form-control" classID="districtSeat" type="number" name="districSeat" min="0" step="1" max="500" />
                     </div>
                 </div>
             </form>
