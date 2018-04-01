@@ -6,7 +6,6 @@ import axios from 'axios';
 
 
 export class SettingMenu extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -20,28 +19,24 @@ export class SettingMenu extends React.Component {
 
 
     componentWillMount = function () {
+        // Keep 'this' as reference to component
         const self = this;
         axios
             .get('http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true')
             .then(function (response) {
-                // console.log(response.data[0].elections);
-                let parliamentElections = response.data[0].elections;
-                let peYears = [];
+                const parliamentElections = response.data[0].elections;
+                let peYears = [];   // All years with available parliament election (pe) data
                 for (let i = 0; i < parliamentElections.length; i++) {
                     peYears.push(parliamentElections[i].year);
                 }
-                //console.log(JSON.stringify(peYears));
-                //console.log(pe)
                 self.setState({
                     selectedValue: peYears[0],
                     selectOptions: peYears
                 });
             }).catch(function (error) { console.log(error) });
-            
     }
 
     handleYearChange(event) {
-        console.log("Event fired");
         this.setState({ selectedValue: event.target.value });
     }
 
