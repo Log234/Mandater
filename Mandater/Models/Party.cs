@@ -16,8 +16,5 @@ namespace Mandater.Models
         public string ShortName { get; set; }
 
         public int CountryId { get; set; }
-        [Required]
-        public virtual Country Country { get; set; }
-        
     }
 }

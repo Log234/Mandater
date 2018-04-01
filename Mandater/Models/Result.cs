@@ -14,16 +14,16 @@ namespace Mandater.Models
         public double Percentage { get; set; } = double.NaN;
 
         public int ElectionId { get; set; }
-        [Required]
-        public virtual Election Election { get; set; }
         
         public int PartyId { get; set; }
-        [Required]
-        public virtual Party Party { get; set; }
-
+        
         public int CountyId { get; set; }
-        [Required]
-        public virtual County County { get; set; }
+
+        public string CountyName { get; set; }
+
+        public string PartyCode { get; set; }
+        
+        public string PartyName { get; set; }
 
     }
 }

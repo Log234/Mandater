@@ -17,7 +17,5 @@ namespace Mandater.Models
         public double Areal { get; set; } = double.NaN;
 
         public int CountyId { get; set; }
-        [Required]
-        public County County { get; set; }
     }
 }

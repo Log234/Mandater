@@ -26,7 +26,6 @@ namespace Mandater.Utilities
                 {
                     county = new County
                     {
-                        Country = election.Country,
                         CountryId = election.CountryId,
                         Name = entity.Fylkenavn
                     };
@@ -39,7 +38,6 @@ namespace Mandater.Utilities
                 {
                     party = new Party
                     {
-                        Country = election.Country,
                         CountryId = election.CountryId,
                         Name = entity.Partinavn,
                         ShortName = entity.Partikode
@@ -59,16 +57,17 @@ namespace Mandater.Utilities
 
                 Result result = new Result
                 {
-                    County = county,
                     CountyId = county.CountyId,
-                    Election = election,
                     ElectionId = election.ElectionId,
-                    Party = party,
                     PartyId = party.PartyId,
                     Percentage = percentage,
-                    Votes = votes
+                    Votes = votes,
+                    PartyName = party.Name,
+                    PartyCode = party.ShortName,
+                    CountyName = county.Name
                 };
                 CustomValidation.ValidateResult(result, validationSet);
+                election.Results.Add(result);
                 context.Results.Add(result);
                 context.SaveChanges();
             }

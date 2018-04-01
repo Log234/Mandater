@@ -28,38 +28,16 @@ namespace Mandater.Data
             {
                 throw new ArgumentException("Country.InternationalName cannot be shorter than 3 characters.");
             }
-            if (country.ShortName == null)
+            if (country.CountryCode == null)
             {
                 throw new ArgumentException("Country.ShortName cannot be null.");
             }
-            if (country.ShortName.Length < 2)
+            if (country.CountryCode.Length < 2)
             {
                 throw new ArgumentException("Country.ShortName cannot be shorter than 2 characters.");
             }
 
             checkedModels.Add(country.GetHashCode());
-
-            if (country.Counties != null)
-            {
-                foreach (County county in country.Counties)
-                {
-                    if (!checkedModels.Contains(county.GetHashCode()))
-                    {
-                        ValidateCounty(county, checkedModels);
-                    }
-                }
-            }
-
-            if (country.Parties != null)
-            {
-                foreach (Party party in country.Parties)
-                {
-                    if (!checkedModels.Contains(party.GetHashCode()))
-                    {
-                        ValidateParty(party, checkedModels);
-                    }
-                }
-            }
 
             if (country.ElectionTypes != null)
             {
@@ -97,18 +75,6 @@ namespace Mandater.Data
             }
 
             checkedModels.Add(county.GetHashCode());
-
-            if (county.Country != null)
-            {
-                if (!checkedModels.Contains(county.Country.GetHashCode()))
-                {
-                    ValidateCountry(county.Country, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("County.Country cannot be null.");
-            }
 
             if (county.CountyData != null)
             {
@@ -150,18 +116,6 @@ namespace Mandater.Data
 
 
             checkedModels.Add(countyData.GetHashCode());
-
-            if (countyData.County != null)
-            {
-                if (!checkedModels.Contains(countyData.County.GetHashCode()))
-                {
-                    ValidateCounty(countyData.County, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("CountyData.County cannot be null.");
-            }
         }
 
         /// <summary>
@@ -203,30 +157,6 @@ namespace Mandater.Data
 
             checkedModels.Add(election.GetHashCode());
 
-            if (election.Country != null)
-            {
-                if (!checkedModels.Contains(election.Country.GetHashCode()))
-                {
-                    ValidateCountry(election.Country, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Election.Country cannot be null.");
-            }
-
-            if (election.ElectionType != null)
-            {
-                if (!checkedModels.Contains(election.ElectionType.GetHashCode()))
-                {
-                    ValidateElectionType(election.ElectionType, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Election.ElectionType cannot be null.");
-            }
-
             if (election.Results != null)
             {
                 foreach (Result result in election.Results)
@@ -261,20 +191,7 @@ namespace Mandater.Data
                 throw new ArgumentException("ElectionType.InternationalName cannot be shorter than 3 characters.");
             }
 
-
             checkedModels.Add(electionType.GetHashCode());
-
-            if (electionType.Country != null)
-            {
-                if (!checkedModels.Contains(electionType.Country.GetHashCode()))
-                {
-                    ValidateCountry(electionType.Country, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("ElectionType.Country cannot be null.");
-            }
 
             if (electionType.Elections != null)
             {
@@ -320,18 +237,6 @@ namespace Mandater.Data
             }
 
             checkedModels.Add(party.GetHashCode());
-
-            if (party.Country != null)
-            {
-                if (!checkedModels.Contains(party.Country.GetHashCode()))
-                {
-                    ValidateCountry(party.Country, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Party.Country cannot be null.");
-            }
         }
 
         /// <summary>
@@ -357,42 +262,6 @@ namespace Mandater.Data
             }
 
             checkedModels.Add(result.GetHashCode());
-
-            if (result.Election != null)
-            {
-                if (!checkedModels.Contains(result.Election.GetHashCode()))
-                {
-                    ValidateElection(result.Election, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Result.Election cannot be null.");
-            }
-
-            if (result.Party != null)
-            {
-                if (!checkedModels.Contains(result.Party.GetHashCode()))
-                {
-                    ValidateParty(result.Party, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Result.Party cannot be null.");
-            }
-
-            if (result.County != null)
-            {
-                if (!checkedModels.Contains(result.County.GetHashCode()))
-                {
-                    ValidateCounty(result.County, checkedModels);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Result.County cannot be null.");
-            }
         }
     }
 }

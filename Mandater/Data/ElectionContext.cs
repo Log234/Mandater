@@ -16,7 +16,7 @@ namespace Mandater.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Country>()
-                .HasKey(c => c.InternationalName);
+                .HasKey(c => c.CountryCode);
             modelBuilder.Entity<Country>()
                 .HasAlternateKey(c => c.CountryId);
             modelBuilder.Entity<County>()
