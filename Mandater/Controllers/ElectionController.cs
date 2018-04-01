@@ -40,10 +40,8 @@ namespace Mandater.Controllers
                 return _context.Countries
                         .Include(c => c.ElectionTypes)
                             .ThenInclude(c => c.Elections)
-                                .ThenInclude(c => c.Results)
-                        .Include(c => c.ElectionTypes)
-                            .ThenInclude(c => c.Elections)
-                                .ThenInclude(c => c.CountyData);
+                                .ThenInclude(c => c.Counties)
+                                    .ThenInclude(c => c.Results);
             }
             return _context.Countries;
         }
@@ -62,10 +60,8 @@ namespace Mandater.Controllers
                 return _context.Countries
                     .Include(c => c.ElectionTypes)
                         .ThenInclude(c => c.Elections)
-                            .ThenInclude(c => c.Results)
-                    .Include(c => c.ElectionTypes)
-                        .ThenInclude(c => c.Elections)
-                            .ThenInclude(c => c.CountyData)
+                            .ThenInclude(c => c.Counties)
+                                .ThenInclude(c => c.Results)
                     .First(c => c.CountryCode == countryCode.ToUpper())
                     .ElectionTypes;
             }
@@ -90,10 +86,8 @@ namespace Mandater.Controllers
                 return _context.Countries
                     .Include(c => c.ElectionTypes)
                         .ThenInclude(c => c.Elections)
-                            .ThenInclude(c => c.Results)
-                    .Include(c => c.ElectionTypes)
-                        .ThenInclude(c => c.Elections)
-                            .ThenInclude(c => c.CountyData)
+                            .ThenInclude(c => c.Counties)
+                                .ThenInclude(c => c.Results)
                     .First(c => c.CountryCode == countryCode.ToUpper())
                     .ElectionTypes
                         .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
@@ -116,18 +110,19 @@ namespace Mandater.Controllers
         /// <param name="year">Four digit election year</param>
         /// <returns>List of results</returns>
         [HttpGet("{countryCode}/{electionCode}/{year}")]
-        public IEnumerable<Result> GetResults(string countryCode, string electionCode, int year)
+        public IEnumerable<County> GetResults(string countryCode, string electionCode, int year)
         {
             return _context.Countries
                     .Include(c => c.ElectionTypes)
                         .ThenInclude(c => c.Elections)
-                            .ThenInclude(c => c.Results)
+                            .ThenInclude(c => c.Counties)
+                                .ThenInclude(c => c.Results)
                     .First(c => c.CountryCode == countryCode.ToUpper())
                     .ElectionTypes
                         .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
                         .Elections
                             .First(c => c.Year == year)
-                            .Results;
+                            .Counties;
         }
 
     }
