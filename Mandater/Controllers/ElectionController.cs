@@ -103,16 +103,19 @@ namespace Mandater.Controllers
         }
 
         /// <summary>
-        /// Default path method that returns a list of Result objects, showing which Results for the specified election the API has data on.
+        /// Default path method that returns a list of County objects, showing which counties for the specified election the API has data on.
         /// </summary>
+        /// <param name="deep">Optional boolean parameter, the method returns a deep list if true</param>
         /// <param name="countryCode">Two character country code, ISO 3166-1 alpha-2</param>
         /// <param name="electionCode">Two character election type code</param>
         /// <param name="year">Four digit election year</param>
-        /// <returns>List of results</returns>
+        /// <returns>List of counties</returns>
         [HttpGet("{countryCode}/{electionCode}/{year}")]
-        public IEnumerable<County> GetResults(string countryCode, string electionCode, int year)
+        public IEnumerable<County> GetCounties(string countryCode, string electionCode, int year, bool? deep)
         {
-            return _context.Countries
+            if (deep.HasValue && deep.Value)
+            {
+                return _context.Countries
                     .Include(c => c.ElectionTypes)
                         .ThenInclude(c => c.Elections)
                             .ThenInclude(c => c.Counties)
@@ -121,9 +124,19 @@ namespace Mandater.Controllers
                     .ElectionTypes
                         .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
                         .Elections
+                        .First(c => c.Year == year)
+                        .Counties;
+            }
+            return _context.Countries
+                    .Include(c => c.ElectionTypes)
+                        .ThenInclude(c => c.Elections)
+                            .ThenInclude(c => c.Counties)
+                    .First(c => c.CountryCode == countryCode.ToUpper())
+                    .ElectionTypes
+                        .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
+                        .Elections
                             .First(c => c.Year == year)
                             .Counties;
         }
-
     }
 }
