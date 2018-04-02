@@ -15,6 +15,7 @@ namespace Mandater.Models
         public int Year { get; set; } = -1;
         public int Population { get; set; } = -1;
         public double Areal { get; set; } = double.NaN;
+        public int Seats { get; set; } = -1;
 
         public int CountyId { get; set; }
     }

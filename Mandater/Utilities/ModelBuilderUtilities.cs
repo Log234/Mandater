@@ -21,16 +21,18 @@ namespace Mandater.Utilities
         {
             foreach (VDModel entity in entities)
             {
-                County county = context.Counties.Find(election.CountryId, entity.Fylkenavn);
+                County county = election.Counties.SingleOrDefault(c => c.Name == entity.Fylkenavn);
                 if (county == null)
                 {
                     county = new County
                     {
+                        ElectionId = election.ElectionId,
                         CountryId = election.CountryId,
-                        Name = entity.Fylkenavn
+                        Name = entity.Fylkenavn,
+                        Results = new List<Result>()
                     };
                     CustomValidation.ValidateCounty(county, validationSet);
-                    context.Counties.Add(county);
+                    election.Counties.Add(county);
                 }
 
                 Party party = context.Parties.Find(election.CountryId, entity.Partinavn);
@@ -45,6 +47,7 @@ namespace Mandater.Utilities
                     CustomValidation.ValidateParty(party, validationSet);
                     context.Parties.Add(party);
                 }
+                context.SaveChanges();
 
                 if (!double.TryParse(entity.OppslutningProsentvis, out double percentage))
                 {
@@ -67,9 +70,8 @@ namespace Mandater.Utilities
                     CountyName = county.Name
                 };
                 CustomValidation.ValidateResult(result, validationSet);
-                election.Results.Add(result);
-                context.Results.Add(result);
-                context.SaveChanges();
+                Console.WriteLine($"{county.Name}: {county.CountyId}, {election.Year}: {election.ElectionId}, {party.Name}: {party.PartyId}");
+                county.Results.Add(result);
             }
         }
     }

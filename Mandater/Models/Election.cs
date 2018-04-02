@@ -29,10 +29,7 @@ namespace Mandater.Models
         public int ElectionTypeId { get; set; }
 
         [Required]
-        public virtual List<Result> Results { get; set; }
-
-        [Required]
-        public virtual List<CountyData> CountyData { get; set; }
+        public virtual List<County> Counties { get; set; }
 
     }
 }
