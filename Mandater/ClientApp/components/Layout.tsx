@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
-import { SettingMenu } from './SettingMenu';
-import { Graph } from './Graph'
+import { SettingsMenu } from './SettingsMenu';
+import { Presentation } from './Presentation';
 import { PresentationSettingsContainer } from './PresentationSettingsContainer';
 
 export class Layout extends React.Component<{}, {}> {
@@ -12,10 +12,10 @@ export class Layout extends React.Component<{}, {}> {
                     <NavMenu />
                 </div>
                 <div className='col-sm-3'>
-                    <SettingMenu />
+                    <SettingsMenu />
                 </div>
                 <div className='col-sm-6'>
-                    <Graph />
+                    <Presentation />
                 </div>
                 <div className='col-sm-3'>
                     <PresentationSettingsContainer />

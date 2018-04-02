@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 
-export class Graph extends React.Component<{}, {}> {
+export class ResultsTable extends React.Component<{}, {}> {
     public render() {
         return (<div>
             <table className='table table-striped electionTable'>
