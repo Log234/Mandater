@@ -1,10 +1,10 @@
-﻿import { Election } from "ClientApp/logic/interfaces/Election";
-import { Result } from "ClientApp/logic/interfaces/Result";
-import { County } from "ClientApp/logic/interfaces/County";
-import { ProcessedResult } from "ClientApp/logic/interfaces/ProcessedResult";
-import { PartyResult } from "ClientApp/logic/interfaces/PartyResult";
+﻿import { Election } from "ClientApp/interfaces/Election";
+import { Result } from "ClientApp/interfaces/Result";
+import { County } from "ClientApp/interfaces/County";
+import { ProcessedResult } from "ClientApp/interfaces/ProcessedResult";
+import { PartyResult } from "ClientApp/interfaces/PartyResult";
 
-export class Algorithm {
+export class ElectionAlgorithm {
     election: Election;
     constructor(election: Election) {
         this.election = election;

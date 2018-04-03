@@ -1,28 +1,28 @@
 ﻿import * as React from 'react';
-import { Algorithm } from '../logic/Algorithm'; // @Edvarda trengs for Algorithms
-import { Election } from 'ClientApp/logic/interfaces/Election'; // @Edvarda trengs for Algorithms
-import { ElectionType } from 'ClientApp/logic/interfaces/ElectionType'; // @Edvarda trengs for Algorithms
+//import { ElectionAlgorithm } from '../logic/Algorithm'; // @Edvarda trengs for Algorithms
+//import { Election } from 'ClientApp/interfaces/Election'; // @Edvarda trengs for Algorithms
+//import { ElectionType } from 'ClientApp/interfaces/ElectionType'; // @Edvarda trengs for Algorithms
 import axios, { AxiosRequestConfig, AxiosPromise } from 'axios'; // @Edvarda trengs for axios på typescript
 
 export class PresentationSettings extends React.Component<{}, {}> {
     // @Edvarda: Dette er et eksempel på hvordan man får ut data for øyeblikket -- det blir enklere etter møtet på onsdag
     public componentWillMount() {
 
-        axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true")
-            .then(res => {
-                let electionType: ElectionType = res.data[0];
-                let election: Election = electionType.elections[electionType.elections.length-1];
-                if (electionType == null) {
-                    console.log(electionType + " is an invalid election");
-                } else {
-                    let definitelyAnElection: Election = election;
-                    let test: Algorithm = new Algorithm(definitelyAnElection);
-                    test.firstDivisor = 1.4;
-                    console.log(test.modifiedSaintLague());
-                }
-            }).catch(error => {
-                console.log(error);
-            });
+        //axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true")
+        //    .then(res => {
+        //        let electionType: ElectionType = res.data[0];
+        //        let election: Election = electionType.elections[electionType.elections.length-1];
+        //        if (electionType == null) {
+        //            console.log(electionType + " is an invalid election");
+        //        } else {
+        //            let definitelyAnElection: Election = election;
+        //            let test: ElectionAlgorithm = new ElectionAlgorithm(definitelyAnElection);
+        //            test.firstDivisor = 1.4;
+        //            console.log(test.modifiedSaintLague());
+        //        }
+        //    }).catch(error => {
+        //        console.log(error);
+        //    });
     }
     public render() {
         return <div className="presentation-settings">

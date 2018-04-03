@@ -1,4 +1,4 @@
-﻿import { Election } from "ClientApp/logic/interfaces/Election";
+﻿import { Election } from "ClientApp/interfaces/Election";
 
 export interface ElectionType {
     countryId: number,
