@@ -29,6 +29,52 @@ export class Presentation extends React.Component<{}, PresentationState> {
         return (
             <div>
                 {this.getView()}
+                <table className="partyTable">
+                    <thead>
+                        <tr>
+                            <th>Parti</th>
+                            <th>Stemmer</th>
+                            <th>Prosent</th>
+                            <th>Distrikt</th>
+                            <th>Utjevning</th>
+                            <th>Sum</th>
+                            <th>Differanse</th>
+                            <th>Prop.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Rødt</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>MDG</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>SV</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         );
     }

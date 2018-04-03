@@ -136,11 +136,49 @@ body, html {
     outline:none;
 }
 
-.electionTable table, th, td {
+.partyTable {
+    overflow:hidden; /* Needed for highlighting to work */
+    width: 100%;
+    table-layout: fixed;
+}
+
+.partyTable table, th, td {
     border-collapse: collapse;
     border: 1px solid black;
     padding: 5px;
     margin: 10px;
+}
+
+.partyTable thead th {
+    text-align: center;
+    background-color: #fab580;
+}
+
+.partyTable tbody th {
+    text-align: center;
+}
+
+
+/* Highlighting of row on hover*/
+.partyTable tbody > tr:hover {
+    padding: 20px;
+    background-color: rgba(255, 110, 0, 0.5294117647058824) !important;
+}
+
+
+table > tbody > tr > td {
+    position: relative;
+}
+
+.partyTable td:hover::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(255, 110, 0, 0.5294117647058824) !important;
+    left: 0;
+    top: -5000px;
+    height: 10000px;
+    width: 100%;
+    z-index: -1;
 }
 
 @media (max-width: 767px) {
