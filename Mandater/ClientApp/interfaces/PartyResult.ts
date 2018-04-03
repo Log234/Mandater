@@ -1,4 +1,4 @@
-﻿import { ProcessedResult } from "ClientApp/logic/interfaces/ProcessedResult";
+﻿import { ProcessedResult } from "ClientApp/interfaces/ProcessedResult";
 
 export interface PartyResult {
     partyName: string,

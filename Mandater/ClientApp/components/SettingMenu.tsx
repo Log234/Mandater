@@ -1,17 +1,24 @@
 ﻿import * as React from 'react';
-import { Algorithm } from '../logic/Algorithm';
+import { ElectionAlgorithm } from '../logic/Algorithm';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import * as ParliamentElectionsStore from '../store/ParliamentElections';
 import axios from 'axios';
 
+export interface settingsProps {
+
+}
+
+export interface settingsState {
+    selectedValue: string,
+    selectOptions: string[]
+}
 
 
-export class SettingMenu extends React.Component {
-    constructor(props) {
+export class SettingMenu extends React.Component<settingsProps, settingsState> {
+    constructor(props : settingsProps) {
         super(props);
 
         this.state = {
-            selectedValue: null,
+            selectedValue: '',
             selectOptions: []
         }
 
@@ -19,19 +26,18 @@ export class SettingMenu extends React.Component {
     }
 
 
-    componentWillMount = function () {
+    public componentWillMount() {
         // Keep 'this' as reference to component
         const self = this;
         axios
             .get('http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true')
             .then(function (response) {
-                let alg = new Algorithm(response.data[0].elections[0]);
+                let alg = new ElectionAlgorithm(response.data[0].elections[0]);
                 console.log(alg.modifiedSaintLague());
 
                 const parliamentElections = response.data[0].elections;
                 let peYears = [];   // All years with available parliament election (pe) data
                 for (let i = 0; i < parliamentElections.length; i++) {
-                    console.log(parliamentElections[i]);
                     peYears.push(parliamentElections[i].year);
                 }
                 self.setState({
@@ -41,8 +47,7 @@ export class SettingMenu extends React.Component {
             }).catch(function (error) { console.log(error) });
     }
 
-    handleYearChange(event) {
-        // TODO: Change to dispatch
+    public handleYearChange(event : any) {
         this.setState({ selectedValue: event.target.value });
     }
 

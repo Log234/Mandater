@@ -3,8 +3,12 @@ import { NavMenu } from './NavMenu';
 import { SettingMenu } from './SettingMenu';
 import { Presentation } from './Presentation';
 import { PresentationSettingsContainer } from './PresentationSettingsContainer';
+import { initializeParliamentaryElectionData } from '../store/ElectionReducer'
 
 export class Layout extends React.Component<{}, {}> {
+    public componentWillMount() {
+        // dispatch(initializeParliamentaryElectionData());
+    }
     public render() {
         return <div className='container-fluid'>
             <div className='row'>

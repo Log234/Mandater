@@ -3,7 +3,7 @@ import { createStore } from 'redux'
 import * as index from '../store'
 import { Presentation } from './Presentation';
 
-const store = createStore(index.reducers.userInterface)
+//const store = createStore(index.reducers.userInterface)
 
 export class PresentationSelection extends React.Component {
     constructor(props) {
@@ -17,7 +17,7 @@ export class PresentationSelection extends React.Component {
             showGraph: view
         }
         console.log(view);
-        store.dispatch(action);
+        //store.dispatch(action);
     }
 
     render() {

@@ -1,4 +1,4 @@
-﻿import { Result } from "ClientApp/logic/interfaces/Result";
+﻿import { Result } from "ClientApp/interfaces/Result";
 
 export interface County {
     countyId: number,
