@@ -26,7 +26,7 @@ export class PresentationSettings extends React.Component<{}, {}> {
     }
     public render() {
         return <div className="presentation-settings">
-            <h1 className="h2">Presentasjon instillinger</h1>
+            <h2>Presentasjonsinnstillinger</h2>
             <form>
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">År</label>

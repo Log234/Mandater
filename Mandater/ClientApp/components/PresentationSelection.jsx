@@ -24,7 +24,7 @@ export class PresentationSelection extends React.Component {
         return <div className="presentation-selection">
             <h2>Presentasjonstyper</h2>
             <button onClick={ this.toggleResultsTable('PartyTable') }>Partitabell</button>
-            <button onClick={ this.toggleResultsTable('CountyTable') }>Fylkestabeller</button>
+            <button onClick={ this.toggleResultsTable('CountyTable') }>Fylkestabell</button>
         </div>
 
     }
