@@ -36,11 +36,25 @@
   <ItemGroup>
     <None Remove="ClientApp\components\PresentationSettings.tsx" />
     <None Remove="ClientApp\components\PresentationSettingsContainer.tsx" />
+    <None Remove="ClientApp\logic\interfaces\AlgorithmOutput.ts" />
+    <None Remove="ClientApp\logic\interfaces\County.ts" />
+    <None Remove="ClientApp\logic\interfaces\Election.ts" />
+    <None Remove="ClientApp\logic\interfaces\ElectionType.ts" />
+    <None Remove="ClientApp\logic\interfaces\PartyResult.ts" />
+    <None Remove="ClientApp\logic\interfaces\ProcessedResult.ts" />
+    <None Remove="ClientApp\logic\interfaces\Result.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\PresentationSettings.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationSettingsContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\logic\interfaces\County.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\interfaces\Election.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\interfaces\AlgorithmOutput.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\interfaces\ElectionType.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\interfaces\PartyResult.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\interfaces\ProcessedResult.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\interfaces\Result.ts" />
   </ItemGroup>
 
   <ItemGroup>
