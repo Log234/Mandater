@@ -73,16 +73,20 @@ namespace Mandater.Data
             {
                 throw new ArgumentException("County.Name cannot be shorter than 3 characters.");
             }
+            if (county.Seats == -1)
+            {
+                throw new ArgumentException("County.Seats cannot be the default value.");
+            }
 
             checkedModels.Add(county.GetHashCode());
 
-            if (county.CountyData != null)
+            if (county.Results != null)
             {
-                foreach (CountyData countyData in county.CountyData)
+                foreach (Result result in county.Results)
                 {
-                    if (!checkedModels.Contains(countyData.GetHashCode()))
+                    if (!checkedModels.Contains(result.GetHashCode()))
                     {
-                        ValidateCountyData(countyData, checkedModels);
+                        ValidateResult(result, checkedModels);
                     }
                 }
             }
@@ -157,13 +161,13 @@ namespace Mandater.Data
 
             checkedModels.Add(election.GetHashCode());
 
-            if (election.Results != null)
+            if (election.Counties != null)
             {
-                foreach (Result result in election.Results)
+                foreach (County county in election.Counties)
                 {
-                    if (!checkedModels.Contains(result.GetHashCode()))
+                    if (!checkedModels.Contains(county.GetHashCode()))
                     {
-                        ValidateResult(result, checkedModels);
+                        ValidateCounty(county, checkedModels);
                     }
                 }
             }

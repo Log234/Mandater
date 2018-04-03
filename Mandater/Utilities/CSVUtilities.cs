@@ -180,17 +180,15 @@ namespace Mandater.Utilities
 
                 Election currentObject = new Election
                 {
-                    CountyData = new List<CountyData>(),
                     Year = year,
                     Algorithm = algorithm,
                     FirstDivisor = firstDivisor,
                     Threshold = threshold,
                     Seats = seats,
                     LevelingSeats = levelingSeats,
-                    Results = new List<Result>(),
-                    CountryId = country.CountryId
+                    CountryId = country.CountryId,
+                    Counties = new List<County>()
                 };
-                System.Console.Write("Year" + currentObject.Year);
                 objects.Add(currentObject);
             }
             return objects.ToArray<Election>();
@@ -213,7 +211,7 @@ namespace Mandater.Utilities
             while ((currentLine = file.ReadLine()) != null)
             {
                 string[] objectFields = currentLine.Split(";");
-                if (objectFields.Length != 4)
+                if (objectFields.Length != 5)
                 {
                     throw new CsvFileFormatException($"Found a line with length {objectFields.Length} instead of the required 4.", filePath, currentLine);
                 }
@@ -229,26 +227,18 @@ namespace Mandater.Utilities
                 {
                     throw new CsvFileFormatException("The field Population is not a valid integer.", filePath, currentLine);
                 }
+                if (!int.TryParse(objectFields[4], out int seats))
+                {
+                    throw new CsvFileFormatException("The field Seats is not a valid integer.", filePath, currentLine);
+                }
 
-                IEnumerable<Election> elections = context.Elections.Where(e => e.Year == year);
-                County county = context.Counties.Find(country.CountryId, objectFields[1]);
+                Election election = context.Elections.Where(e => e.Year == year).Single();
+                County county = election.Counties.Single(c => c.Name == objectFields[1]);
                 if (county == null)
                 {
                     throw new CsvFileFormatException($"The field County does not match any known counties. {country.CountryId} - {objectFields[1]}", filePath, currentLine);
                 }
-                CountyData countyData = new CountyData
-                {
-                    Year = year,
-                    Areal = areal,
-                    Population = population,
-                    CountyId = county.CountyId
-                };
-
-                foreach (Election election in elections)
-                {
-                    election.CountyData.Add(countyData);
-                }
-                context.CountyData.Add(countyData);
+                county.Seats = seats;
             }
         }
     }
