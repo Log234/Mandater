@@ -1,4 +1,5 @@
 ﻿import * as React from 'react';
+import { Algorithm } from '../logic/Algorithm';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import * as ParliamentElectionsStore from '../store/ParliamentElections';
 import axios from 'axios';
@@ -24,6 +25,9 @@ export class SettingMenu extends React.Component {
         axios
             .get('http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true')
             .then(function (response) {
+                let alg = new Algorithm(response.data[0].elections[0]);
+                console.log(alg.modifiedSaintLague());
+
                 const parliamentElections = response.data[0].elections;
                 let peYears = [];   // All years with available parliament election (pe) data
                 for (let i = 0; i < parliamentElections.length; i++) {
@@ -78,7 +82,7 @@ export class SettingMenu extends React.Component {
                         <input className="form-control" classID="firstDivisor" type="number" name="firstDivisor" placeholder="1.0" min="1.0" step="0.1" max="5.0" />
                     </div>
                 </div>
-                <div className="form-group row">
+                {/*<div className="form-group row">
                     <label htmlFor="electionThreshold" className="col-sm-5 col-form-label">Sperregrense</label>
                     <div className="col-sm-7">
                         <input className="form-control" classID="electionThreshold" type="number" name="electionThreshold" placeholder="1.4" min="0.0" step="0.1" max="15.0" />
@@ -95,7 +99,7 @@ export class SettingMenu extends React.Component {
                     <div className="col-sm-7">
                         <input className="form-control" classID="districtSeat" type="number" name="districSeat" min="0" step="1" max="500" />
                     </div>
-                </div>
+                </div>*/}
             </form>
         </div>
         );

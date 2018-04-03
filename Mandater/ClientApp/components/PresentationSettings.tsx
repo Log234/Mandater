@@ -11,7 +11,7 @@ export class PresentationSettings extends React.Component<{}, {}> {
         axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true")
             .then(res => {
                 let electionType: ElectionType = res.data[0];
-                let election: Election = electionType.elections[0];
+                let election: Election = electionType.elections[electionType.elections.length-1];
                 if (electionType == null) {
                     console.log(electionType + " is an invalid election");
                 } else {
