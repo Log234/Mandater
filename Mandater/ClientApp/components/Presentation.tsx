@@ -1,22 +1,27 @@
 ﻿import * as React from 'react';
-import { ResultsTable } from './ResultsTable';
+import { CountyTable } from './CountyTable';
+import { PartyTable } from './PartyTable';
 
-type State = {
-    showGraph: string
+type PresentationState = {
+    showGraph: string,
+    year: number
 }
 
-export class Presentation extends React.Component<{}, State> {
-    state: State = {
-        showGraph: 'PartyTable'
+export class Presentation extends React.Component<{}, PresentationState> {
+    state: PresentationState = {
+        showGraph: 'PartyTable',
+        year: 2017
     }
 
     // returns the corresponding View based on currentMode
     getView() {
         switch (this.state.showGraph) {
-            case 'ResultsTable':
-                return <ResultsTable />
+            case 'CountyTable':
+                return <CountyTable />
+            case 'PartyTable':
+                return <PartyTable />
             default:
-                return <ResultsTable />
+                return <PartyTable />
         }
     }
 
