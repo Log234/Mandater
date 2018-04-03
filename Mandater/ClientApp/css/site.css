@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body, html {
+    font-family: 'Open Sans', 'Times New Roman';
+}
+
 .main-nav li .glyphicon {
     margin-right: 10px;
 }
@@ -11,28 +17,60 @@
 }
 
 .nav_container {
-    height:40px;
+    height: 5em;
     margin-bottom: 20px;
-    width:calc(100%-20px);
-    padding:0;
-    justify-content:flex-end;
-    align-self:center;
-    background-color:#20232a;
+    width: 100%;
+    padding: 0;
+    text-transform: uppercase;
+    background-color: #fff;
+    border-bottom: 3px solid #e9e6e2;
+}
+
+.nav_container li a:active,
+.nav_container li a:hover, 
+.nav_container li a:focus {
+    color: #ff6e00;
 }
 .nav_container ul {
-    justify-content: flex-end;
-    align-self:center;
-    list-style: none;
+    padding: 0;
+    align-items: center;
     display: flex;
+    list-style: none;
 }
 
 .nav_container li {
     margin-top: 10px;
-    margin-right: 10px;
+    padding-right: 1.5em;
+
+}
+
+.nav_container li:last-child {
+    padding-right: 2em;
+}
+
+.nav_container li:not(.lavinaLogo) {
+
 }
 
 .nav_container a {
-    color:white;
+    color:black;
+}
+
+.laviniaLogo {
+    padding: 0;
+    margin: auto;
+    text-transform: capitalize;
+    font-variant: small-caps;
+    font-size: 2.5em;
+}
+
+.laviniaLogo a,
+.laviniaLogo a:hover,
+.laviniaLogo a:active,
+.laviniaLogo a:active {
+    text-decoration: none;
+    color: #a39161 !important;
+    
 }
 
 /* Keep the nav menu independent of scrolling and on top of other items */
