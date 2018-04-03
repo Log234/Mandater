@@ -27,6 +27,7 @@ export class SettingMenu extends React.Component {
                 const parliamentElections = response.data[0].elections;
                 let peYears = [];   // All years with available parliament election (pe) data
                 for (let i = 0; i < parliamentElections.length; i++) {
+                    console.log(parliamentElections[i]);
                     peYears.push(parliamentElections[i].year);
                 }
                 self.setState({
@@ -37,6 +38,7 @@ export class SettingMenu extends React.Component {
     }
 
     handleYearChange(event) {
+        // TODO: Change to dispatch
         this.setState({ selectedValue: event.target.value });
     }
 
