@@ -42,5 +42,7 @@
     "webpack-hot-middleware": "2.18.2",
     "webpack-merge": "4.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "0.18.0"
+  }
 }

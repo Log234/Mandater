@@ -29,7 +29,7 @@ export function initializeParliamentaryElectionData() {
             } else {
                 for (let e of electionType.elections) {
                     electionYears.push(e.year);
-                    console.log(e.year);
+                    console.log(e.year + " " + electionYears.length);
                 }
                 let defaultElection: Election = election;
                 let electionAlgorithm: ElectionAlgorithm = new ElectionAlgorithm(defaultElection);
@@ -45,7 +45,7 @@ export function initializeParliamentaryElectionData() {
         electionYears: electionYears,
         firstDivisor: defaultElection.firstDivisor
     }
-
+    console.log("Initialized: " + electionYears)
     return initializeAction;
 }
 
@@ -80,6 +80,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case "INITIALIZE_PARLIAMENTARY_ELECTION":
+            console.log("Called: " + action.electionYears)
             return {
                 election: action.election,
                 electionYears: action.electionYears,

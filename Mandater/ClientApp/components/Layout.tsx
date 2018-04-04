@@ -4,10 +4,16 @@ import { SettingMenu } from './SettingMenu';
 import { Presentation } from './Presentation';
 import { PresentationSettingsContainer } from './PresentationSettingsContainer';
 import { initializeParliamentaryElectionData } from '../store/ElectionReducer'
+import { connect } from 'react-redux';
+import { ApplicationState } from 'ClientApp/store';
 
-export class Layout extends React.Component<{}, {}> {
+export interface layoutProps {
+    initializeState: () => any
+}
+
+export class _Layout extends React.Component<layoutProps, {}> {
     public componentWillMount() {
-        // dispatch(initializeParliamentaryElectionData());
+        this.props.initializeState();
     }
     public render() {
         return <div className='container-fluid'>
@@ -37,3 +43,17 @@ export class Layout extends React.Component<{}, {}> {
         </div>;
     }
 }
+
+const mapStateToProps = (state: ApplicationState) => {
+    return {};
+}
+
+const mapDispatchToProps = (dispatch: any) => ({
+    initializeState: () => {
+        console.log("Test1")
+        dispatch(initializeParliamentaryElectionData())
+        console.log("Test2")
+    }
+})
+
+export const Layout = connect(mapStateToProps, mapDispatchToProps)(_Layout)
