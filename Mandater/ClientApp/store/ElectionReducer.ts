@@ -7,6 +7,7 @@ import { ElectionAlgorithm } from '../logic/Algorithm';
 import { PartyResult } from 'ClientApp/interfaces/PartyResult';
 import { PartyResultDictionary } from 'ClientApp/interfaces/PartyResultDictionary';
 import { ElectionState } from 'ClientApp/interfaces/states/ElectionState';
+import { time } from 'console';
 
 // TODO: Make actions for updates of elections etc...
 
@@ -16,11 +17,11 @@ type KnownAction = GetMenuDataAction
 
 // ACTION CREATORS
 
-export function initializeParliamentaryElectionData() {
+export async function initializeParliamentaryElectionData() {
     let electionYears: number[] = [];
     let defaultElection: any = {};
     let defaultPartyResults: PartyResultDictionary = {}
-    axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true")
+    await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true")
         .then(res => {
             let electionType: ElectionType = res.data[0];
             let election: Election = electionType.elections[electionType.elections.length - 1]; // most recent
@@ -38,6 +39,7 @@ export function initializeParliamentaryElectionData() {
         }).catch(error => {
             console.log(error);
         });
+    
     let initializeAction: InitializeParliamentaryElectionAction = {
         type: "INITIALIZE_PARLIAMENTARY_ELECTION",
         election: defaultElection,

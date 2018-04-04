@@ -1,50 +1,36 @@
 ﻿import * as React from 'react';
 import { ElectionAlgorithm } from '../logic/Algorithm';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import { ApplicationState } from '../store/index'
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 export interface settingsProps {
-
-}
-
-export interface settingsState {
-    selectedValue: string,
-    selectOptions: string[]
+    selectOptions: number[]
 }
 
 
-export class SettingMenu extends React.Component<settingsProps, settingsState> {
-    constructor(props : settingsProps) {
-        super(props);
-
-        this.state = {
-            selectedValue: '',
-            selectOptions: []
-        }
-
-        this.handleYearChange = this.handleYearChange.bind(this)
-    }
-
+export class _SettingMenu extends React.Component<settingsProps, {}> {
 
     public componentWillMount() {
         // Keep 'this' as reference to component
-        const self = this;
-        axios
-            .get('http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true')
-            .then(function (response) {
-                let alg = new ElectionAlgorithm(response.data[0].elections[0]);
-                console.log(alg.modifiedSaintLague());
+        //const self = this;
+        //axios
+        //    .get('http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true')
+        //    .then(function (response) {
+        //        let alg = new ElectionAlgorithm(response.data[0].elections[0]);
+        //        console.log(alg.modifiedSaintLague());
 
-                const parliamentElections = response.data[0].elections;
-                let peYears = [];   // All years with available parliament election (pe) data
-                for (let i = 0; i < parliamentElections.length; i++) {
-                    peYears.push(parliamentElections[i].year);
-                }
-                self.setState({
-                    selectedValue: peYears[0],
-                    selectOptions: peYears
-                });
-            }).catch(function (error) { console.log(error) });
+        //        const parliamentElections = response.data[0].elections;
+        //        let peYears = [];   // All years with available parliament election (pe) data
+        //        for (let i = 0; i < parliamentElections.length; i++) {
+        //            peYears.push(parliamentElections[i].year);
+        //        }
+        //        self.setState({
+        //            selectedValue: peYears[0],
+        //            selectOptions: peYears
+        //        });
+        //    }).catch(function (error) { console.log(error) });
     }
 
     public handleYearChange(event : any) {
@@ -61,7 +47,7 @@ export class SettingMenu extends React.Component<settingsProps, settingsState> {
                     <div className="col-sm-7">
                         <select id="year" onChange={this.handleYearChange} className="form-control" name='year'>
                             {
-                                this.state.selectOptions.map(function (item, index) {
+                                this.props.selectOptions.map(function (item, index) {
                                     return (
                                         <option
                                             key={index} // By convention all children should have a unique key prop
@@ -110,3 +96,16 @@ export class SettingMenu extends React.Component<settingsProps, settingsState> {
         );
     }
 }
+
+const mapStateToProps = (state: ApplicationState) => ({
+    selectOptions: state.electionState.electionYears
+})
+
+const mapDispatchToProps = (dispatch: any) => ({
+    
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(_SettingMenu)

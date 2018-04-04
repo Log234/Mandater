@@ -1,21 +1,25 @@
 ﻿import * as React from 'react';
 import { CountyTable } from './CountyTable';
 import { PartyTable } from './PartyTable';
+import { PartyResultDictionary } from 'ClientApp/interfaces/PartyResultDictionary';
+import { ApplicationState } from 'ClientApp/store';
+import { connect } from 'react-redux';
+import { PartyResult } from 'ClientApp/interfaces/PartyResult';
 
 type PresentationState = {
     showGraph: string,
     year: number
 }
 
-export class Presentation extends React.Component<{}, PresentationState> {
-    state: PresentationState = {
-        showGraph: 'PartyTable',
-        year: 2017
-    }
+type PresentationProps = {
+    results: { [id: string]: PartyResult},
+    showGraph: string
+}
 
+export class _Presentation extends React.Component<PresentationProps, {}> {
     // returns the corresponding View based on currentMode
     getView() {
-        switch (this.state.showGraph) {
+        switch (this.props.showGraph) {
             case 'CountyTable':
                 return <CountyTable />
             case 'PartyTable':
@@ -26,6 +30,22 @@ export class Presentation extends React.Component<{}, PresentationState> {
     }
 
     render() {
+        let rows = [];
+        for (let result in this.props.results) {
+            let value = this.props.results[result];
+
+            rows.push(<tr>
+                <th>{value.partyCode}</th>
+                <td></td>
+                <td></td>
+                <td>{value.sum.toString()}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>)
+        }
+
         return (
             <div>
                 {this.getView()}
@@ -43,39 +63,24 @@ export class Presentation extends React.Component<{}, PresentationState> {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>Rødt</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>MDG</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>SV</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        {rows}
                     </tbody>
                 </table>
             </div>
         );
     }
 }
+
+const mapStateToProps = (state: ApplicationState) => ({
+    results: state.electionState.partyResults,
+    showGraph: "PartyTable"
+})
+
+const mapDispatchToProps = (dispatch: any) => ({
+
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(_Presentation)

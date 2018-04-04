@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
-import { SettingMenu } from './SettingMenu';
-import { Presentation } from './Presentation';
+import * as SettingMenu from './SettingMenu';
+import * as Presentation from './Presentation';
 import { PresentationSettingsContainer } from './PresentationSettingsContainer';
 import { initializeParliamentaryElectionData } from '../store/ElectionReducer'
 import { connect } from 'react-redux';
@@ -12,8 +12,8 @@ export interface layoutProps {
 }
 
 export class _Layout extends React.Component<layoutProps, {}> {
-    public componentWillMount() {
-        this.props.initializeState();
+    public async componentWillMount() {
+        await this.props.initializeState();
     }
     public render() {
         return <div className='container-fluid'>
@@ -22,10 +22,10 @@ export class _Layout extends React.Component<layoutProps, {}> {
                     <NavMenu />
                 </div>
                 <div className='col-sm-3'>
-                    <SettingMenu />
+                    <SettingMenu.default />
                 </div>
                 <div className='col-sm-6'>
-                    <Presentation />
+                    <Presentation.default />
                 </div>
                 <div className='col-sm-3'>
                     <PresentationSettingsContainer />
@@ -49,9 +49,10 @@ const mapStateToProps = (state: ApplicationState) => {
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
-    initializeState: () => {
+    initializeState: async () => {
         console.log("Test1")
-        dispatch(initializeParliamentaryElectionData())
+        let action = await initializeParliamentaryElectionData()
+        dispatch(action)
         console.log("Test2")
     }
 })
