@@ -8,6 +8,7 @@ import { PartyResult } from 'ClientApp/interfaces/PartyResult';
 import { PartyResultDictionary } from 'ClientApp/interfaces/PartyResultDictionary';
 import { ElectionState } from 'ClientApp/interfaces/states/ElectionState';
 import { time } from 'console';
+import * as constants from '../constants'
 
 // TODO: Make actions for updates of elections etc...
 
@@ -41,7 +42,7 @@ export async function initializeParliamentaryElectionData() {
         });
     
     let initializeAction: InitializeParliamentaryElectionAction = {
-        type: "INITIALIZE_PARLIAMENTARY_ELECTION",
+        type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
         election: defaultElection,
         partyResults: defaultPartyResults,
         electionYears: electionYears,
@@ -81,7 +82,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
     // Include known action if applicable
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case "INITIALIZE_PARLIAMENTARY_ELECTION":
+        case constants.INITIALIZE_PARLIAMENTARY_ELECTION:
             console.log("Called: " + action.electionYears)
             return {
                 election: action.election,
@@ -89,14 +90,14 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 firstDivisor: action.firstDivisor,
                 partyResults: action.partyResults
             }
-        case "GET_MENU_DATA":
+        case constants.GET_MENU_DATA:
             return {
                 election: state.election,
                 electionYears: action.electionYears,
                 firstDivisor: action.firstDivisor,
                 partyResults: state.partyResults
             }
-        case "UPDATE_CALCULATION":
+        case constants.UPDATE_CALCULATION:
             return {
                 election: state.election,
                 electionYears: state.electionYears,
