@@ -7,7 +7,7 @@ export interface GetMenuDataAction {
     type: constants.GET_MENU_DATA,
     electionYears: number[],
     firstDivisor: number,
-    //algorithms: string[] // for more sensible code later
+    algorithms: string[]
 }
 
 export interface InitializeParliamentaryElectionAction {

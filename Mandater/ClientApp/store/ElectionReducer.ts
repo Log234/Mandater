@@ -85,6 +85,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
         case constants.INITIALIZE_PARLIAMENTARY_ELECTION:
             console.log("Called: " + action.electionYears)
             return {
+                ...state, 
                 election: action.election,
                 electionYears: action.electionYears,
                 firstDivisor: action.firstDivisor,
@@ -92,16 +93,13 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
             }
         case constants.GET_MENU_DATA:
             return {
-                election: state.election,
+                ...state,
                 electionYears: action.electionYears,
                 firstDivisor: action.firstDivisor,
-                partyResults: state.partyResults
             }
         case constants.UPDATE_CALCULATION:
             return {
-                election: state.election,
-                electionYears: state.electionYears,
-                firstDivisor: state.firstDivisor,
+                ...state,
                 partyResults: action.partyResults
             }
         default:
