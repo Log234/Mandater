@@ -88,10 +88,10 @@ namespace Mandater.Data
 
                         // Iterate through the elections
                         string[] electionFiles = Directory.GetFiles(electionType);
-                        Election[] elections = CSVUtilities.CsvToElectionArray(electionType + "/Elections.csv", countryModel, electionTypeModel);
-                        context.Elections.AddRange(elections);
-                        electionTypeModel.Elections.AddRange(elections);
-                        if (electionFiles.Length != elections.Length + 1)
+                        List<ElectionFormat> elections = CSVUtilities.CsvToList<ElectionFormat>(electionType + "/Elections.csv");
+                        List<Election> electionModels = ModelBuilder.BuildElections(elections, countryModel, electionTypeModel);
+                        electionTypeModel.Elections.AddRange(electionModels);
+                        if (electionFiles.Length != elections.Count + 1)
                         {
                             throw new ArgumentException($"The number of elections in {electionType} does not match the number found in Elections.csv.");
                         }
