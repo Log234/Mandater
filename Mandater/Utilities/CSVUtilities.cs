@@ -22,23 +22,18 @@ namespace Mandater.Utilities
         }
     }
 
-    public interface ICsvFormat<T>
-    {
-        T Parse(string[] line, string filePath, string currentLine);
-    }
-
     public static class CSVUtilities
     {
         public static List<T> CsvToList<T>(string filePath) where T : ICsvFormat<T>, new()
         {
             List<T> objects = new List<T>();
             StreamReader file = new StreamReader(filePath);
+            FieldParser parser = new FieldParser(filePath, ";");
             string actualHeaderString = file.ReadLine(); // Skip
             string currentLine;
             while ((currentLine = file.ReadLine()) != null)
             {
-                string[] objectFields = currentLine.Split(";");
-                objects.Add((new T()).Parse(objectFields));
+                objects.Add((new T()).Parse(currentLine, parser));
             }
             return objects;
         }

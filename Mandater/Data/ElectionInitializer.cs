@@ -27,91 +27,21 @@ namespace Mandater.Data
             // Catch all Argument/KeyNotFound/CsvFileFormatExceptions thrown by model validation
             try
             {
-                Dictionary<string, string> countryNames = CSVUtilities.CsvToDictionary(root + "/Countries.csv");
+                List<CountryFormat> countries = CSVUtilities.CsvToList<CountryFormat>(root + "/Countries.csv");
+                List<Country> countryModels = ModelBuilder.BuildCountries(countries);
+                context.Countries.AddRange(countryModels);
 
                 // Iterate through countries
-                string[] countries = Directory.GetDirectories(root);
-                if (countries.Length != countryNames.Count)
+                string[] countryDirectories = Directory.GetDirectories(root);
+                if (countryDirectories.Length != countryModels.Count)
                 {
-                    throw new ArgumentException("The number of directories in Data/States does not match the number found in States.csv");
+                    throw new ArgumentException($"The number of directories in {root} does not match the number found in States.csv");
                 }
 
-                foreach (string country in countries)
+                foreach (Country country in countryModels)
                 {
-
-                    // Check if the countryId is valid
-                    string countryId = Path.GetFileName(country);
-                    if (!countryNames.TryGetValue(countryId, out string countryName))
-                    {
-                        throw new KeyNotFoundException($"Could not find any entry with the countryId: {countryId}");
-                    }
-
-                    // Create a model based on the InternationalName and ShortName
-                    HashSet<int> validationSet = new HashSet<int>();
-                    Country countryModel = new Country
-                    {
-                        InternationalName = countryName,
-                        CountryCode = countryId,
-                        ElectionTypes = new List<ElectionType>()
-                    };
-                    CustomValidation.ValidateCountry(countryModel, validationSet);
-                    context.Countries.Add(countryModel);
-
-
-                    // Get a list of ElectionTypeIDs and their names
-                    Dictionary<string, string> electionTypeNames =
-                        CSVUtilities.CsvToDictionary(country + "/ElectionTypes.csv");
-
-                    // Iterate through the country's election types
-                    string[] electionTypes = Directory.GetDirectories(country);
-                    if (electionTypes.Length != electionTypeNames.Count)
-                    {
-                        throw new ArgumentException($"The number of directories in {country} does not match the number found in ElectionTypes.csv.");
-                    }
-
-                    foreach (string electionType in electionTypes)
-                    {
-                        // Check if the electionTypeId is valid
-                        string electionTypeId = Path.GetFileName(electionType);
-                        string electionTypeName = electionTypeNames[electionTypeId];
-
-                        // Create an election type model based on the Country and InternationalName
-                        ElectionType electionTypeModel = new ElectionType
-                        {
-                            CountryId = countryModel.CountryId,
-                            InternationalName = electionTypeName,
-                            Elections = new List<Election>()
-                        };
-                        CustomValidation.ValidateElectionType(electionTypeModel, validationSet);
-                        context.ElectionTypes.Add(electionTypeModel);
-                        countryModel.ElectionTypes.Add(electionTypeModel);
-
-                        // Iterate through the elections
-                        string[] electionFiles = Directory.GetFiles(electionType);
-                        List<ElectionFormat> elections = CSVUtilities.CsvToList<ElectionFormat>(electionType + "/Elections.csv");
-                        List<Election> electionModels = ModelBuilder.BuildElections(elections, countryModel, electionTypeModel);
-                        electionTypeModel.Elections.AddRange(electionModels);
-                        if (electionFiles.Length != elections.Count + 1)
-                        {
-                            throw new ArgumentException($"The number of elections in {electionType} does not match the number found in Elections.csv.");
-                        }
-                        
-                        foreach (string electionFile in electionFiles)
-                        {
-                            if (!Path.GetFileName(electionFile).Equals("Elections.csv"))
-                            {
-                                VDModel[] entities = CSVUtilities.CsvToVdArray(electionFile);
-                                int year = int.Parse(Path.GetFileNameWithoutExtension(electionFile));
-                                Election electionModel = elections.Single(e => e.Year == year);
-                                CustomValidation.ValidateElection(electionModel, validationSet);
-                                ModelBuilderUtilities.ResultModelBuilder(context, electionModel, entities, validationSet);
-                            }
-                        }
-                    }
-                    context.SaveChanges();
-                    CSVUtilities.CsvToCountyData(country + "/CountyData.csv", countryModel, context);
-
-                    CustomValidation.ValidateCountry(countryModel, new HashSet<int>());
+                    string path = Path.Combine(root, country.CountryCode);
+                    CreateElectionTypes(country, path);
                 }
 
                 context.SaveChanges();
@@ -129,6 +59,68 @@ namespace Mandater.Data
             {
                 logger.LogError(csvFileFormatException, "The csv file has a malformed format.");
             }
+        }
+
+        private static void CreateElectionTypes(Country country, string root)
+        {
+            // Check if the countryId is valid
+            if (!File.Exists(root))
+            {
+                throw new KeyNotFoundException($"Could not find any directory with the country code: {country.CountryCode}");
+            }
+
+            // Get a list of ElectionTypeFormats
+            List<ElectionTypeFormat> electionTypes =  CSVUtilities.CsvToList<ElectionTypeFormat>(Path.Combine(root, "ElectionTypes.csv"));
+            List<ElectionType> electionTypeModels = ModelBuilder.BuildElectionTypes(electionTypes, country);
+            country.ElectionTypes.AddRange(electionTypeModels);
+
+            List<CountyDataFormat> countyData = CSVUtilities.CsvToList<CountyDataFormat>(Path.Combine(root, "CountyData.csv"));
+
+            // Iterate through the country's election types
+            string[] electionTypeFiles = Directory.GetDirectories(root);
+            if (electionTypeFiles.Length != electionTypes.Count)
+            {
+                throw new ArgumentException($"The number of directories in {root} does not match the number found in ElectionTypes.csv.");
+            }
+
+            foreach (ElectionType electionTypeModel in electionTypeModels)
+            {
+                string path = Path.Combine(root, electionTypeModel.ElectionTypeCode);
+                CreateElection(country, electionTypeModel, countyData, path);
+            }
+        }
+
+        private static void CreateElection(Country country, ElectionType electionType, List<CountyDataFormat> countyData, string root)
+        {
+            // Check if the electionTypeId is valid
+            if (!File.Exists(root))
+            {
+                throw new KeyNotFoundException($"Could not find any directory with the election type code: {electionType.ElectionTypeCode}");
+            }
+            
+            List<ElectionFormat> elections = CSVUtilities.CsvToList<ElectionFormat>(Path.Combine(root, "Elections.csv"));
+            List<Election> electionModels = ModelBuilder.BuildElections(elections, country, electionType);
+            electionType.Elections.AddRange(electionModels);
+
+            // Iterate through the elections
+            string[] electionFiles = Directory.GetFiles(root);
+            if (electionFiles.Length != elections.Count + 1)
+            {
+                throw new ArgumentException($"The number of elections in {electionType} does not match the number found in Elections.csv.");
+            }
+
+            foreach (Election electionModel in electionModels)
+            {
+                string path = Path.Combine(root, electionModel.Year + ".csv");
+                CreateResults(country, electionModel, path);
+            }
+        }
+
+        private static void CreateResults(Country country, Election election, string root)
+        {
+            List<ResultFormat> entities = CSVUtilities.CsvToList<ResultFormat>(root);
+            List<Result> resultModels = ModelBuilder.
+            ModelBuilderUtilities.ResultModelBuilder(context, electionModel, entities, validationSet);
         }
     }
 }

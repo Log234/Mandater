@@ -12,6 +12,8 @@ namespace Mandater.Models
         
         [Required]
         public string InternationalName { get; set; }
+        [Required]
+        public string ElectionTypeCode { get; set; }
 
         public int CountryId { get; set; }
 
