@@ -15,8 +15,6 @@ namespace Mandater.Models
         [Required]
         public string ElectionTypeCode { get; set; }
 
-        public int CountryId { get; set; }
-
         [Required]
         public virtual List<Election> Elections { get; set; }
         

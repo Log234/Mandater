@@ -27,7 +27,7 @@ namespace Mandater.Data
             // Catch all Argument/KeyNotFound/CsvFileFormatExceptions thrown by model validation
             try
             {
-                List<CountryFormat> countries = CSVUtilities.CsvToList<CountryFormat>(root + "/Countries.csv");
+                List<CountryFormat> countries = CSVUtilities.CsvToList<CountryFormat>(root + "Countries.csv");
                 List<Country> countryModels = ModelBuilder.BuildCountries(countries);
                 context.Countries.AddRange(countryModels);
 
@@ -41,7 +41,11 @@ namespace Mandater.Data
                 foreach (Country country in countryModels)
                 {
                     string path = Path.Combine(root, country.CountryCode);
-                    CreateElectionTypes(country, path);
+                    List<ElectionType>  electionTypes = CreateElectionTypes(country, path);
+                    country.ElectionTypes.AddRange(electionTypes);
+
+                    HashSet<int> validated = new HashSet<int>();
+                    CustomValidation.ValidateCountry(country, validated);
                 }
 
                 context.SaveChanges();
@@ -61,7 +65,7 @@ namespace Mandater.Data
             }
         }
 
-        private static void CreateElectionTypes(Country country, string root)
+        private static List<ElectionType> CreateElectionTypes(Country country, string root)
         {
             // Check if the countryId is valid
             if (!File.Exists(root))
@@ -72,7 +76,6 @@ namespace Mandater.Data
             // Get a list of ElectionTypeFormats
             List<ElectionTypeFormat> electionTypes =  CSVUtilities.CsvToList<ElectionTypeFormat>(Path.Combine(root, "ElectionTypes.csv"));
             List<ElectionType> electionTypeModels = ModelBuilder.BuildElectionTypes(electionTypes, country);
-            country.ElectionTypes.AddRange(electionTypeModels);
 
             List<CountyDataFormat> countyData = CSVUtilities.CsvToList<CountyDataFormat>(Path.Combine(root, "CountyData.csv"));
 
@@ -86,11 +89,13 @@ namespace Mandater.Data
             foreach (ElectionType electionTypeModel in electionTypeModels)
             {
                 string path = Path.Combine(root, electionTypeModel.ElectionTypeCode);
-                CreateElection(country, electionTypeModel, countyData, path);
+                List<Election> elections = CreateElection(country, electionTypeModel, countyData, path);
+                electionTypeModel.Elections.AddRange(elections);
             }
+            return electionTypeModels;
         }
 
-        private static void CreateElection(Country country, ElectionType electionType, List<CountyDataFormat> countyData, string root)
+        private static List<Election> CreateElection(Country country, ElectionType electionType, List<CountyDataFormat> countyData, string root)
         {
             // Check if the electionTypeId is valid
             if (!File.Exists(root))
@@ -100,7 +105,6 @@ namespace Mandater.Data
             
             List<ElectionFormat> elections = CSVUtilities.CsvToList<ElectionFormat>(Path.Combine(root, "Elections.csv"));
             List<Election> electionModels = ModelBuilder.BuildElections(elections, country, electionType);
-            electionType.Elections.AddRange(electionModels);
 
             // Iterate through the elections
             string[] electionFiles = Directory.GetFiles(root);
@@ -112,15 +116,29 @@ namespace Mandater.Data
             foreach (Election electionModel in electionModels)
             {
                 string path = Path.Combine(root, electionModel.Year + ".csv");
-                CreateResults(country, electionModel, path);
+                List<County> counties = CreateCounties(electionModel, countyData.Where(cD => cD.Year == electionModel.Year), path);
+                electionModel.Counties.AddRange(counties);
             }
+
+            return electionModels;
         }
 
-        private static void CreateResults(Country country, Election election, string root)
+        private static List<County> CreateCounties(Election election, IEnumerable<CountyDataFormat> countyData, string root)
         {
-            List<ResultFormat> entities = CSVUtilities.CsvToList<ResultFormat>(root);
-            List<Result> resultModels = ModelBuilder.
-            ModelBuilderUtilities.ResultModelBuilder(context, electionModel, entities, validationSet);
+            List<ResultFormat> resultFormat = CSVUtilities.CsvToList<ResultFormat>(root);
+            List<County> countyModels = ModelBuilder.BuildCounties(resultFormat, countyData);
+
+            foreach (County county in countyModels)
+            {
+                List<Result> results = CreateResults(county, resultFormat.Where(r => r.Fylkenavn.Equals(county.Name)));
+                county.Results.AddRange(results);
+            }
+            return countyModels;
+        }
+
+        private static List<Result> CreateResults(County county, IEnumerable<ResultFormat> resultFormat)
+        {
+            return ModelBuilder.BuildResults(resultFormat);
         }
     }
 }
