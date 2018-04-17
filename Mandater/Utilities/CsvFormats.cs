@@ -10,6 +10,9 @@ namespace Mandater.Utilities
         T Parse(string line, FieldParser parser);
     }
 
+    /// <summary>
+    /// Represents the parsed values of a line from the Elections.csv file
+    /// </summary>
     public class ElectionFormat : ICsvFormat<ElectionFormat>
     {
         public int Year { get; set; }
@@ -19,6 +22,12 @@ namespace Mandater.Utilities
         public int Seats { get; set; }
         public int LevelingSeats { get; set; }
 
+        /// <summary>
+        /// Parses a line following the ElectionFormat and returns an ElectionFormat object
+        /// </summary>
+        /// <param name="line">The line to parse</param>
+        /// <param name="parser">The field parser to use</param>
+        /// <returns>An ElectionFormat object containing the parsed values</returns>
         public ElectionFormat Parse(string line, FieldParser parser)
         {
             string[] fields =  parser.ParseLength(line, 6);
@@ -41,6 +50,9 @@ namespace Mandater.Utilities
         }
     }
 
+    /// <summary>
+    /// Represents the parsed values of a line from the results files
+    /// </summary>
     public class ResultFormat : ICsvFormat<ResultFormat>
     {
         public int Fylkenummer { get; set; }
@@ -57,13 +69,19 @@ namespace Mandater.Utilities
         public int AntallMandater { get; set; }
         public int AntallUtjevningsmandater { get; set; }
 
+        /// <summary>
+        /// Parses a line following the ResultFormat and returns an ResultFormat object
+        /// </summary>
+        /// <param name="line">The line to parse</param>
+        /// <param name="parser">The field parser to use</param>
+        /// <returns>An ResultFormat object containing the parsed values</returns>
         public ResultFormat Parse(string line, FieldParser parser)
         {
             string[] fields =  parser.ParseLength(line, 18);
             int fylkenummer = parser.ParseInt(fields[0], "Fylkenummer");
             string fylkenavn = parser.ParseString(fields[1], "Fylkenavn", 3, -1);
             string partikode = parser.ParseString(fields[6], "Partikode", 1, 10);
-            string partinavn = parser.ParseString(fields[7], "Partinavn", 3, 20);
+            string partinavn = parser.ParseString(fields[7], "Partinavn", 1, -1);
             double oppslutningProsentvis = parser.ParseDouble(fields[8], "Oppslutning prosentvis");
             int antallStemmeberettigde = parser.ParseInt(fields[9], "Antall stemmeberettigde");
             int antallForhåndsstemmer = parser.ParseInt(fields[10], "Antall forhåndsstemmer");
@@ -93,11 +111,20 @@ namespace Mandater.Utilities
         }
     }
 
+    /// <summary>
+    /// Represents the parsed values of a line from the Countries.csv file
+    /// </summary>
     public class CountryFormat : ICsvFormat<CountryFormat>
     {
         public string CountryCode;
         public string InternationalName;
 
+        /// <summary>
+        /// Parses a line following the CountryFormat and returns an CountryFormat object
+        /// </summary>
+        /// <param name="line">The line to parse</param>
+        /// <param name="parser">The field parser to use</param>
+        /// <returns>An CountryFormat object containing the parsed values</returns>
         public CountryFormat Parse(string line, FieldParser parser)
         {
             string[] fields = parser.ParseLength(line, 2);
@@ -111,11 +138,21 @@ namespace Mandater.Utilities
             };
         }
     }
+
+    /// <summary>
+    /// Represents the parsed values of a line from the ElectionTypes.csv file
+    /// </summary>
     public class ElectionTypeFormat : ICsvFormat<ElectionTypeFormat>
     {
         public string ElectionTypeCode;
         public string InternationalName;
 
+        /// <summary>
+        /// Parses a line following the ElectionTypeFormat and returns an ElectionTypeFormat object
+        /// </summary>
+        /// <param name="line">The line to parse</param>
+        /// <param name="parser">The field parser to use</param>
+        /// <returns>An ElectionTypeFormat object containing the parsed values</returns>
         public ElectionTypeFormat Parse(string line, FieldParser parser)
         {
             string[] fields = parser.ParseLength(line, 2);
@@ -130,6 +167,9 @@ namespace Mandater.Utilities
         }
     }
 
+    /// <summary>
+    /// Represents the parsed values of a line from the CountyData.csv file
+    /// </summary>
     public class CountyDataFormat : ICsvFormat<CountyDataFormat>
     {
         public int Year;
@@ -137,7 +177,13 @@ namespace Mandater.Utilities
         public double Areal;
         public int Population;
         public int Seats;
-        
+
+        /// <summary>
+        /// Parses a line following the CountyDataFormat and returns an CountyDataFormat object
+        /// </summary>
+        /// <param name="line">The line to parse</param>
+        /// <param name="parser">The field parser to use</param>
+        /// <returns>An CountyDataFormat object containing the parsed values</returns>
         public CountyDataFormat Parse(string line, FieldParser parser)
         {
             string[] fields = parser.ParseLength(line, 5);

@@ -8,6 +8,11 @@ namespace Mandater.Utilities
 {
     public static class ModelBuilder
     {
+        /// <summary>
+        /// Builds a list of Country object based on a list of CountryFormat objects
+        /// </summary>
+        /// <param name="countries">A list of CountryFormats</param>
+        /// <returns>A list of Countries</returns>
         public static List<Country> BuildCountries(List<CountryFormat> countries)
         {
             List<Country> countryModels = new List<Country>();
@@ -24,7 +29,12 @@ namespace Mandater.Utilities
             return countryModels;
         }
 
-        public static List<Election> BuildElections(List<ElectionFormat> elections, Country country, ElectionType electionType)
+        /// <summary>
+        /// Takes a list of ElectionFormat and builds a list of Elections
+        /// </summary>
+        /// <param name="elections">A list of ElectionFormat</param>
+        /// <returns>A list of Elections</returns>
+        public static List<Election> BuildElections(List<ElectionFormat> elections)
         {
             List<Election> electionModels = new List<Election>();
             foreach (ElectionFormat election in elections)
@@ -44,7 +54,12 @@ namespace Mandater.Utilities
             return electionModels;
         }
 
-        public static List<ElectionType> BuildElectionTypes(List<ElectionTypeFormat> electionTypes, Country country)
+        /// <summary>
+        /// Takes a list of ElectionTypeFormat and builds a list of ElectionTypes
+        /// </summary>
+        /// <param name="electionTypes">A list of ElectionTypesFormat</param>
+        /// <returns>A list of ElectionTypes</returns>
+        public static List<ElectionType> BuildElectionTypes(List<ElectionTypeFormat> electionTypes)
         {
             List<ElectionType> electionTypeModels = new List<ElectionType>();
             foreach (ElectionTypeFormat electionType in electionTypes)
@@ -60,6 +75,12 @@ namespace Mandater.Utilities
             return electionTypeModels;
         }
 
+        /// <summary>
+        /// Takes a list of ResultFormat and a list of CountyDataFormat, and builds a list of Counties
+        /// </summary>
+        /// <param name="results">A list of ResultFormat</param>
+        /// <param name="countyData">A list of CountyDataFormat</param>
+        /// <returns>A list of Counties</returns>
         public static List<County> BuildCounties(List<ResultFormat> results, IEnumerable<CountyDataFormat> countyData)
         {
             List<County> countyModels = new List<County>();
@@ -78,6 +99,11 @@ namespace Mandater.Utilities
             return countyModels;
         }
 
+        /// <summary>
+        /// Takes a list of ResultFormat and builds a list of Results
+        /// </summary>
+        /// <param name="results">A list of ResultFormat</param>
+        /// <returns>A list of Results</returns>
         public static List<Result> BuildResults(IEnumerable<ResultFormat> results)
         {
             List<Result> resultModels = new List<Result>();

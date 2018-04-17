@@ -52,7 +52,7 @@ namespace Mandater.Utilities
         /// <exception cref="CsvFileFormatException">Is thrown if the string does not match any known algorithm</exception>
         public Algorithm ParseAlgorithm(string value, string field)
         {
-            if (!Algorithm.TryParse(value, out Algorithm algorithm))
+            if (!AlgorithmUtilities.TryParse(value, out Algorithm algorithm))
             {
                 throw new CsvFileFormatException($"The {field} \"{value}\" is not a valid algorithm name.", File, Line);
             }

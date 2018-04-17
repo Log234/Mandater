@@ -18,7 +18,7 @@ namespace Mandater.Data
         /// <param name="logger">Where to log any issues.</param>
         public static void Initialize(ElectionContext context, ILogger logger)
         {
-            const string root = "Data/Countries";
+            string root = Path.Combine("Data", "Countries");
 
             // Make sure the DB is ready and empty
             context.Database.EnsureCreated();
@@ -27,7 +27,8 @@ namespace Mandater.Data
             // Catch all Argument/KeyNotFound/CsvFileFormatExceptions thrown by model validation
             try
             {
-                List<CountryFormat> countries = CSVUtilities.CsvToList<CountryFormat>(root + "Countries.csv");
+                string path = Path.Combine(root, "Countries.csv");
+                List<CountryFormat> countries = CSVUtilities.CsvToList<CountryFormat>(path);
                 List<Country> countryModels = ModelBuilder.BuildCountries(countries);
                 context.Countries.AddRange(countryModels);
 
@@ -40,8 +41,8 @@ namespace Mandater.Data
 
                 foreach (Country country in countryModels)
                 {
-                    string path = Path.Combine(root, country.CountryCode);
-                    List<ElectionType>  electionTypes = CreateElectionTypes(country, path);
+                    path = Path.Combine(root, country.CountryCode);
+                    List<ElectionType>  electionTypes = CreateElectionTypes(path);
                     country.ElectionTypes.AddRange(electionTypes);
 
                     HashSet<int> validated = new HashSet<int>();
@@ -65,17 +66,17 @@ namespace Mandater.Data
             }
         }
 
-        private static List<ElectionType> CreateElectionTypes(Country country, string root)
+        private static List<ElectionType> CreateElectionTypes(string root)
         {
             // Check if the countryId is valid
-            if (!File.Exists(root))
+            if (!Directory.Exists(root))
             {
-                throw new KeyNotFoundException($"Could not find any directory with the country code: {country.CountryCode}");
+                throw new KeyNotFoundException($"Could not find any directory with the path: {root}");
             }
 
             // Get a list of ElectionTypeFormats
             List<ElectionTypeFormat> electionTypes =  CSVUtilities.CsvToList<ElectionTypeFormat>(Path.Combine(root, "ElectionTypes.csv"));
-            List<ElectionType> electionTypeModels = ModelBuilder.BuildElectionTypes(electionTypes, country);
+            List<ElectionType> electionTypeModels = ModelBuilder.BuildElectionTypes(electionTypes);
 
             List<CountyDataFormat> countyData = CSVUtilities.CsvToList<CountyDataFormat>(Path.Combine(root, "CountyData.csv"));
 
@@ -89,54 +90,54 @@ namespace Mandater.Data
             foreach (ElectionType electionTypeModel in electionTypeModels)
             {
                 string path = Path.Combine(root, electionTypeModel.ElectionTypeCode);
-                List<Election> elections = CreateElection(country, electionTypeModel, countyData, path);
+                List<Election> elections = CreateElection(countyData, path);
                 electionTypeModel.Elections.AddRange(elections);
             }
             return electionTypeModels;
         }
 
-        private static List<Election> CreateElection(Country country, ElectionType electionType, List<CountyDataFormat> countyData, string root)
+        private static List<Election> CreateElection(List<CountyDataFormat> countyData, string root)
         {
             // Check if the electionTypeId is valid
-            if (!File.Exists(root))
+            if (!Directory.Exists(root))
             {
-                throw new KeyNotFoundException($"Could not find any directory with the election type code: {electionType.ElectionTypeCode}");
+                throw new KeyNotFoundException($"Could not find any directory with the path: {root}");
             }
             
             List<ElectionFormat> elections = CSVUtilities.CsvToList<ElectionFormat>(Path.Combine(root, "Elections.csv"));
-            List<Election> electionModels = ModelBuilder.BuildElections(elections, country, electionType);
+            List<Election> electionModels = ModelBuilder.BuildElections(elections);
 
-            // Iterate through the elections
             string[] electionFiles = Directory.GetFiles(root);
             if (electionFiles.Length != elections.Count + 1)
             {
-                throw new ArgumentException($"The number of elections in {electionType} does not match the number found in Elections.csv.");
+                throw new ArgumentException($"The number of elections in {root} does not match the number found in Elections.csv.");
             }
 
+            // Iterate through the elections
             foreach (Election electionModel in electionModels)
             {
                 string path = Path.Combine(root, electionModel.Year + ".csv");
-                List<County> counties = CreateCounties(electionModel, countyData.Where(cD => cD.Year == electionModel.Year), path);
+                List<County> counties = CreateCounties(countyData.Where(cD => cD.Year == electionModel.Year), path);
                 electionModel.Counties.AddRange(counties);
             }
 
             return electionModels;
         }
 
-        private static List<County> CreateCounties(Election election, IEnumerable<CountyDataFormat> countyData, string root)
+        private static List<County> CreateCounties(IEnumerable<CountyDataFormat> countyData, string root)
         {
             List<ResultFormat> resultFormat = CSVUtilities.CsvToList<ResultFormat>(root);
             List<County> countyModels = ModelBuilder.BuildCounties(resultFormat, countyData);
 
             foreach (County county in countyModels)
             {
-                List<Result> results = CreateResults(county, resultFormat.Where(r => r.Fylkenavn.Equals(county.Name)));
+                List<Result> results = CreateResults(resultFormat.Where(r => r.Fylkenavn.Equals(county.Name)));
                 county.Results.AddRange(results);
             }
             return countyModels;
         }
 
-        private static List<Result> CreateResults(County county, IEnumerable<ResultFormat> resultFormat)
+        private static List<Result> CreateResults(IEnumerable<ResultFormat> resultFormat)
         {
             return ModelBuilder.BuildResults(resultFormat);
         }

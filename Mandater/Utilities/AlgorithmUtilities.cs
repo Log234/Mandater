@@ -19,9 +19,9 @@ namespace Mandater.Utilities
         private const string dHondt = "d'Hondt";
 
         // Our accepted names for the different algorithms
-        private static readonly string[] ModifiedSainteLaguesSet = {modifiedSainteLagues};
-        private static readonly string[] SainteLaguesSet = {sainteLagues};
-        private static readonly string[] DHondtSet = {dHondt};
+        private static readonly string[] ModifiedSainteLaguesSet = {modifiedSainteLagues.ToLower()};
+        private static readonly string[] SainteLaguesSet = {sainteLagues.ToLower()};
+        private static readonly string[] DHondtSet = {dHondt.ToLower()};
 
         /// <summary>
         /// Accepts a string and returns the matching algorithm enum.
@@ -31,17 +31,19 @@ namespace Mandater.Utilities
         /// <returns>An algorithm enum</returns>
         public static Algorithm StringToAlgorithm(string name)
         {
-            if (ModifiedSainteLaguesSet.Contains(name))
+            string curName = name.ToLower();
+
+            if (ModifiedSainteLaguesSet.Contains(curName))
             {
                 return Algorithm.ModifiedSainteLagues;
             }
 
-            if (SainteLaguesSet.Contains(name))
+            if (SainteLaguesSet.Contains(curName))
             {
                 return Algorithm.SainteLagues;
             }
 
-            if (DHondtSet.Contains(name))
+            if (DHondtSet.Contains(curName))
             {
                 return Algorithm.DHondt;
             }
@@ -77,9 +79,10 @@ namespace Mandater.Utilities
         /// <returns>True if we have an enum for the algorithm, false otherwise.</returns>
         public static bool IsAlgorithm(string name)
         {
-            return ModifiedSainteLaguesSet.Contains(name)
-                   || SainteLaguesSet.Contains(name)
-                   || DHondtSet.Contains(name);
+            string curName = name.ToLower();
+            return ModifiedSainteLaguesSet.Contains(curName)
+                   || SainteLaguesSet.Contains(curName)
+                   || DHondtSet.Contains(curName);
         }
 
         /// <summary>
