@@ -83,20 +83,24 @@ namespace Mandater.Utilities
         /// <returns>A list of Counties</returns>
         public static List<County> BuildCounties(List<ResultFormat> results, IEnumerable<CountyDataFormat> countyData)
         {
-            List<County> countyModels = new List<County>();
+            Dictionary<string, County> countyModels = new Dictionary<string, County>();
             foreach (ResultFormat resultFormat in results)
             {
-                CountyDataFormat curCountyData = countyData.Single(cD => cD.County.Equals(resultFormat.Fylkenavn));
-
-                County countyModel = new County()
+                if (!countyModels.ContainsKey(resultFormat.Fylkenavn))
                 {
-                    Name = resultFormat.Fylkenavn,
-                    Seats = curCountyData.Seats,
-                    Results = new List<Result>()
-                };
-                countyModels.Add(countyModel);
+
+                    CountyDataFormat curCountyData = countyData.Single(cD => cD.County.Equals(resultFormat.Fylkenavn));
+
+                    County countyModel = new County()
+                    {
+                        Name = resultFormat.Fylkenavn,
+                        Seats = curCountyData.Seats,
+                        Results = new List<Result>()
+                    };
+                    countyModels.Add(resultFormat.Fylkenavn, countyModel);
+                }
             }
-            return countyModels;
+            return countyModels.Values.ToList();
         }
 
         /// <summary>
