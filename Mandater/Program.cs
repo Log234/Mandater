@@ -27,7 +27,7 @@ namespace Mandater
                     //VDContext context = services.GetRequiredService<VDContext>();
                     //VDInitializer.Initialize(context);
                     ElectionContext context = services.GetRequiredService<ElectionContext>();
-                    ILogger logger = services.GetRequiredService < ILogger<Program>>();
+                    ILogger logger = services.GetRequiredService <ILogger<Program>>();
                     ElectionInitializer.Initialize(context, logger);
                 }
                 catch (Exception ex)
