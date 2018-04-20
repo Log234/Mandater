@@ -10,20 +10,10 @@ namespace Mandater.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ResultId { get; set; }
 
+        public string PartyName { get; set; }
+        public string PartyCode { get; set; }
         public int Votes { get; set; } = -1;
         public double Percentage { get; set; } = double.NaN;
-
-        public int ElectionId { get; set; }
-        
-        public int PartyId { get; set; }
-        
-        public int CountyId { get; set; }
-
-        public string CountyName { get; set; }
-
-        public string PartyCode { get; set; }
-        
-        public string PartyName { get; set; }
 
     }
 }

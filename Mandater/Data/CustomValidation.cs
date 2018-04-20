@@ -194,6 +194,14 @@ namespace Mandater.Data
             {
                 throw new ArgumentException("ElectionType.InternationalName cannot be shorter than 3 characters.");
             }
+            if (electionType.ElectionTypeCode == null)
+            {
+                throw new ArgumentException("ElectionType.InternationalName cannot be null.");
+            }
+            if (electionType.ElectionTypeCode.Length < 2)
+            {
+                throw new ArgumentException("ElectionType.InternationalName cannot be shorter than 2 characters.");
+            }
 
             checkedModels.Add(electionType.GetHashCode());
 
@@ -256,6 +264,22 @@ namespace Mandater.Data
                 throw new ArgumentException("Result cannot be null.");
             }
 
+            if (result.PartyName == null)
+            {
+                throw new ArgumentException("Party.Name cannot be null.");
+            }
+            if (result.PartyName.Length < 2)
+            {
+                throw new ArgumentException("Party.Name cannot be shorter than 3 characters.");
+            }
+            if (result.PartyCode == null)
+            {
+                throw new ArgumentException("Party.Name cannot be null.");
+            }
+            if (result.PartyCode.Length < 1)
+            {
+                throw new ArgumentException("Party.Name cannot be shorter than 3 characters.");
+            }
             if (result.Votes == -1)
             {
                 throw new ArgumentException("Result.Votes cannot be the default value.");
