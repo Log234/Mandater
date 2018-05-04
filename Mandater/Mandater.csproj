@@ -34,9 +34,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\new.js" />
+    <None Remove="ClientApp\components\PresentationComponent.tsx" />
+    <None Remove="ClientApp\components\PresentationMenu.tsx" />
     <None Remove="ClientApp\components\PresentationSettings.tsx" />
-    <None Remove="ClientApp\components\PresentationSettingsContainer.tsx" />
+    <None Remove="ClientApp\components\SettingMenuComponent.tsx" />
     <None Remove="ClientApp\containers\index.ts" />
+    <None Remove="ClientApp\containers\PresentationContainer.tsx" />
+    <None Remove="ClientApp\containers\SettingMenuContainer.tsx" />
     <None Remove="ClientApp\index.ts" />
     <None Remove="ClientApp\interfaces\AlgorithmOutput.ts" />
     <None Remove="ClientApp\interfaces\County.ts" />
@@ -53,10 +58,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\PresentationComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationSettings.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\PresentationSettingsContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\PresentationMenu.tsx" />
     <TypeScriptCompile Include="ClientApp\actions\index.ts" />
+    <TypeScriptCompile Include="ClientApp\components\SettingMenuComponent.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\PresentationContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\index.ts" />
+    <TypeScriptCompile Include="ClientApp\containers\SettingMenuContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\interfaces\County.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Election.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\AlgorithmOutput.ts" />

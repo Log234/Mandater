@@ -1,5 +1,4 @@
-﻿// Deprecated
-import * as React from 'react';
+﻿import * as React from 'react';
 import { ElectionAlgorithm } from '../logic/Algorithm';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { ApplicationState } from '../store/index'
@@ -11,34 +10,10 @@ export interface settingsProps {
 }
 
 
-export class _SettingMenu extends React.Component<settingsProps, {}> {
-
-    public componentWillMount() {
-        // Keep 'this' as reference to component
-        //const self = this;
-        //axios
-        //    .get('http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true')
-        //    .then(function (response) {
-        //        let alg = new ElectionAlgorithm(response.data[0].elections[0]);
-        //        console.log(alg.modifiedSaintLague());
-
-        //        const parliamentElections = response.data[0].elections;
-        //        let peYears = [];   // All years with available parliament election (pe) data
-        //        for (let i = 0; i < parliamentElections.length; i++) {
-        //            peYears.push(parliamentElections[i].year);
-        //        }
-        //        self.setState({
-        //            selectedValue: peYears[0],
-        //            selectOptions: peYears
-        //        });
-        //    }).catch(function (error) { console.log(error) });
+export class SettingMenuComponent extends React.Component<settingsProps, {}> {
+    handleYearChange(event: any) {
+        // TODO: Implement year change (load new data into state)
     }
-
-    public handleYearChange(event : any) {
-        this.setState({ selectedValue: event.target.value });
-    }
-
-
     render() {
         return (<div className="settings-menu">
             <h1 className="h2">Stortingsvalg</h1>
@@ -97,16 +72,3 @@ export class _SettingMenu extends React.Component<settingsProps, {}> {
         );
     }
 }
-
-const mapStateToProps = (state: ApplicationState) => ({
-    selectOptions: state.electionState.electionYears
-})
-
-const mapDispatchToProps = (dispatch: any) => ({
-    
-})
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(_SettingMenu)

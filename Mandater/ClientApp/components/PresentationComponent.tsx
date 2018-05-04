@@ -12,11 +12,11 @@ type PresentationState = {
 }
 
 type PresentationProps = {
-    results: { [id: string]: PartyResult},
+    results: { [id: string]: PartyResult },
     showGraph: string
 }
 
-export class _Presentation extends React.Component<PresentationProps, {}> {
+export class PresentationComponent extends React.Component<PresentationProps, {}> {
     // returns the corresponding View based on currentMode
     getView() {
         switch (this.props.showGraph) {
@@ -70,17 +70,3 @@ export class _Presentation extends React.Component<PresentationProps, {}> {
         );
     }
 }
-
-const mapStateToProps = (state: ApplicationState) => ({
-    results: state.electionState.partyResults,
-    showGraph: "PartyTable"
-})
-
-const mapDispatchToProps = (dispatch: any) => ({
-
-})
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(_Presentation)

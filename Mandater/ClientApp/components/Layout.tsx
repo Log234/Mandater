@@ -1,11 +1,14 @@
+// Deprecated
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
 import * as SettingMenu from './SettingMenu';
 import * as Presentation from './Presentation';
-import { PresentationSettingsContainer } from './PresentationSettingsContainer';
+import { PresentationMenu } from './PresentationMenu';
 import { initializeParliamentaryElectionData } from '../store/ElectionReducer'
 import { connect } from 'react-redux';
-import { ApplicationState } from 'ClientApp/store';
+import { ApplicationState } from '../store';
+import PresentationContainer from '../containers/PresentationContainer';
+import SettingMenuContainer from '../containers/SettingMenuContainer';
 
 export interface layoutProps {
     initializeState: () => any
@@ -22,13 +25,13 @@ export class _Layout extends React.Component<layoutProps, {}> {
                     <NavMenu />
                 </div>
                 <div className='col-sm-3'>
-                    <SettingMenu.default />
+                    <SettingMenuContainer />
                 </div>
                 <div className='col-sm-6'>
-                    <Presentation.default />
+                    <PresentationContainer />
                 </div>
                 <div className='col-sm-3'>
-                    <PresentationSettingsContainer />
+                    <PresentationMenu />
                 </div>
 
                 {/*

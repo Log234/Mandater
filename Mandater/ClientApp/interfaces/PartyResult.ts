@@ -4,5 +4,6 @@ export interface PartyResult {
     partyName: string,
     partyCode: string,
     sum: number,
+    totalVotes: number,
     resultsPerCounty: ProcessedResult[],
 }

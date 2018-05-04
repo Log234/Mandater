@@ -62,10 +62,12 @@ export class ElectionAlgorithm {
                     partyCode: result.partyCode,
                     resultsPerCounty: [],
                     sum: 0,
+                    totalVotes: 0,
                 }
             }
             partyResults[result.partyName].resultsPerCounty.push(result);
             partyResults[result.partyName].sum += result.seats;
+            partyResults[result.partyName].totalVotes += result.votes;
         }
         return partyResults;
     }

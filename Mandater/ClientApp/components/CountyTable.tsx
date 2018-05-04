@@ -1,4 +1,5 @@
-﻿import * as React from 'react';
+﻿// Deprecated, should be dynamically generated
+import * as React from 'react';
 
 export class CountyTable extends React.Component<{}, {}> {
     public render() {

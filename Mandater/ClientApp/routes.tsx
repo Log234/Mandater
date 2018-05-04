@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
-import { Layout } from './components/Layout';
+import LayoutContainer from './containers/LayoutContainer';
 
-export const routes = <Layout>
-</Layout>;
+export const routes = <LayoutContainer>
+</LayoutContainer>;
