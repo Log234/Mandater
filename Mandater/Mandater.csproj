@@ -87,16 +87,16 @@
     <None Update="Data\Countries\NO\ElectionTypes.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Countries\NO\ParliamentaryElection\2009.csv">
+    <None Update="Data\Countries\NO\PE\2009.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Countries\NO\ParliamentaryElection\2013.csv">
+    <None Update="Data\Countries\NO\PE\2013.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Countries\NO\ParliamentaryElection\2017.csv">
+    <None Update="Data\Countries\NO\PE\2017.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Countries\NO\ParliamentaryElection\Elections.csv">
+    <None Update="Data\Countries\NO\PE\Elections.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Countries\Countries.csv">

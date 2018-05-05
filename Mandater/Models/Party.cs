@@ -14,7 +14,5 @@ namespace Mandater.Models
         public string Name { get; set; }
         public string InternationalName { get; set; }
         public string ShortName { get; set; }
-
-        public int CountryId { get; set; }
     }
 }

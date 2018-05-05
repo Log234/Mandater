@@ -24,12 +24,7 @@ namespace Mandater.Models
         [Required]
         public int LevelingSeats { get; set; } = -1;
 
-        public int CountryId { get; set; }
-
-        public int ElectionTypeId { get; set; }
-
         [Required]
         public virtual List<County> Counties { get; set; }
-
     }
 }

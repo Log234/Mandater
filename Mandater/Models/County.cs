@@ -13,9 +13,6 @@ namespace Mandater.Models
         public string Name { get; set; }
         public int Seats { get; set; }
 
-        public int CountryId { get; set; }
-        public int ElectionId { get; set; }
-
         [Required]
         public List<Result> Results { get; set; }
         
