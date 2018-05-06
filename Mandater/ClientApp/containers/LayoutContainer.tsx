@@ -5,7 +5,7 @@ import { initializeParliamentaryElectionData } from "../store/ElectionReducer";
 
 const mapStateToProps = (state: ApplicationState) => {
     return {};
-};
+}
 
 const mapDispatchToProps = (dispatch: any) => ({
     initializeState: async () => {
