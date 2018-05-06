@@ -1,10 +1,10 @@
 ﻿// Deprecated, should be dynamically generated
-import * as React from 'react';
+import * as React from "react";
 
 export class CountyTable extends React.Component<{}, {}> {
     public render() {
         return (<div>
-            <table className='table table-striped electionTable'>
+            <table className="table table-striped electionTable">
                 <tr>
                     <th scope="col">Valgdistrikt</th>
                     <th scope="col">Rødt</th>

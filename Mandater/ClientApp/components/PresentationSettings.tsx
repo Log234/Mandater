@@ -1,8 +1,8 @@
-﻿import * as React from 'react';
+﻿import * as React from "react";
 //import { ElectionAlgorithm } from '../logic/Algorithm'; // @Edvarda trengs for Algorithms
 //import { Election } from 'ClientApp/interfaces/Election'; // @Edvarda trengs for Algorithms
 //import { ElectionType } from 'ClientApp/interfaces/ElectionType'; // @Edvarda trengs for Algorithms
-import axios, { AxiosRequestConfig, AxiosPromise } from 'axios'; // @Edvarda trengs for axios på typescript
+import axios, { AxiosRequestConfig, AxiosPromise } from "axios"; // @Edvarda trengs for axios på typescript
 
 export class PresentationSettings extends React.Component<{}, {}> {
     // @Edvarda: Dette er et eksempel på hvordan man får ut data for øyeblikket -- det blir enklere etter møtet på onsdag
@@ -31,7 +31,7 @@ export class PresentationSettings extends React.Component<{}, {}> {
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">År</label>
                     <div className="col-sm-7">
-                        <select className="form-control" name='year'>
+                        <select className="form-control" name="year">
                             <option value="2017">2017</option>
                             <option value="2016">2016</option>
                             <option value="2015">2015</option>
@@ -60,14 +60,15 @@ export class PresentationSettings extends React.Component<{}, {}> {
                     </div>
                 </div>
                 <div className="form-group row">
-                    {/*Utjevningsmandat = Leveling seat as of https://www.dinordbok.no/norsk-engelsk/?q=utjevningsmandat */}
+                    { /*Utjevningsmandat = Leveling seat as of https://www.dinordbok.no/norsk-engelsk/?q=utjevningsmandat */
+                    }
                     <label htmlFor="levelingSeat" className="col-sm-5 col-form-label">Utjevningsmandater</label>
                     <div className="col-sm-7">
                         <input className="form-control" classID="levelingSeat" type="number" name="levelingSeat" placeholder="1.4" min="0.0" step="0.1" max="15.0" />
                     </div>
                 </div>
             </form>
-        </div>
+        </div>;
 
     }
 }

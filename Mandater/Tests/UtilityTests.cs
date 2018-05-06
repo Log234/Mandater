@@ -64,7 +64,7 @@ namespace Mandater.Tests
         public void ReadAllTest()
         {
             int expectedNumberOfVotes = 800947; // from VDs own site
-            List<VDModel> objects = Utilities.CSVUtilities.CsvToList(filePath);
+            List<VDModel> objects = Utilities.CsvUtilities.CsvToList(filePath);
             List<VDModel> APResults = objects.FindAll(a => a.Partinavn == "Arbeiderpartiet");
             int actualNumberOfVotes = 0;
             foreach (VDModel element in APResults)

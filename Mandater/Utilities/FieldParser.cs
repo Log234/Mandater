@@ -10,8 +10,8 @@ namespace Mandater.Utilities
     /// </summary>
     public class FieldParser
     {
-        private string File { get; set; }
-        private string Separator { get; set; }
+        private string File { get; }
+        private string Separator { get; }
         private string Line { get; set; }
 
         /// <summary>

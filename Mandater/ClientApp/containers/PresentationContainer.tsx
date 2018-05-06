@@ -5,13 +5,13 @@ import { connect } from "react-redux";
 const mapStateToProps = (state: ApplicationState) => ({
     results: state.electionState.partyResults,
     showGraph: "PartyTable"
-})
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
 
-})
+});
 
 export default connect(
         mapStateToProps,
         mapDispatchToProps
-    )(PresentationComponent)
+    )((PresentationComponent) as any)

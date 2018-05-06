@@ -111,7 +111,7 @@ namespace Mandater.Controllers
         /// <param name="year">Four digit election year</param>
         /// <returns>List of counties</returns>
         [HttpGet("{countryCode}/{electionCode}/{year}")]
-        public IEnumerable<County> GetCounties(string countryCode, string electionCode, int year, bool? deep)
+        public Election GetCounties(string countryCode, string electionCode, int year, bool? deep)
         {
             if (deep.HasValue && deep.Value)
             {
@@ -124,8 +124,7 @@ namespace Mandater.Controllers
                     .ElectionTypes
                         .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
                         .Elections
-                        .First(c => c.Year == year)
-                        .Counties;
+                        .First(c => c.Year == year);
             }
             return _context.Countries
                     .Include(c => c.ElectionTypes)
@@ -135,8 +134,7 @@ namespace Mandater.Controllers
                     .ElectionTypes
                         .First(c => c.InternationalName == Utilities.ETNameUtilities.CodeToName(electionCode))
                         .Elections
-                            .First(c => c.Year == year)
-                            .Counties;
+                            .First(c => c.Year == year);
         }
     }
 }

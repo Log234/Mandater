@@ -5,5 +5,5 @@ export interface ElectionState {
     electionYears: number[],
     firstDivisor: number,
     election: Election,
-    partyResults: PartyResultDictionary
+    partyResults: PartyResultDictionary;
 }

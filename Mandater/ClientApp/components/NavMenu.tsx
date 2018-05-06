@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import * as React from "react";
+import { NavLink, Link } from "react-router-dom";
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
-        return <div className='nav_container'>
+        return <div className="nav_container">
             <ul>
                 <li className="laviniaLogo"><a href="">Lavinia</a></li>
                 <li><a target="_blank" href="/swagger">API</a></li>

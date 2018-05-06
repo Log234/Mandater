@@ -7,5 +7,5 @@
     countyId: number,
     countyName: string,
     partyCode: string,
-    partyName: string
+    partyName: string;
 }

@@ -1,14 +1,14 @@
-﻿import { Action, Reducer, ActionCreator } from 'redux';
-import { Election } from 'ClientApp/interfaces/Election';
-import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction } from 'ClientApp/interfaces/ParliamentaryElectionActions';
-import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
-import { ElectionType } from 'ClientApp/interfaces/ElectionType';
-import { ElectionAlgorithm } from '../logic/Algorithm';
-import { PartyResult } from 'ClientApp/interfaces/PartyResult';
-import { PartyResultDictionary } from 'ClientApp/interfaces/PartyResultDictionary';
-import { ElectionState } from 'ClientApp/interfaces/states/ElectionState';
-import { time } from 'console';
-import * as constants from '../constants'
+﻿import { Action, Reducer, ActionCreator } from "redux";
+import { Election } from "ClientApp/interfaces/Election";
+import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction } from "ClientApp/interfaces/ParliamentaryElectionActions";
+import axios, { AxiosRequestConfig, AxiosPromise } from "axios";
+import { ElectionType } from "ClientApp/interfaces/ElectionType";
+import { ElectionAlgorithm } from "../logic/Algorithm";
+import { PartyResult } from "ClientApp/interfaces/PartyResult";
+import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
+import { ElectionState } from "ClientApp/interfaces/states/ElectionState";
+import { time } from "console";
+import * as constants from "../constants"
 
 // TODO: Make actions for updates of elections etc...
 
@@ -21,7 +21,7 @@ type KnownAction = GetMenuDataAction
 export async function initializeParliamentaryElectionData() {
     let electionYears: number[] = [];
     let defaultElection: any = {};
-    let defaultPartyResults: PartyResultDictionary = {}
+    let defaultPartyResults: PartyResultDictionary = {};
     await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true")
         .then(res => {
             let electionType: ElectionType = res.data[0];
@@ -47,8 +47,8 @@ export async function initializeParliamentaryElectionData() {
         partyResults: defaultPartyResults,
         electionYears: electionYears,
         firstDivisor: defaultElection.firstDivisor
-    }
-    console.log("Initialized: " + electionYears)
+    };
+    console.log(`Initialized: ${electionYears}`);
     return initializeAction;
 }
 
@@ -72,38 +72,39 @@ const unloadedState: ElectionState = {
     electionYears: [],
     firstDivisor: -1,
     partyResults: {}
-}
+};
 
 
 // NB: BaseReducer Typescript (Reducer<State>) definition changes as of redux 4.0.0
 // https://github.com/rt2zz/redux-persist/pull/778
 
+
+// ReSharper disable TsResolvedFromInaccessibleModule
 export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAction: Action) => {
     // Include known action if applicable
-    const action = incomingAction as KnownAction;
+    let action: KnownAction = incomingAction as KnownAction;
     switch (action.type) {
         case constants.INITIALIZE_PARLIAMENTARY_ELECTION:
-            console.log("Called: " + action.electionYears)
             return {
                 ...state, 
                 election: action.election,
                 electionYears: action.electionYears,
                 firstDivisor: action.firstDivisor,
                 partyResults: action.partyResults
-            }
+            };
         case constants.GET_MENU_DATA:
             return {
                 ...state,
                 electionYears: action.electionYears,
                 firstDivisor: action.firstDivisor,
-            }
+            };
         case constants.UPDATE_CALCULATION:
             return {
                 ...state,
                 partyResults: action.partyResults
-            }
+            };
         default:
             return state || unloadedState;
-    };
-
-}
+    }
+    // ReSharper restore TsResolvedFromInaccessibleModule
+};

@@ -31,7 +31,7 @@ export class ElectionAlgorithm {
                     partyCode: currentResult.partyCode,
                     votes: currentResult.votes,
                     seats: 0
-                }
+                };
                 processedResults.push(currentParty);
             }
         }
@@ -63,7 +63,7 @@ export class ElectionAlgorithm {
                     resultsPerCounty: [],
                     sum: 0,
                     totalVotes: 0,
-                }
+                };
             }
             partyResults[result.partyName].resultsPerCounty.push(result);
             partyResults[result.partyName].sum += result.seats;

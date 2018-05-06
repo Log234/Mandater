@@ -1,4 +1,4 @@
-﻿import { Action, Reducer, ActionCreator } from 'redux';
+﻿import { Action, Reducer, ActionCreator } from "redux";
 
 // STATES
 export interface UserInterfaceState {
@@ -7,7 +7,7 @@ export interface UserInterfaceState {
 
 // ACTIONS
 interface ChangeGraphAction {
-    type: 'CHANGE_GRAPH';
+    type: "CHANGE_GRAPH";
     showGraph: string;
 }
 
@@ -19,8 +19,8 @@ type KnownAction = ChangeGraphAction;
 
 // REDUCER
 const unloadedState: UserInterfaceState = {
-    showGraph: 'CountyTable'
-}
+    showGraph: "CountyTable"
+};
 
 // NB: BaseReducer Typescript (Reducer<State>) definition changes as of redux 4.0.0
 // https://github.com/rt2zz/redux-persist/pull/778
@@ -28,12 +28,12 @@ export const reducer: Reducer<UserInterfaceState> = (state: UserInterfaceState, 
     // Include known action if applicable
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case 'CHANGE_GRAPH':
-            console.log('State changed: ' + action.showGraph);
+        case "CHANGE_GRAPH":
+            console.log(`State changed: ${action.showGraph}`);
             return {
                 showGraph: action.showGraph
-            }
+            };
         default:
             return state || unloadedState;
     };
-}
+};

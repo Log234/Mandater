@@ -1,17 +1,17 @@
 ﻿// Deprecated
-import * as React from 'react';
-import { ElectionAlgorithm } from '../logic/Algorithm';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { ApplicationState } from '../store/index'
-import axios from 'axios';
-import { connect } from 'react-redux';
+import * as React from "react";
+import { ElectionAlgorithm } from "../logic/Algorithm";
+import { Link, RouteComponentProps } from "react-router-dom";
+import { ApplicationState } from "../store/index"
+import axios from "axios";
+import { connect } from "react-redux";
 
-export interface settingsProps {
+export interface ISettingsProps {
     selectOptions: number[]
 }
 
 
-export class _SettingMenu extends React.Component<settingsProps, {}> {
+export class SettingMenu extends React.Component<ISettingsProps, {}> {
 
     public componentWillMount() {
         // Keep 'this' as reference to component
@@ -46,7 +46,7 @@ export class _SettingMenu extends React.Component<settingsProps, {}> {
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">År</label>
                     <div className="col-sm-7">
-                        <select id="year" onChange={this.handleYearChange} className="form-control" name='year'>
+                        <select id="year" onChange={this.handleYearChange} className="form-control" name="year">
                             {
                                 this.props.selectOptions.map(function (item, index) {
                                     return (
@@ -54,7 +54,7 @@ export class _SettingMenu extends React.Component<settingsProps, {}> {
                                             key={index} // By convention all children should have a unique key prop
                                             value={item}
                                         > {item} </option>
-                                    )
+                                    );
                                 })
                             }
                         </select>
@@ -100,13 +100,13 @@ export class _SettingMenu extends React.Component<settingsProps, {}> {
 
 const mapStateToProps = (state: ApplicationState) => ({
     selectOptions: state.electionState.electionYears
-})
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
     
-})
+});
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(_SettingMenu)
+)((SettingMenu) as any)

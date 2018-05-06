@@ -1,11 +1,11 @@
 
-import * as UserInterface from './UserInterface';
-import { combineReducers } from 'redux';
-import { reducer } from './UserInterface';
-import { createStore } from 'redux';
-import * as ElectionReducer from './ElectionReducer'
-import { ElectionState } from '../interfaces/states/ElectionState'
-import configureStore from 'ClientApp/configureStore';
+import * as UserInterface from "./UserInterface";
+import { combineReducers } from "redux";
+import { reducer } from "./UserInterface";
+import { createStore } from "redux";
+import * as ElectionReducer from "./ElectionReducer"
+import { ElectionState } from "../interfaces/states/ElectionState"
+import configureStore from "ClientApp/configureStore";
 
 // The top-level state object
 export interface ApplicationState {

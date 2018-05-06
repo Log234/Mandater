@@ -1,6 +1,6 @@
-﻿import * as React from 'react';
-import { PresentationSelection } from './PresentationSelection';
-import { PresentationSettings } from './PresentationSettings';
+﻿import * as React from "react";
+import { PresentationSelection } from "./PresentationSelection";
+import { PresentationSettings } from "./PresentationSettings";
 
 export class PresentationMenu extends React.Component<{}, {}> {
     public render() {
@@ -8,7 +8,7 @@ export class PresentationMenu extends React.Component<{}, {}> {
         return <div className="presentation-settings-container settings-menu">
             <PresentationSelection />
             <PresentationSettings />
-        </div>
+        </div>;
 
     }
 }

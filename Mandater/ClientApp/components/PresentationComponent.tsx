@@ -1,31 +1,31 @@
-﻿import * as React from 'react';
-import { CountyTable } from './CountyTable';
-import { PartyTable } from './PartyTable';
-import { PartyResultDictionary } from 'ClientApp/interfaces/PartyResultDictionary';
-import { ApplicationState } from 'ClientApp/store';
-import { connect } from 'react-redux';
-import { PartyResult } from 'ClientApp/interfaces/PartyResult';
+﻿import * as React from "react";
+import { CountyTable } from "./CountyTable";
+import { PartyTable } from "./PartyTable";
+import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
+import { ApplicationState } from "ClientApp/store";
+import { connect } from "react-redux";
+import { PartyResult } from "ClientApp/interfaces/PartyResult";
 
 type PresentationState = {
     showGraph: string,
-    year: number
+    year: number;
 }
 
 type PresentationProps = {
     results: { [id: string]: PartyResult },
-    showGraph: string
+    showGraph: string;
 }
 
 export class PresentationComponent extends React.Component<PresentationProps, {}> {
     // returns the corresponding View based on currentMode
     getView() {
         switch (this.props.showGraph) {
-            case 'CountyTable':
-                return <CountyTable />
-            case 'PartyTable':
-                return <PartyTable />
+            case "CountyTable":
+                return <CountyTable />;
+            case "PartyTable":
+                return <PartyTable />;
             default:
-                return <PartyTable />
+                return <PartyTable />;
         }
     }
 
@@ -34,16 +34,16 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
         for (let result in this.props.results) {
             let value = this.props.results[result];
 
-            rows.push(<tr>
-                <td>{value.partyCode}</td>
-                <td>{value.totalVotes.toString()}</td>
-                <td></td>
-                <td>{value.sum.toString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>)
+            rows.push((<tr>
+                           <td>{value.partyCode}</td>
+                           <td>{value.totalVotes.toString()}</td>
+                           <td></td>
+                           <td>{value.sum.toString()}</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                       </tr>) as any);
         }
 
         return (

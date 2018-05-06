@@ -29,7 +29,7 @@ namespace Mandater.Utilities
         /// </summary>
         /// <param name="name">The name of the algorithm to be converted.</param>
         /// <returns>An algorithm enum</returns>
-        public static Algorithm StringToAlgorithm(string name)
+        private static Algorithm StringToAlgorithm(string name)
         {
             string curName = name.ToLower();
 
@@ -77,7 +77,7 @@ namespace Mandater.Utilities
         /// </summary>
         /// <param name="name">The name of the algorithm.</param>
         /// <returns>True if we have an enum for the algorithm, false otherwise.</returns>
-        public static bool IsAlgorithm(string name)
+        private static bool IsAlgorithm(string name)
         {
             string curName = name.ToLower();
             return ModifiedSainteLaguesSet.Contains(curName)

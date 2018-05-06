@@ -4,28 +4,28 @@ import SettingMenuContainer from "../containers/SettingMenuContainer";
 import PresentationContainer from "../containers/PresentationContainer";
 import { PresentationMenu } from "../components/PresentationMenu";
 
-interface props {
+interface IProps {
     initializeState: () => any
 }
 
-export class LayoutComponent extends React.Component<props, {}> {
+export class LayoutComponent extends React.Component<IProps, {}> {
     public async componentWillMount() {
         await this.props.initializeState();
     }
 
     public render() {
-        return <div className='container-fluid'>
-            <div className='row'>
+        return <div className="container-fluid">
+            <div className="row">
                 <div>
                     <NavMenu />
                 </div>
-                <div className='col-sm-3'>
+                <div className="col-sm-3">
                     <SettingMenuContainer />
                 </div>
-                <div className='col-sm-6'>
+                <div className="col-sm-6">
                     <PresentationContainer />
                 </div>
-                <div className='col-sm-3'>
+                <div className="col-sm-3">
                     <PresentationMenu />
                 </div>
             </div>

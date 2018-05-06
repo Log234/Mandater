@@ -4,5 +4,5 @@ export interface ElectionType {
     countryId: number,
     electionTypeId: number,
     elections: Election[],
-    internationalName: string
+    internationalName: string;
 }

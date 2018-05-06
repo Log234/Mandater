@@ -6,5 +6,5 @@ export interface County {
     seats: number,
     countryId: number,
     electionId: number,
-    results: Array<Result>
+    results: Array<Result>;
 }

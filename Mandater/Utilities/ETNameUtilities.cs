@@ -20,7 +20,7 @@ namespace Mandater.Utilities
         /// </summary>
         /// <param name="name">The name of the ElectionType code.</param>
         /// <returns>A string code</returns>
-        public static string NameToCode(string name)
+        private static string NameToCode(string name)
         {
             name = name.ToLower();
 
@@ -54,7 +54,7 @@ namespace Mandater.Utilities
         /// </summary>
         /// <param name="name">The name of the ElectionType.</param>
         /// <returns>True if the name is in our dictionary, false otherwise.</returns>
-        public static bool IsElectionType(string name)
+        private static bool IsElectionType(string name)
         {
             return ParliamentaryElectionSet.Contains(name);
         }

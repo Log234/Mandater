@@ -25,7 +25,7 @@ namespace Mandater
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -96,7 +96,7 @@ namespace Mandater
             });
         }
 
-        public void SetUpDatabase(IServiceCollection services)
+        private static void SetUpDatabase(IServiceCollection services)
         {
             //services.AddDbContext<VDContext>(options => options.UseInMemoryDatabase("Testing"));
             services.AddDbContext<ElectionContext>(options => options.UseInMemoryDatabase("ModelDB"));
