@@ -1,9 +1,4 @@
 ﻿import * as React from "react";
-import { CountyTable } from "./CountyTable";
-import { PartyTable } from "./PartyTable";
-import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
-import { ApplicationState } from "ClientApp/store";
-import { connect } from "react-redux";
 import { PartyResult } from "ClientApp/interfaces/PartyResult";
 
 type PresentationState = {
@@ -19,14 +14,7 @@ type PresentationProps = {
 export class PresentationComponent extends React.Component<PresentationProps, {}> {
     // returns the corresponding View based on currentMode
     getView() {
-        switch (this.props.showGraph) {
-            case "CountyTable":
-                return <CountyTable />;
-            case "PartyTable":
-                return <PartyTable />;
-            default:
-                return <PartyTable />;
-        }
+        console.log("getView called from PresentationComponent");
     }
 
     render() {
