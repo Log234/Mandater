@@ -22,21 +22,17 @@ export async function initializeParliamentaryElectionData() {
     let electionYears: number[] = [];
     let defaultElection: any = {};
     let defaultPartyResults: PartyResultDictionary = {};
-    await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true")
+    await axios.get("http://localhost:58757/api/v1.0.0/no/pe?deep=true")
         .then(res => {
-            let electionType: ElectionType = res.data[0];
+            let electionType: ElectionType = res.data;
             let election: Election = electionType.elections[electionType.elections.length - 1]; // most recent
-            if (electionType == null) {
-                console.log(electionType + " is an invalid election");
-            } else {
-                for (let e of electionType.elections) {
-                    electionYears.push(e.year);
-                    console.log(e.year + " " + electionYears.length);
-                }
-                let defaultElection: Election = election;
-                let electionAlgorithm: ElectionAlgorithm = new ElectionAlgorithm(defaultElection);
-                defaultPartyResults = electionAlgorithm.modifiedSaintLague();
+            for (let e of electionType.elections) {
+                electionYears.push(e.year);
+                console.log(`${e.year} ${electionYears.length}`);
             }
+            defaultElection = election;
+            let electionAlgorithm = new ElectionAlgorithm(defaultElection);
+            defaultPartyResults = electionAlgorithm.modifiedSaintLague();
         }).catch(error => {
             console.log(error);
         });

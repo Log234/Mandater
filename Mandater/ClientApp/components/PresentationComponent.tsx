@@ -19,19 +19,22 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
 
     render() {
         let rows = [];
-        for (let result in this.props.results) {
-            let value = this.props.results[result];
+        let results = this.props.results;
+        for (let result in results) {
+            if (results.hasOwnProperty(result)) {
+                let value = results[result];
 
-            rows.push((<tr>
-                           <td>{value.partyCode}</td>
-                           <td>{value.totalVotes.toString()}</td>
-                           <td></td>
-                           <td>{value.sum.toString()}</td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                       </tr>) as any);
+                rows.push((<tr key={value.partyCode}>
+                               <td>{value.partyCode}</td>
+                               <td>{value.totalVotes.toString()}</td>
+                               <td></td>
+                               <td>{value.sum.toString()}</td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                           </tr>) as any);
+            }
         }
 
         return (
@@ -39,19 +42,19 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
                 {this.getView()}
                 <table className="partyTable">
                     <thead>
-                        <tr>
-                            <th>Parti</th>
-                            <th>Stemmer</th>
-                            <th>Prosent</th>
-                            <th>Distrikt</th>
-                            <th>Utjevning</th>
-                            <th>Sum</th>
-                            <th>Differanse</th>
-                            <th>Prop.</th>
-                        </tr>
+                    <tr>
+                        <th>Parti</th>
+                        <th>Stemmer</th>
+                        <th>Prosent</th>
+                        <th>Distrikt</th>
+                        <th>Utjevning</th>
+                        <th>Sum</th>
+                        <th>Differanse</th>
+                        <th>Prop.</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {rows}
+                    {rows}
                     </tbody>
                 </table>
             </div>
