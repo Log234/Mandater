@@ -55,6 +55,7 @@ export class ElectionAlgorithm {
             offset += county.results.length;
         }
         let partyResults: { [id: string]: PartyResult } = {};
+        let total: number = 0;
         for (let result of processedResults) {
             if (partyResults[result.partyName] == undefined) {
                 partyResults[result.partyName] = {
@@ -62,12 +63,21 @@ export class ElectionAlgorithm {
                     partyCode: result.partyCode,
                     resultsPerCounty: [],
                     sum: 0,
+                    percent: 0,
                     totalVotes: 0,
                 };
             }
             partyResults[result.partyName].resultsPerCounty.push(result);
             partyResults[result.partyName].sum += result.seats;
             partyResults[result.partyName].totalVotes += result.votes;
+            total += result.votes;
+        }
+        
+        for (let result in partyResults) {
+            if (partyResults.hasOwnProperty(result)) {
+                partyResults[result].percent = (partyResults[result].totalVotes / total) * 100;
+                partyResults[result].percent = Math.round(partyResults[result].percent * 100) / 100;
+            }
         }
         return partyResults;
     }

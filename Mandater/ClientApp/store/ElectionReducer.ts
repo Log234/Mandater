@@ -21,10 +21,11 @@ type KnownAction = GetMenuDataAction
 export async function initializeParliamentaryElectionData() {
     let electionYears: number[] = [];
     let defaultElection: any = {};
+    let electionType: any = {};
     let defaultPartyResults: PartyResultDictionary = {};
-    await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no/pe?deep=true")
+    await axios.get("http://localhost:58932/api/v1.0.0/no/pe?deep=true")
         .then(res => {
-            let electionType: ElectionType = res.data;
+            electionType = res.data;
             let election: Election = electionType.elections[electionType.elections.length - 1]; // most recent
             for (let e of electionType.elections) {
                 electionYears.push(e.year);
@@ -39,7 +40,7 @@ export async function initializeParliamentaryElectionData() {
     
     let initializeAction: InitializeParliamentaryElectionAction = {
         type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
-        election: defaultElection,
+        electionType: electionType,
         partyResults: defaultPartyResults,
         electionYears: electionYears,
         firstDivisor: defaultElection.firstDivisor
@@ -49,24 +50,25 @@ export async function initializeParliamentaryElectionData() {
 }
 
 export function updateElectionData(election: Election) {
+    let electionAlgorithm = new ElectionAlgorithm(election);
+    let results = electionAlgorithm.modifiedSaintLague();
 
+    let updateCalculationAction: UpdateCalculationAction = {
+        type: constants.UPDATE_CALCULATION,
+        partyResults: results
+    }
+    return updateCalculationAction;
 }
 
 const unloadedState: ElectionState = {
-    election : {
-        algorithm: -1,
-        counties: [],
-        countryId: -1,
-        electionId: -1,
-        electionTypeId: -1,
-        firstDivisor: -1,
-        levelingSeats: -1,
-        seats: -1,
-        threshold: -1,
-        year: -1
-    },
-    electionYears: [],
     firstDivisor: -1,
+    electionYears: [],
+    electionType: {
+        countryId: -1,
+        electionTypeId: -1,
+        internationalName: "",
+        elections: []
+    },
     partyResults: {}
 };
 
@@ -83,7 +85,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
         case constants.INITIALIZE_PARLIAMENTARY_ELECTION:
             return {
                 ...state, 
-                election: action.election,
+                electionType: action.electionType,
                 electionYears: action.electionYears,
                 firstDivisor: action.firstDivisor,
                 partyResults: action.partyResults

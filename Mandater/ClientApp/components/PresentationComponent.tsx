@@ -27,7 +27,7 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
                 rows.push((<tr key={value.partyCode}>
                                <td>{value.partyCode}</td>
                                <td>{value.totalVotes.toString()}</td>
-                               <td></td>
+                               <td>{value.percent.toString()}</td>
                                <td>{value.sum.toString()}</td>
                                <td></td>
                                <td></td>

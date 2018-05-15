@@ -1,5 +1,5 @@
 ﻿import { Election } from "ClientApp/interfaces/Election";
-import { PartyResult } from "ClientApp/interfaces/PartyResult";
+import { ElectionType } from "./ElectionType"
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import * as constants from "../constants";
 
@@ -12,7 +12,7 @@ export interface GetMenuDataAction {
 
 export type InitializeParliamentaryElectionAction =  {
     type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
-    election: Election,
+    electionType: ElectionType,
     electionYears: number[],
     firstDivisor: number,
     partyResults: PartyResultDictionary;

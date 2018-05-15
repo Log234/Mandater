@@ -2,7 +2,7 @@
 //import { ElectionAlgorithm } from '../logic/Algorithm'; // @Edvarda trengs for Algorithms
 //import { Election } from 'ClientApp/interfaces/Election'; // @Edvarda trengs for Algorithms
 //import { ElectionType } from 'ClientApp/interfaces/ElectionType'; // @Edvarda trengs for Algorithms
-import axios, { AxiosRequestConfig, AxiosPromise } from "axios"; // @Edvarda trengs for axios på typescript
+// @Edvarda trengs for axios på typescript
 
 export class PresentationSettings extends React.Component<{}, {}> {
     // @Edvarda: Dette er et eksempel på hvordan man får ut data for øyeblikket -- det blir enklere etter møtet på onsdag

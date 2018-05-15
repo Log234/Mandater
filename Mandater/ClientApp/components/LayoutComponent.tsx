@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export class LayoutComponent extends React.Component<IProps, {}> {
-    public async componentWillMount() {
+    async componentWillMount() {
         await this.props.initializeState();
     }
 

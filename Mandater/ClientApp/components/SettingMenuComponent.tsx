@@ -1,19 +1,15 @@
 ﻿import * as React from "react";
-import { ElectionAlgorithm } from "../logic/Algorithm";
-import { Link, RouteComponentProps } from "react-router-dom";
-import { ApplicationState } from "../store/index"
-import axios from "axios";
-import { connect } from "react-redux";
+import { ElectionType } from "../interfaces/ElectionType";
+import { Election } from "../interfaces/Election";
 
 export interface ISettingsProps {
-    selectOptions: number[]
+    selectOptions: number[],
+    electionType: ElectionType,
+    updateCalculation: (year: string, electionType: ElectionType) => any;
 }
 
 
 export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
-    handleYearChange(event: any) {
-        // TODO: Implement year change (load new data into state)
-    }
     render() {
         return (<div className="settings-menu">
             <h1 className="h2">Stortingsvalg</h1>
@@ -21,7 +17,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">År</label>
                     <div className="col-sm-7">
-                        <select id="year" onChange={this.handleYearChange} className="form-control" name="year">
+                        <select id="year" onChange={(event : React.ChangeEvent<HTMLSelectElement>) => this.props.updateCalculation(event.target.value, this.props.electionType)} className="form-control" name="year">
                             {
                                 this.props.selectOptions.map(function (item, index) {
                                     return (
