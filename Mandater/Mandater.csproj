@@ -39,6 +39,7 @@
     <None Remove="ClientApp\components\PresentationMenu.tsx" />
     <None Remove="ClientApp\components\PresentationSettings.tsx" />
     <None Remove="ClientApp\components\SettingMenuComponent.tsx" />
+    <None Remove="ClientApp\components\TableComponent.tsx" />
     <None Remove="ClientApp\containers\index.ts" />
     <None Remove="ClientApp\containers\PresentationContainer.tsx" />
     <None Remove="ClientApp\containers\SettingMenuContainer.tsx" />
@@ -53,6 +54,7 @@
     <None Remove="ClientApp\interfaces\PartyResultDictionary.ts" />
     <None Remove="ClientApp\interfaces\ProcessedResult.ts" />
     <None Remove="ClientApp\interfaces\Result.ts" />
+    <None Remove="ClientApp\interfaces\TableData.ts" />
     <None Remove="ClientApp\reducers\index.ts" />
     <None Remove="ClientApp\store\ElectionReducer.ts" />
   </ItemGroup>
@@ -63,6 +65,7 @@
     <TypeScriptCompile Include="ClientApp\components\PresentationMenu.tsx" />
     <TypeScriptCompile Include="ClientApp\actions\index.ts" />
     <TypeScriptCompile Include="ClientApp\components\SettingMenuComponent.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\TableComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\PresentationContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\index.ts" />
     <TypeScriptCompile Include="ClientApp\containers\SettingMenuContainer.tsx" />
@@ -76,6 +79,7 @@
     <TypeScriptCompile Include="ClientApp\interfaces\PartyResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\ProcessedResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Result.ts" />
+    <TypeScriptCompile Include="ClientApp\interfaces\TableData.ts" />
     <TypeScriptCompile Include="ClientApp\reducers\index.ts" />
     <TypeScriptCompile Include="ClientApp\store\ElectionReducer.ts" />
   </ItemGroup>

@@ -1,5 +1,7 @@
 ﻿import * as React from "react";
 import { PartyResult } from "ClientApp/interfaces/PartyResult";
+import { TableComponent } from "./TableComponent";
+import { ITableData, ITableRow } from "../interfaces/TableData";
 
 type PresentationState = {
     showGraph: string,
@@ -12,52 +14,26 @@ type PresentationProps = {
 }
 
 export class PresentationComponent extends React.Component<PresentationProps, {}> {
-    // returns the corresponding View based on currentMode
-    getView() {
-        console.log("getView called from PresentationComponent");
-    }
-
     render() {
-        let rows = [];
+        let tableData: ITableData = {
+            tableHeaders: ["Parti", "Stemmer", "Prosent", "Distrikt", "Utjevning", "Sum", "Differanse", "Prop."],
+            tableRows: []
+        }
+
         let results = this.props.results;
         for (let result in results) {
             if (results.hasOwnProperty(result)) {
                 let value = results[result];
-
-                rows.push((<tr key={value.partyCode}>
-                               <td>{value.partyCode}</td>
-                               <td>{value.totalVotes.toString()}</td>
-                               <td>{value.percent.toString()}</td>
-                               <td>{value.sum.toString()}</td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                           </tr>) as any);
+                tableData.tableRows.push({
+                    key: value.partyCode,
+                    rowData: [
+                        value.partyCode, value.totalVotes.toString(), value.percent.toString(), value.sum.toString(),
+                        "", "", "", ""
+                    ]
+                });
             }
         }
 
-        return (
-            <div>
-                {this.getView()}
-                <table className="partyTable">
-                    <thead>
-                    <tr>
-                        <th>Parti</th>
-                        <th>Stemmer</th>
-                        <th>Prosent</th>
-                        <th>Distrikt</th>
-                        <th>Utjevning</th>
-                        <th>Sum</th>
-                        <th>Differanse</th>
-                        <th>Prop.</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {rows}
-                    </tbody>
-                </table>
-            </div>
-        );
+        return (<TableComponent tableData={tableData}/>);
     }
 }

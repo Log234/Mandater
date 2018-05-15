@@ -1,13 +1,10 @@
-﻿import { Action, Reducer, ActionCreator } from "redux";
+﻿import { Action, Reducer } from "redux";
 import { Election } from "ClientApp/interfaces/Election";
 import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction } from "ClientApp/interfaces/ParliamentaryElectionActions";
-import axios, { AxiosRequestConfig, AxiosPromise } from "axios";
-import { ElectionType } from "ClientApp/interfaces/ElectionType";
+import axios from "axios";
 import { ElectionAlgorithm } from "../logic/Algorithm";
-import { PartyResult } from "ClientApp/interfaces/PartyResult";
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import { ElectionState } from "ClientApp/interfaces/states/ElectionState";
-import { time } from "console";
 import * as constants from "../constants"
 
 // TODO: Make actions for updates of elections etc...
@@ -23,13 +20,12 @@ export async function initializeParliamentaryElectionData() {
     let defaultElection: any = {};
     let electionType: any = {};
     let defaultPartyResults: PartyResultDictionary = {};
-    await axios.get("http://localhost:58932/api/v1.0.0/no/pe?deep=true")
+    await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no/pe?deep=true")
         .then(res => {
             electionType = res.data;
             let election: Election = electionType.elections[electionType.elections.length - 1]; // most recent
             for (let e of electionType.elections) {
                 electionYears.push(e.year);
-                console.log(`${e.year} ${electionYears.length}`);
             }
             defaultElection = election;
             let electionAlgorithm = new ElectionAlgorithm(defaultElection);
