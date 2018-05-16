@@ -4,6 +4,7 @@ import { Election } from "../interfaces/Election";
 
 export interface ISettingsProps {
     selectOptions: number[],
+    firstDivisor: number,
     electionType: ElectionType,
     updateCalculation: (year: string, electionType: ElectionType) => any;
 }
@@ -42,7 +43,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                 <div className="form-group row">
                     <label htmlFor="firstDivisor" className="col-sm-5 col-form-label">Første delingstall</label>
                     <div className="col-sm-7">
-                        <input className="form-control" classID="firstDivisor" type="number" name="firstDivisor" placeholder="1.0" min="1.0" step="0.1" max="5.0" />
+                        <input className="form-control" classID="firstDivisor" type="number" name="firstDivisor" placeholder={this.props.firstDivisor.toString()} min="1.0" step="0.1" max="5.0" />
                     </div>
                 </div>
                 {/*<div className="form-group row">

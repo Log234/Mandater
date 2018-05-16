@@ -20,10 +20,10 @@ export async function initializeParliamentaryElectionData() {
     let defaultElection: any = {};
     let electionType: any = {};
     let defaultPartyResults: PartyResultDictionary = {};
-    await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no/pe?deep=true")
+    await axios.get("http://localhost:58932/api/v1.0.0/no/pe?deep=true")
         .then(res => {
             electionType = res.data;
-            let election: Election = electionType.elections[electionType.elections.length - 1]; // most recent
+            let election: Election = electionType.elections[0]; // most recent
             for (let e of electionType.elections) {
                 electionYears.push(e.year);
             }

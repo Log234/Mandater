@@ -27,8 +27,8 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
                 tableData.tableRows.push({
                     key: value.partyCode,
                     rowData: [
-                        value.partyCode, value.totalVotes.toString(), value.percent.toString(), value.sum.toString(),
-                        "", "", "", ""
+                        value.partyCode, value.totalVotes.toString(), value.percent.toString(), value.districtSeats.toString(),
+                        value.levelingSeats.toString(), value.sum.toString(), "", ""
                     ]
                 });
             }

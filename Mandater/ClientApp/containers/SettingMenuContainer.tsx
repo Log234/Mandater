@@ -8,6 +8,7 @@ import { ElectionType } from "../interfaces/ElectionType";
 
 const mapStateToProps = (state: ApplicationState) => ({
     selectOptions: state.electionState.electionYears,
+    firstDivisor: state.electionState.firstDivisor,
     electionType: state.electionState.electionType
 });
 

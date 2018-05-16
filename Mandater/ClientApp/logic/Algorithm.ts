@@ -61,16 +61,54 @@ export class ElectionAlgorithm {
             total += result.votes;
         }
 
+        let filteredResults: ProcessedResult[] = [];
         for (let result in partyResults) {
             if (partyResults.hasOwnProperty(result)) {
                 partyResults[result].percent = (partyResults[result].totalVotes / total) * 100;
+                if (partyResults[result].percent >= 4) {
+                    filteredResults.push({
+                        partyCode: partyResults[result].partyCode,
+                        partyName: partyResults[result].partyName,
+                        countyName: "NO",
+                        votes: partyResults[result].totalVotes,
+                        seats: 0
+                    });
+                }
                 partyResults[result].percent = Math.round(partyResults[result].percent * 100) / 100;
             }
+        }
+
+        filteredResults = this.distributeSeats(this.election.seats + this.election.levelingSeats,
+            0,
+            filteredResults.length,
+            filteredResults);
+        let filteredStgTwo: ProcessedResult[] = [];
+        for (let result of filteredResults) {
+            if (result.seats > partyResults[result.partyName].districtSeats) {
+                filteredStgTwo.push({
+                    partyCode: result.partyCode,
+                    partyName: result.partyName,
+                    countyName: result.countyName,
+                    votes: result.votes,
+                    seats: partyResults[result.partyName].districtSeats
+                });
+            }
+        }
+
+        filteredStgTwo = this.distributeSeats(this.election.levelingSeats,
+            0,
+            filteredStgTwo.length,
+            filteredStgTwo);
+        for (let result of filteredStgTwo) {
+            let name = result.partyName;
+            partyResults[name].levelingSeats = result.seats - partyResults[name].districtSeats;
+            partyResults[name].sum += partyResults[name].levelingSeats;
         }
         return partyResults;
     }
 
     distributeSeats(numSeats: number, offset: number, end: number, processedResults: ProcessedResult[]) {
+        let tmp = 0;
         for (let i: number = 0; i < numSeats; i++) {
             let currentWinnerIndex = -1;
             let currentMaxQuotient: number = -1;
@@ -83,8 +121,8 @@ export class ElectionAlgorithm {
                 }
             }
             processedResults[currentWinnerIndex].seats += 1;
+            tmp += 1;
         }
-
         return processedResults;
     }
 
