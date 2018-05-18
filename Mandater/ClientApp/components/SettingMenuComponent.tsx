@@ -5,8 +5,11 @@ import { Election } from "../interfaces/Election";
 export interface ISettingsProps {
     selectOptions: number[],
     firstDivisor: number,
+    electionThreshold: number,
+    districtSeats: number,
+    levellingSeats: number,
     electionType: ElectionType,
-    updateCalculation: (year: string, electionType: ElectionType) => any;
+    updateCalculation: (year: string, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levellingSeats: number) => any;
 }
 
 
@@ -18,7 +21,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">År</label>
                     <div className="col-sm-7">
-                        <select id="year" onChange={(event : React.ChangeEvent<HTMLSelectElement>) => this.props.updateCalculation(event.target.value, this.props.electionType)} className="form-control" name="year">
+                        <select id="year" onChange={(event : React.ChangeEvent<HTMLSelectElement>) => this.props.updateCalculation(event.target.value, this.props.electionType, this.props.firstDivisor, this.props.electionThreshold, this.props.districtSeats, this.props.levellingSeats)} className="form-control" name="year">
                             {
                                 this.props.selectOptions.map(function (item, index) {
                                     return (
@@ -46,19 +49,19 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         <input className="form-control" classID="firstDivisor" type="number" name="firstDivisor" placeholder={this.props.firstDivisor.toString()} min="1.0" step="0.1" max="5.0" />
                     </div>
                 </div>
-                {/*<div className="form-group row">
+                <div className="form-group row">
                     <label htmlFor="electionThreshold" className="col-sm-5 col-form-label">Sperregrense</label>
                     <div className="col-sm-7">
-                        <input className="form-control" classID="electionThreshold" type="number" name="electionThreshold" placeholder="1.4" min="0.0" step="0.1" max="15.0" />
+                        <input className="form-control" classID="electionThreshold" type="number" name="electionThreshold" placeholder={this.props.electionThreshold.toString()} min="0.0" step="0.1" max="15.0" />
                     </div>
                 </div>
                 <div className="form-group row">
                     <label htmlFor="levelingSeat" className="col-sm-5 col-form-label">Utjevningsmandater</label>
                     <div className="col-sm-7">
-                        <input className="form-control" classID="levelingSeat" type="number" name="levelingSeat" placeholder="1.4" min="0.0" step="0.1" max="15.0" />
+                        <input className="form-control" classID="levelingSeat" type="number" name="levelingSeat" placeholder={this.props.levellingSeats.toString()} min="0.0" step="0.1" max="15.0" />
                     </div>
                 </div>
-                <div className="form-group row">
+                {/*<div className="form-group row">
                     <label htmlFor="districtSeat" className="col-sm-5 col-form-label">Distriksmandater</label>
                     <div className="col-sm-7">
                         <input className="form-control" classID="districtSeat" type="number" name="districSeat" min="0" step="1" max="500" />

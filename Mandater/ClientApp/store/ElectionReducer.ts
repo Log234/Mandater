@@ -45,19 +45,26 @@ export async function initializeParliamentaryElectionData() {
     return initializeAction;
 }
 
-export function updateElectionData(election: Election) {
+export function updateElectionData(election: Election, firstDivisor: number, electionThreshold: number, districtSeats: number, levellingSeats: number) {
     const electionAlgorithm = new ElectionAlgorithm(election);
     const results = electionAlgorithm.modifiedSaintLague();
 
     const updateCalculationAction: UpdateCalculationAction = {
         type: constants.UPDATE_CALCULATION,
-        partyResults: results
+        partyResults: results,
+        firstDivisor: firstDivisor,
+        electionThreshold: electionThreshold,
+        districtSeats: districtSeats,
+        levellingSeats: levellingSeats
     };
     return updateCalculationAction;
 }
 
 const unloadedState: ElectionState = {
     firstDivisor: -1,
+    electionThreshold: -1,
+    districSeats: -1,
+    levellingSeats: -1,
     electionYears: [],
     electionType: {
         countryId: -1,
@@ -91,11 +98,18 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 ...state,
                 electionYears: action.electionYears,
                 firstDivisor: action.firstDivisor,
+                electionThreshold: action.electionThreshold,
+                districtSeats: action.districtSeats,
+                levellingSeats: action.levellingSeats
             };
         case constants.UPDATE_CALCULATION:
             return {
                 ...state,
-                partyResults: action.partyResults
+                partyResults: action.partyResults,
+                firstDivisor: action.firstDivisor,
+                electionThreshold: action.electionThreshold,
+                districtSeats: action.districtSeats,
+                levellingSeats: action.levellingSeats
             };
         default:
             return state || unloadedState;

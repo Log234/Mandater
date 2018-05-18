@@ -7,6 +7,9 @@ export interface GetMenuDataAction {
     type: constants.GET_MENU_DATA,
     electionYears: number[],
     firstDivisor: number,
+    electionThreshold: number,
+    districtSeats: number,
+    levellingSeats: number,
     algorithms: string[];
 }
 
@@ -20,5 +23,9 @@ export type InitializeParliamentaryElectionAction =  {
 
 export interface UpdateCalculationAction {
     type: constants.UPDATE_CALCULATION,
-    partyResults: PartyResultDictionary;
+    partyResults: PartyResultDictionary,
+    firstDivisor: number,
+    electionThreshold: number,
+    districtSeats: number,
+    levellingSeats: number;
 }
