@@ -5,6 +5,7 @@ import { Election } from "../interfaces/Election";
 import { updateElectionData } from "../store/ElectionReducer";
 import * as Index from "react/index";
 import { ElectionType } from "../interfaces/ElectionType";
+import { validateNumber } from "../logic/Validation";
 
 const mapStateToProps = (state: ApplicationState) => ({
     selectOptions: state.electionState.electionYears,
@@ -19,6 +20,11 @@ const mapStateToProps = (state: ApplicationState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
     updateCalculation: (year: number, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => {
         console.log(`Selected: ${year}`);
+
+        if (!validateNumber(firstDivisor, 1)) {
+            return;
+        }
+
         let election = electionType.elections.find(element => element.year === year);
         if (election !== undefined) {
             let updateCalculationAction = updateElectionData(election, year, firstDivisor, electionThreshold, districtSeats, levelingSeats);

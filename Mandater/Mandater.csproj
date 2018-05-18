@@ -60,6 +60,7 @@
     <None Remove="ClientApp\interfaces\ProcessedResult.ts" />
     <None Remove="ClientApp\interfaces\Result.ts" />
     <None Remove="ClientApp\interfaces\TableData.ts" />
+    <None Remove="ClientApp\logic\Validation.ts" />
     <None Remove="ClientApp\reducers\index.ts" />
     <None Remove="ClientApp\store\ElectionReducer.ts" />
   </ItemGroup>
@@ -85,6 +86,7 @@
     <TypeScriptCompile Include="ClientApp\interfaces\ProcessedResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Result.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\TableData.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\Validation.ts" />
     <TypeScriptCompile Include="ClientApp\reducers\index.ts" />
     <TypeScriptCompile Include="ClientApp\store\ElectionReducer.ts" />
   </ItemGroup>
