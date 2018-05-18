@@ -16,25 +16,25 @@ type KnownAction = GetMenuDataAction
 // ACTION CREATORS
 
 export async function initializeParliamentaryElectionData() {
-    let electionYears: number[] = [];
+    const electionYears: number[] = [];
     let defaultElection: any = {};
     let electionType: any = {};
     let defaultPartyResults: PartyResultDictionary = {};
     await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no/pe?deep=true")
         .then(res => {
             electionType = res.data;
-            let election: Election = electionType.elections[0]; // most recent
+            const election: Election = electionType.elections[0]; // most recent
             for (let e of electionType.elections) {
                 electionYears.push(e.year);
             }
             defaultElection = election;
-            let electionAlgorithm = new ElectionAlgorithm(defaultElection);
+            const electionAlgorithm = new ElectionAlgorithm(defaultElection);
             defaultPartyResults = electionAlgorithm.modifiedSaintLague();
         }).catch(error => {
             console.log(error);
         });
     
-    let initializeAction: InitializeParliamentaryElectionAction = {
+    const initializeAction: InitializeParliamentaryElectionAction = {
         type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
         electionType: electionType,
         partyResults: defaultPartyResults,
@@ -46,13 +46,13 @@ export async function initializeParliamentaryElectionData() {
 }
 
 export function updateElectionData(election: Election) {
-    let electionAlgorithm = new ElectionAlgorithm(election);
-    let results = electionAlgorithm.modifiedSaintLague();
+    const electionAlgorithm = new ElectionAlgorithm(election);
+    const results = electionAlgorithm.modifiedSaintLague();
 
-    let updateCalculationAction: UpdateCalculationAction = {
+    const updateCalculationAction: UpdateCalculationAction = {
         type: constants.UPDATE_CALCULATION,
         partyResults: results
-    }
+    };
     return updateCalculationAction;
 }
 
@@ -76,7 +76,7 @@ const unloadedState: ElectionState = {
 // ReSharper disable TsResolvedFromInaccessibleModule
 export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAction: Action) => {
     // Include known action if applicable
-    let action: KnownAction = incomingAction as KnownAction;
+    const action = incomingAction as KnownAction;
     switch (action.type) {
         case constants.INITIALIZE_PARLIAMENTARY_ELECTION:
             return {
