@@ -7,9 +7,9 @@ export interface ISettingsProps {
     firstDivisor: number,
     electionThreshold: number,
     districtSeats: number,
-    levellingSeats: number,
+    levelingSeats: number,
     electionType: ElectionType,
-    updateCalculation: (year: string, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levellingSeats: number) => any;
+    updateCalculation: (year: string, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => any;
 }
 
 
@@ -21,7 +21,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">År</label>
                     <div className="col-sm-7">
-                        <select id="year" onChange={(event : React.ChangeEvent<HTMLSelectElement>) => this.props.updateCalculation(event.target.value, this.props.electionType, this.props.firstDivisor, this.props.electionThreshold, this.props.districtSeats, this.props.levellingSeats)} className="form-control" name="year">
+                        <select id="year" onChange={(event : React.ChangeEvent<HTMLSelectElement>) => this.props.updateCalculation(event.target.value, this.props.electionType, this.props.firstDivisor, this.props.electionThreshold, this.props.districtSeats, this.props.levelingSeats)} className="form-control" name="year">
                             {
                                 this.props.selectOptions.map(function (item, index) {
                                     return (
@@ -58,7 +58,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                 <div className="form-group row">
                     <label htmlFor="levelingSeat" className="col-sm-5 col-form-label">Utjevningsmandater</label>
                     <div className="col-sm-7">
-                        <input className="form-control" classID="levellingSeat" type="number" name="levellingSeat" placeholder={this.props.levellingSeats.toString()} min="0.0" step="0.1" max="15.0" />
+                        <input className="form-control" classID="levellingSeat" type="number" name="levellingSeat" placeholder={this.props.levelingSeats.toString()} min="0.0" step="0.1" max="15.0" />
                     </div>
                 </div>
                 {/*<div className="form-group row">

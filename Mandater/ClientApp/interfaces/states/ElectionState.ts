@@ -6,7 +6,7 @@ export interface ElectionState {
     firstDivisor: number,
     electionThreshold: number,
     districSeats: number,
-    levellingSeats: number,
+    levelingSeats: number,
     electionType: ElectionType,
     partyResults: PartyResultDictionary;
 }

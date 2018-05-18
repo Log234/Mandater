@@ -9,19 +9,19 @@ import { ElectionType } from "../interfaces/ElectionType";
 const mapStateToProps = (state: ApplicationState) => ({
     selectOptions: state.electionState.electionYears,
     firstDivisor: state.electionState.firstDivisor,
-    threshold: state.electionState.electionThreshold,
+    electionThreshold: state.electionState.electionThreshold,
     districtSeats: state.electionState.districSeats,
-    levellingSeats: state.electionState.levellingSeats,
+    levelingSeats: state.electionState.levelingSeats,
     electionType: state.electionState.electionType
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateCalculation: (year: string, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levellingSeats: number) => {
+    updateCalculation: (year: string, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => {
         let value = parseInt(year);
         console.log(`Selected: ${value}`);
         let election = electionType.elections.find(element => element.year === value);
         if (election !== undefined) {
-            let updateCalculationAction = updateElectionData(election, firstDivisor, electionThreshold, districtSeats, levellingSeats);
+            let updateCalculationAction = updateElectionData(election, firstDivisor, electionThreshold, districtSeats, levelingSeats);
             dispatch(updateCalculationAction);
             console.log(`Updated: ${year}`);
         }
