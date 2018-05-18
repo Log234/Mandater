@@ -1,4 +1,5 @@
 ﻿import * as React from "react";
+import Button from "./Button";
 
 type PresentationSelectionProps = {
     // TODO: Specify what props PresentationSelection needs
@@ -20,10 +21,9 @@ export class PresentationSelection extends React.Component {
 
     render() {
         return <div className="presentation-selection">
-                   <h2>Presentasjonstyper</h2>
-                   <button onClick={ (event: any) => this.toggleResultsTable("PartyTable") }>Partitabell</button>
-                   <button onClick={ (event: any) => this.toggleResultsTable("CountyTable") }>Fylkestabell</button>
-               </div>;
+            <h2>Presentasjonstyper</h2>
+            
+        </div>;
 
     }
 }

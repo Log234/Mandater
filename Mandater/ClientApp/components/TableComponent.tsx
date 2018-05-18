@@ -17,8 +17,8 @@ export class TableComponent extends React.Component<TableProps, {}> {
         for (let data of rowData) {
             let row: React.ReactNode[] = [];
             let index: number = 0;
-            for (let collumn of data.rowData) {
-                row.push(<td key={index += 1}>{collumn}</td>);
+            for (let column of data.rowData) {
+                row.push(<td key={index += 1}>{column}</td>);
             }
 
             rows.push(<tr key={data.key}>{row}</tr>);
@@ -26,7 +26,7 @@ export class TableComponent extends React.Component<TableProps, {}> {
 
         return (
             <div>
-                <table className = "partyTable">
+                <table className="partyTable"> {/* TODO: Update this to ElectionOverview or some simple table class */}
                     <thead>
                         <tr key="header">
                             { header }
