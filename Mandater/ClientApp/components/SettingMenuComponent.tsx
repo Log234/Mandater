@@ -1,43 +1,16 @@
-﻿import * as React from 'react';
-import { ElectionAlgorithm } from '../logic/Algorithm';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { ApplicationState } from '../store/index'
-import axios from 'axios';
-import { connect } from 'react-redux';
+﻿import * as React from "react";
+import { ElectionType } from "../interfaces/ElectionType";
+import { Election } from "../interfaces/Election";
 
-export interface settingsProps {
-    selectOptions: number[]
+export interface ISettingsProps {
+    selectOptions: number[],
+    firstDivisor: number,
+    electionType: ElectionType,
+    updateCalculation: (year: string, electionType: ElectionType) => any;
 }
 
 
-export class _SettingMenu extends React.Component<settingsProps, {}> {
-
-    public componentWillMount() {
-        // Keep 'this' as reference to component
-        //const self = this;
-        //axios
-        //    .get('http://mandater-testing.azurewebsites.net/api/v1.0.0/no?deep=true')
-        //    .then(function (response) {
-        //        let alg = new ElectionAlgorithm(response.data[0].elections[0]);
-        //        console.log(alg.modifiedSaintLague());
-
-        //        const parliamentElections = response.data[0].elections;
-        //        let peYears = [];   // All years with available parliament election (pe) data
-        //        for (let i = 0; i < parliamentElections.length; i++) {
-        //            peYears.push(parliamentElections[i].year);
-        //        }
-        //        self.setState({
-        //            selectedValue: peYears[0],
-        //            selectOptions: peYears
-        //        });
-        //    }).catch(function (error) { console.log(error) });
-    }
-
-    public handleYearChange(event : any) {
-        this.setState({ selectedValue: event.target.value });
-    }
-
-
+export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
     render() {
         return (<div className="settings-menu">
             <h1 className="h2">Stortingsvalg</h1>
@@ -45,7 +18,7 @@ export class _SettingMenu extends React.Component<settingsProps, {}> {
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">År</label>
                     <div className="col-sm-7">
-                        <select id="year" onChange={this.handleYearChange} className="form-control" name='year'>
+                        <select id="year" onChange={(event : React.ChangeEvent<HTMLSelectElement>) => this.props.updateCalculation(event.target.value, this.props.electionType)} className="form-control" name="year">
                             {
                                 this.props.selectOptions.map(function (item, index) {
                                     return (
@@ -53,7 +26,7 @@ export class _SettingMenu extends React.Component<settingsProps, {}> {
                                             key={index} // By convention all children should have a unique key prop
                                             value={item}
                                         > {item} </option>
-                                    )
+                                    );
                                 })
                             }
                         </select>
@@ -70,7 +43,7 @@ export class _SettingMenu extends React.Component<settingsProps, {}> {
                 <div className="form-group row">
                     <label htmlFor="firstDivisor" className="col-sm-5 col-form-label">Første delingstall</label>
                     <div className="col-sm-7">
-                        <input className="form-control" classID="firstDivisor" type="number" name="firstDivisor" placeholder="1.0" min="1.0" step="0.1" max="5.0" />
+                        <input className="form-control" classID="firstDivisor" type="number" name="firstDivisor" placeholder={this.props.firstDivisor.toString()} min="1.0" step="0.1" max="5.0" />
                     </div>
                 </div>
                 {/*<div className="form-group row">
@@ -96,16 +69,3 @@ export class _SettingMenu extends React.Component<settingsProps, {}> {
         );
     }
 }
-
-const mapStateToProps = (state: ApplicationState) => ({
-    selectOptions: state.electionState.electionYears
-})
-
-const mapDispatchToProps = (dispatch: any) => ({
-    
-})
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(_SettingMenu)

@@ -58,7 +58,7 @@ namespace Mandater.Data
         /// </summary>
         /// <param name="county">The model to check.</param>
         /// <param name="checkedModels">A set of models that have already been checked.</param>
-        public static void ValidateCounty(County county, HashSet<int> checkedModels)
+        private static void ValidateCounty(County county, HashSet<int> checkedModels)
         {
             if (county == null)
             {
@@ -128,7 +128,7 @@ namespace Mandater.Data
         /// </summary>
         /// <param name="election">The model to check.</param>
         /// <param name="checkedModels">A set of already checked models.</param>
-        public static void ValidateElection(Election election, HashSet<int> checkedModels)
+        private static void ValidateElection(Election election, HashSet<int> checkedModels)
         {
             if (election == null)
             {
@@ -179,7 +179,7 @@ namespace Mandater.Data
         /// </summary>
         /// <param name="electionType">The model to check.</param>
         /// <param name="checkedModels">A set of already checked models.</param>
-        public static void ValidateElectionType(ElectionType electionType, HashSet<int> checkedModels)
+        private static void ValidateElectionType(ElectionType electionType, HashSet<int> checkedModels)
         {
             if (electionType == null)
             {
@@ -257,7 +257,7 @@ namespace Mandater.Data
         /// </summary>
         /// <param name="result">The model to check.</param>
         /// <param name="checkedModels">A set of already checked models.</param>
-        public static void ValidateResult(Result result, HashSet<int> checkedModels)
+        private static void ValidateResult(Result result, HashSet<int> checkedModels)
         {
             if (result == null)
             {

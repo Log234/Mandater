@@ -3,15 +3,32 @@ using System.Linq;
 
 namespace Mandater.Utilities
 {
+    /// <summary>
+    /// Enum representing the available methods of seat calculation for political systems given a voting district/circuit.
+    /// </summary>
     public enum Algorithm
     {
+        /// <summary>
+        /// Algorithm not defined
+        /// </summary>
         Undefined = 0,
+        /// <summary>
+        /// The Modified Sainte-Lagüe method in accordance with the Norwegian system. TODO: More accurate description of Modified Sainte-Lagüe
+        /// </summary>
         ModifiedSainteLagues,
+        /// <summary>
+        /// Normal Sainte-Lagüe method TODO: More accurate description of Sainte-Lagüe
+        /// </summary>
         SainteLagues,
+        /// <summary>
+        /// D'Hondt method TODO: More accurate description of D'Hondt
+        /// </summary>
         DHondt
     }
-
-    public class AlgorithmUtilities
+    /// <summary>
+    /// Utility class to make operations surrounding the Algorithm enum more practical
+    /// </summary>
+    public static class AlgorithmUtilities
     {
         // Our internal textual representations of the algorithm names
         private const string modifiedSainteLagues = "Sainte Laguës (modified)";
@@ -29,7 +46,7 @@ namespace Mandater.Utilities
         /// </summary>
         /// <param name="name">The name of the algorithm to be converted.</param>
         /// <returns>An algorithm enum</returns>
-        public static Algorithm StringToAlgorithm(string name)
+        private static Algorithm StringToAlgorithm(string name)
         {
             string curName = name.ToLower();
 
@@ -77,7 +94,7 @@ namespace Mandater.Utilities
         /// </summary>
         /// <param name="name">The name of the algorithm.</param>
         /// <returns>True if we have an enum for the algorithm, false otherwise.</returns>
-        public static bool IsAlgorithm(string name)
+        private static bool IsAlgorithm(string name)
         {
             string curName = name.ToLower();
             return ModifiedSainteLaguesSet.Contains(curName)

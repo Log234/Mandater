@@ -16,7 +16,7 @@ namespace Mandater.Data
             context.Database.EnsureCreated();
             if (!context.VDModels.Any())
             {
-                VDModel[] entities = CSVUtilities.CsvToVdArray("Data/States/NO/ParliamentaryElection/2017.csv");
+                VDModel[] entities = CsvUtilities.CsvToVdArray("Data/States/NO/ParliamentaryElection/2017.csv");
                 context.VDModels.AddRange(entities);
                 context.SaveChanges();
             }

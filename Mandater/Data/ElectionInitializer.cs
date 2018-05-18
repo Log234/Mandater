@@ -28,7 +28,7 @@ namespace Mandater.Data
             try
             {
                 string path = Path.Combine(root, "Countries.csv");
-                List<CountryFormat> countries = CSVUtilities.CsvToList<CountryFormat>(path);
+                List<CountryFormat> countries = CsvUtilities.CsvToList<CountryFormat>(path);
                 List<Country> countryModels = ModelBuilder.BuildCountries(countries);
                 context.Countries.AddRange(countryModels);
 
@@ -75,10 +75,10 @@ namespace Mandater.Data
             }
 
             // Get a list of ElectionTypeFormats
-            List<ElectionTypeFormat> electionTypes =  CSVUtilities.CsvToList<ElectionTypeFormat>(Path.Combine(root, "ElectionTypes.csv"));
+            List<ElectionTypeFormat> electionTypes =  CsvUtilities.CsvToList<ElectionTypeFormat>(Path.Combine(root, "ElectionTypes.csv"));
             List<ElectionType> electionTypeModels = ModelBuilder.BuildElectionTypes(electionTypes);
 
-            List<CountyDataFormat> countyData = CSVUtilities.CsvToList<CountyDataFormat>(Path.Combine(root, "CountyData.csv"));
+            List<CountyDataFormat> countyData = CsvUtilities.CsvToList<CountyDataFormat>(Path.Combine(root, "CountyData.csv"));
 
             // Iterate through the country's election types
             string[] electionTypeFiles = Directory.GetDirectories(root);
@@ -104,7 +104,7 @@ namespace Mandater.Data
                 throw new KeyNotFoundException($"Could not find any directory with the path: {root}");
             }
             
-            List<ElectionFormat> elections = CSVUtilities.CsvToList<ElectionFormat>(Path.Combine(root, "Elections.csv"));
+            List<ElectionFormat> elections = CsvUtilities.CsvToList<ElectionFormat>(Path.Combine(root, "Elections.csv"));
             List<Election> electionModels = ModelBuilder.BuildElections(elections);
 
             string[] electionFiles = Directory.GetFiles(root);
@@ -126,7 +126,7 @@ namespace Mandater.Data
 
         private static List<County> CreateCounties(IEnumerable<CountyDataFormat> countyData, string root)
         {
-            List<ResultFormat> resultFormat = CSVUtilities.CsvToList<ResultFormat>(root);
+            List<ResultFormat> resultFormat = CsvUtilities.CsvToList<ResultFormat>(root);
             List<County> countyModels = ModelBuilder.BuildCounties(resultFormat, countyData);
 
             foreach (County county in countyModels)

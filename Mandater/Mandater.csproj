@@ -11,6 +11,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.0\Mandater.xml</DocumentationFile>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <ExcludeXmlAssemblyFiles>false</ExcludeXmlAssemblyFiles>
+  </PropertyGroup>
+  
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="6.1.1" />
@@ -34,8 +39,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\new.js" />
+    <None Remove="ClientApp\components\PresentationComponent.tsx" />
+    <None Remove="ClientApp\components\PresentationMenu.tsx" />
     <None Remove="ClientApp\components\PresentationSettings.tsx" />
-    <None Remove="ClientApp\components\PresentationSettingsContainer.tsx" />
+    <None Remove="ClientApp\components\SettingMenuComponent.tsx" />
+    <None Remove="ClientApp\components\TableComponent.tsx" />
+    <None Remove="ClientApp\containers\index.ts" />
+    <None Remove="ClientApp\containers\PresentationContainer.tsx" />
+    <None Remove="ClientApp\containers\SettingMenuContainer.tsx" />
+    <None Remove="ClientApp\index.ts" />
     <None Remove="ClientApp\interfaces\AlgorithmOutput.ts" />
     <None Remove="ClientApp\interfaces\County.ts" />
     <None Remove="ClientApp\interfaces\Election.ts" />
@@ -46,12 +59,21 @@
     <None Remove="ClientApp\interfaces\PartyResultDictionary.ts" />
     <None Remove="ClientApp\interfaces\ProcessedResult.ts" />
     <None Remove="ClientApp\interfaces\Result.ts" />
+    <None Remove="ClientApp\interfaces\TableData.ts" />
+    <None Remove="ClientApp\reducers\index.ts" />
     <None Remove="ClientApp\store\ElectionReducer.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\PresentationComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationSettings.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\PresentationSettingsContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\PresentationMenu.tsx" />
+    <TypeScriptCompile Include="ClientApp\actions\index.ts" />
+    <TypeScriptCompile Include="ClientApp\components\SettingMenuComponent.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\TableComponent.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\PresentationContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\index.ts" />
+    <TypeScriptCompile Include="ClientApp\containers\SettingMenuContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\interfaces\County.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Election.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\AlgorithmOutput.ts" />
@@ -62,6 +84,8 @@
     <TypeScriptCompile Include="ClientApp\interfaces\PartyResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\ProcessedResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Result.ts" />
+    <TypeScriptCompile Include="ClientApp\interfaces\TableData.ts" />
+    <TypeScriptCompile Include="ClientApp\reducers\index.ts" />
     <TypeScriptCompile Include="ClientApp\store\ElectionReducer.ts" />
   </ItemGroup>
 

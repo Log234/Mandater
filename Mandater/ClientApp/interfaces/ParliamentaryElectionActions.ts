@@ -1,23 +1,24 @@
 ﻿import { Election } from "ClientApp/interfaces/Election";
-import { PartyResult } from "ClientApp/interfaces/PartyResult";
+import { ElectionType } from "./ElectionType"
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
+import * as constants from "../constants";
 
 export interface GetMenuDataAction {
-    type: 'GET_MENU_DATA',
+    type: constants.GET_MENU_DATA,
     electionYears: number[],
     firstDivisor: number,
-    //algorithms: string[] // for more sensible code later
+    algorithms: string[];
 }
 
-export interface InitializeParliamentaryElectionAction {
-    type: 'INITIALIZE_PARLIAMENTARY_ELECTION',
-    election: Election,
+export type InitializeParliamentaryElectionAction =  {
+    type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
+    electionType: ElectionType,
     electionYears: number[],
     firstDivisor: number,
-    partyResults: PartyResultDictionary
+    partyResults: PartyResultDictionary;
 }
 
 export interface UpdateCalculationAction {
-    type: 'UPDATE_CALCULATION',
-    partyResults: PartyResultDictionary
+    type: constants.UPDATE_CALCULATION,
+    partyResults: PartyResultDictionary;
 }

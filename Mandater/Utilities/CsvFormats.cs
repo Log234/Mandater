@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Mandater.Utilities
 {
-    public interface ICsvFormat<T>
+    public interface ICsvFormat<out T>
     {
         T Parse(string line, FieldParser parser);
     }
@@ -15,12 +15,12 @@ namespace Mandater.Utilities
     /// </summary>
     public class ElectionFormat : ICsvFormat<ElectionFormat>
     {
-        public int Year { get; set; }
-        public Algorithm Algorithm { get; set; }
-        public double FirstDivisor { get; set; }
-        public double Threshold { get; set; }
-        public int Seats { get; set; }
-        public int LevelingSeats { get; set; }
+        public int Year { get; private set; }
+        public Algorithm Algorithm { get; private set; }
+        public double FirstDivisor { get; private set; }
+        public double Threshold { get; private set; }
+        public int Seats { get; private set; }
+        public int LevelingSeats { get; private set; }
 
         /// <summary>
         /// Parses a line following the ElectionFormat and returns an ElectionFormat object
@@ -55,19 +55,19 @@ namespace Mandater.Utilities
     /// </summary>
     public class ResultFormat : ICsvFormat<ResultFormat>
     {
-        public int Fylkenummer { get; set; }
-        public string Fylkenavn { get; set; }
-        public string Partikode { get; set; }
-        public string Partinavn { get; set; }
-        public double OppslutningProsentvis { get; set; }
-        public int AntallStemmeberettigede { get; set; }
-        public int AntallForhåndsstemmer { get; set; }
-        public int AntallValgtingstemmer { get; set; }
-        public int AntallStemmerTotalt { get; set; }
-        public double EndringProsentSisteTilsvarendeValg { get; set; }
-        public double EndringProsentSisteEkvivalenteValg { get; set; }
-        public int AntallMandater { get; set; }
-        public int AntallUtjevningsmandater { get; set; }
+        private int Fylkenummer { get; set; }
+        public string Fylkenavn { get; private set; }
+        public string Partikode { get; private set; }
+        public string Partinavn { get; private set; }
+        public double OppslutningProsentvis { get; private set; }
+        private int AntallStemmeberettigede { get; set; }
+        private int AntallForhåndsstemmer { get; set; }
+        private int AntallValgtingstemmer { get; set; }
+        public int AntallStemmerTotalt { get; private set; }
+        private double EndringProsentSisteTilsvarendeValg { get; set; }
+        private double EndringProsentSisteEkvivalenteValg { get; set; }
+        private int AntallMandater { get; set; }
+        private int AntallUtjevningsmandater { get; set; }
 
         /// <summary>
         /// Parses a line following the ResultFormat and returns an ResultFormat object
