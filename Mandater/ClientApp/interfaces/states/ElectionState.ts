@@ -3,6 +3,7 @@ import { ElectionType } from "../ElectionType";
 
 export interface ElectionState {
     electionYears: number[],
+    selectedYear: number,
     firstDivisor: number,
     electionThreshold: number,
     districSeats: number,

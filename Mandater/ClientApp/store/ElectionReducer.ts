@@ -39,6 +39,7 @@ export async function initializeParliamentaryElectionData() {
         electionType: electionType,
         partyResults: defaultPartyResults,
         electionYears: electionYears,
+        selectedYear: defaultElection.year,
         firstDivisor: defaultElection.firstDivisor,
         electionThreshold: defaultElection.threshold,
         districtSeats: defaultElection.seats,
@@ -49,12 +50,13 @@ export async function initializeParliamentaryElectionData() {
     return initializeAction;
 }
 
-export function updateElectionData(election: Election, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) {
+export function updateElectionData(election: Election, selectedYear: number, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) {
     const electionAlgorithm = new ElectionAlgorithm(election);
     const results = electionAlgorithm.modifiedSaintLague();
 
     const updateCalculationAction: UpdateCalculationAction = {
         type: constants.UPDATE_CALCULATION,
+        selectedYear: selectedYear,
         partyResults: results,
         firstDivisor: firstDivisor,
         electionThreshold: electionThreshold,
@@ -65,11 +67,12 @@ export function updateElectionData(election: Election, firstDivisor: number, ele
 }
 
 const unloadedState: ElectionState = {
+    electionYears: [],
+    selectedYear: -1,
     firstDivisor: -1,
     electionThreshold: -1,
     districSeats: -1,
     levelingSeats: -1,
-    electionYears: [],
     electionType: {
         countryId: -1,
         electionTypeId: -1,
@@ -94,6 +97,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 ...state, 
                 electionType: action.electionType,
                 electionYears: action.electionYears,
+                selectedYear: action.selectedYear,
                 firstDivisor: action.firstDivisor,
                 electionThreshold: action.electionThreshold,
                 districSeats: action.districtSeats,
@@ -104,6 +108,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
             return {
                 ...state,
                 electionYears: action.electionYears,
+                selectedYear: action.selectedYear,
                 firstDivisor: action.firstDivisor,
                 electionThreshold: action.electionThreshold,
                 districtSeats: action.districtSeats,
@@ -112,6 +117,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
         case constants.UPDATE_CALCULATION:
             return {
                 ...state,
+                selectedYear: action.selectedYear,
                 partyResults: action.partyResults,
                 firstDivisor: action.firstDivisor,
                 electionThreshold: action.electionThreshold,
