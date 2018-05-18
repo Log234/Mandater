@@ -1,4 +1,4 @@
-﻿import { Result } from "ClientApp/interfaces/Result";
+﻿import { Result } from "../interfaces/Result";
 
 export interface County {
     countyId: number,
