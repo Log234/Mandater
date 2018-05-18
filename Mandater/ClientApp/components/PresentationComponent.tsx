@@ -3,11 +3,6 @@ import { PartyResult } from "ClientApp/interfaces/PartyResult";
 import { TableComponent } from "./TableComponent";
 import { ITableData } from "../interfaces/TableData";
 
-type PresentationState = {
-    showGraph: string,
-    year: number;
-}
-
 type PresentationProps = {
     results: { [id: string]: PartyResult },
     showGraph: string;
