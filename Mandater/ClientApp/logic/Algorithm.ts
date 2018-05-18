@@ -4,18 +4,21 @@ import { PartyResult } from "ClientApp/interfaces/PartyResult";
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 
 export class ElectionAlgorithm {
+    algorithm: number;
     election: Election;
+    firstDivisor: number;
+    electionThreshold: number;
+    districtSeats: number;
+    levelingSeats: number;
 
-    constructor(election: Election) {
+    constructor(election: Election, firstDivisor?: number, electionThreshold?: number, districtSeats?: number, levelingSeats?: number) {
         this.election = election;
-    }
+        this.algorithm = 1;
 
-    set algorithm(id: number) {
-        this.algorithm = id;
-    }
-
-    set firstDivisor(newNumber: number) {
-        this.election.firstDivisor = newNumber;
+        this.firstDivisor = firstDivisor || election.firstDivisor;
+        this.electionThreshold = electionThreshold !== undefined ? electionThreshold : election.threshold;
+        this.districtSeats = districtSeats !== undefined ? districtSeats : election.seats;
+        this.levelingSeats = levelingSeats !== undefined ? levelingSeats : election.levelingSeats;
     }
 
     public modifiedSaintLague() {
@@ -65,7 +68,7 @@ export class ElectionAlgorithm {
         for (let result in partyResults) {
             if (partyResults.hasOwnProperty(result)) {
                 partyResults[result].percent = (partyResults[result].totalVotes / total) * 100;
-                if (partyResults[result].percent >= 4) {
+                if (partyResults[result].percent >= this.electionThreshold) {
                     filteredResults.push({
                         partyCode: partyResults[result].partyCode,
                         partyName: partyResults[result].partyName,
@@ -78,7 +81,7 @@ export class ElectionAlgorithm {
             }
         }
 
-        filteredResults = this.distributeSeats(this.election.seats + this.election.levelingSeats,
+        filteredResults = this.distributeSeats(this.districtSeats + this.levelingSeats,
             0,
             filteredResults.length,
             filteredResults);
@@ -95,7 +98,7 @@ export class ElectionAlgorithm {
             }
         }
 
-        filteredStgTwo = this.distributeSeats(this.election.levelingSeats,
+        filteredStgTwo = this.distributeSeats(this.levelingSeats,
             0,
             filteredStgTwo.length,
             filteredStgTwo);
@@ -128,7 +131,7 @@ export class ElectionAlgorithm {
 
     getQuotient(numberOfSeatsAssigned: number) {
         if (numberOfSeatsAssigned === 0) {
-            return this.election.firstDivisor;
+            return this.firstDivisor;
         } else {
             return (2 * numberOfSeatsAssigned + 1);
         }
