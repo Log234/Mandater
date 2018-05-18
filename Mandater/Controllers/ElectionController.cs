@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using Mandater.Data;
@@ -39,17 +40,28 @@ namespace Mandater.Controllers
         /// <param name="deep">Optional boolean parameter, the method returns a deep list if true</param>
         /// <returns>List of countries</returns>
         [HttpGet]
-        public IEnumerable<Country> GetCountries(bool? deep)
+        public IActionResult GetCountries(bool? deep)
         {
-            if (deep.HasValue && deep.Value)
+            _logger.LogInformation("GetCountries called with parameter deep = " + deep);
+            try
             {
-                return _context.Countries
-                        .Include(c => c.ElectionTypes)
+                if (deep.HasValue && deep.Value)
+                {
+                    return Ok(
+                        _context.Countries
+                            .Include(c => c.ElectionTypes)
                             .ThenInclude(c => c.Elections)
-                                .ThenInclude(c => c.Counties)
-                                    .ThenInclude(c => c.Results);
+                            .ThenInclude(c => c.Counties)
+                            .ThenInclude(c => c.Results)
+                    );
+                }
+                return Ok(_context.Countries);
             }
-            return _context.Countries;
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Something went terribly wrong in GetCountries");
+                return new StatusCodeResult(500);
+            }
         }
 
         /// <summary>
@@ -59,45 +71,77 @@ namespace Mandater.Controllers
         /// <param name="countryCode">Two character country code, ISO 3166-1 alpha-2</param>
         /// <returns>Country</returns>
         [HttpGet("{countryCode}")]
-        public Country GetCountry(string countryCode, bool? deep)
+        public IActionResult GetCountry(string countryCode, bool? deep)
         {
-            if (deep.HasValue && deep.Value)
-                return _context.Countries
-                    .Include(c => c.ElectionTypes)
-                        .ThenInclude(c => c.Elections)
+            _logger.LogInformation("GetCountry called with parameters countryCode = " + countryCode + ", deep = " + deep);
+            try
+            {
+                if (deep.HasValue && deep.Value)
+                {
+                    return Ok(
+                        _context.Countries
+                            .Include(c => c.ElectionTypes)
+                            .ThenInclude(c => c.Elections)
                             .ThenInclude(c => c.Counties)
                             .ThenInclude(c => c.Results)
-                    .First(c => c.CountryCode == countryCode.ToUpper());
-            return _context.Countries
-                .Include(c => c.ElectionTypes)
-                .First(c => c.CountryCode == countryCode.ToUpper());
+                            .First(c => c.CountryCode == countryCode.ToUpper())
+                    );
+                }
+                return Ok(
+                    _context.Countries
+                        .Include(c => c.ElectionTypes)
+                        .First(c => c.CountryCode == countryCode.ToUpper())
+                );
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Something has gone terribly wrong in GetCountry");
+                return new StatusCodeResult(500);
+            }
         }
 
         /// <summary>
         /// Returns either a shallow or a deep ElectionType object, where a deep object contains the entire hierarchy of data from the ElectionType down.
         /// </summary>
         /// <param name="deep">Optional boolean parameter, the method returns a deep list if true</param>
+        /// <param name="electionCode">Two character election type code</param>
         /// <param name="countryCode">Two character country code, ISO 3166-1 alpha-2</param>
         /// <returns>ElectionType of a given country</returns>
         [HttpGet("{countryCode}/{electionCode}")]
-        public ElectionType GetElectionType(string countryCode, string electionCode, bool? deep)
+        public IActionResult GetElectionType(string countryCode, string electionCode, bool? deep)
         {
-            if (deep.HasValue && deep.Value)
-                return _context.Countries
-                    .Include(c => c.ElectionTypes)
+            _logger.LogInformation("GetElectionType called with parameters countryCode = " + countryCode +
+                                   ", electionCode = " + electionCode + ", deep = " + deep);
+            try
+            {
+                if (deep.HasValue && deep.Value)
+                {
+                    return Ok(
+                        _context.Countries
+                        .Include(c => c.ElectionTypes)
                         .ThenInclude(c => c.Elections)
-                            .ThenInclude(c => c.Counties)
-                                .ThenInclude(c => c.Results)
+                        .ThenInclude(c => c.Counties)
+                        .ThenInclude(c => c.Results)
+                        .First(c => c.CountryCode == countryCode.ToUpper())
+                        .ElectionTypes
+                        .First(c => c.InternationalName == ETNameUtilities.CodeToName(electionCode))
+                        );
+                }
+
+                return Ok(
+                    _context.Countries
+                    .Include(c => c.ElectionTypes)
+                    .ThenInclude(c => c.Elections)
                     .First(c => c.CountryCode == countryCode.ToUpper())
                     .ElectionTypes
-                        .First(c => c.InternationalName == ETNameUtilities.CodeToName(electionCode));
-
-            return _context.Countries
-                .Include(c => c.ElectionTypes)
-                    .ThenInclude(c => c.Elections)
-                .First(c => c.CountryCode == countryCode.ToUpper())
-                .ElectionTypes
-                    .First(c => c.InternationalName == ETNameUtilities.CodeToName(electionCode));
+                    .First(c => c.InternationalName == ETNameUtilities.CodeToName(electionCode))
+                    );
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Something has gone terribly wrong in GetElectionType");
+                return new StatusCodeResult(500);
+            }
         }
 
         /// <summary>
@@ -109,28 +153,42 @@ namespace Mandater.Controllers
         /// <param name="year">Four digit election year</param>
         /// <returns>Election of a given type and a given year for a given country</returns>
         [HttpGet("{countryCode}/{electionCode}/{year}")]
-        public Election GetElection(string countryCode, string electionCode, int year, bool? deep)
+        public IActionResult GetElection(string countryCode, string electionCode, int year, bool? deep)
         {
-            if (deep.HasValue && deep.Value)
-                return _context.Countries
-                    .Include(c => c.ElectionTypes)
-                        .ThenInclude(c => c.Elections)
+            _logger.LogInformation("GetElectionType called with parameters countryCode = " + countryCode +
+                                   ", electionCode = " + electionCode + ", year = " + year + ", deep = " + deep);
+            try
+            {
+                if (deep.HasValue && deep.Value)
+                    return Ok(
+                        _context.Countries
+                            .Include(c => c.ElectionTypes)
+                            .ThenInclude(c => c.Elections)
                             .ThenInclude(c => c.Counties)
-                                .ThenInclude(c => c.Results)
-                    .First(c => c.CountryCode == countryCode.ToUpper())
+                            .ThenInclude(c => c.Results)
+                            .First(c => c.CountryCode == countryCode.ToUpper())
+                            .ElectionTypes
+                            .First(c => c.InternationalName == ETNameUtilities.CodeToName(electionCode))
+                            .Elections
+                            .First(c => c.Year == year)
+                    );
+                return Ok(
+                    _context.Countries
+                        .Include(c => c.ElectionTypes)
+                        .ThenInclude(c => c.Elections)
+                        .ThenInclude(c => c.Counties)
+                        .First(c => c.CountryCode == countryCode.ToUpper())
                         .ElectionTypes
                         .First(c => c.InternationalName == ETNameUtilities.CodeToName(electionCode))
-                            .Elections
-                            .First(c => c.Year == year);
-            return _context.Countries
-                .Include(c => c.ElectionTypes)
-                    .ThenInclude(c => c.Elections)
-                        .ThenInclude(c => c.Counties)
-                .First(c => c.CountryCode == countryCode.ToUpper())
-                    .ElectionTypes
-                    .First(c => c.InternationalName == ETNameUtilities.CodeToName(electionCode))
-                            .Elections
-                            .First(c => c.Year == year);
+                        .Elections
+                        .First(c => c.Year == year)
+                );
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Something has gone terribly wrong in GetElection");
+                return new StatusCodeResult(500);
+            }
         }
     }
 }
