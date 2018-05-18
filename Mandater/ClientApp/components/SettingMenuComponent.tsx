@@ -58,7 +58,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                 <div className="form-group row">
                     <label htmlFor="levelingSeat" className="col-sm-5 col-form-label">Utjevningsmandater</label>
                     <div className="col-sm-7">
-                        <input className="form-control" classID="levelingSeat" type="number" name="levelingSeat" placeholder={this.props.levellingSeats.toString()} min="0.0" step="0.1" max="15.0" />
+                        <input className="form-control" classID="levellingSeat" type="number" name="levellingSeat" placeholder={this.props.levellingSeats.toString()} min="0.0" step="0.1" max="15.0" />
                     </div>
                 </div>
                 {/*<div className="form-group row">
