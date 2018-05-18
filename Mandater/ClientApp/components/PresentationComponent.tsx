@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import { PartyResult } from "ClientApp/interfaces/PartyResult";
 import { TableComponent } from "./TableComponent";
-import { ITableData, ITableRow } from "../interfaces/TableData";
+import { ITableData } from "../interfaces/TableData";
 
 type PresentationState = {
     showGraph: string,
@@ -16,7 +16,7 @@ type PresentationProps = {
 export class PresentationComponent extends React.Component<PresentationProps, {}> {
     render() {
         let tableData: ITableData = {
-            tableHeaders: ["Parti", "Stemmer", "Prosent", "Distrikt", "Utjevning", "Sum", "Differanse", "Prop."],
+            tableHeaders: ["Parti", "Stemmer", "Prosent", "Distrikt", "Utjevning", "Sum"/*, "Differanse", "Prop."*/],
             tableRows: []
         }
 
@@ -28,7 +28,7 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
                     key: value.partyCode,
                     rowData: [
                         value.partyCode, value.totalVotes.toString(), value.percent.toString(), value.districtSeats.toString(),
-                        value.levelingSeats.toString(), value.sum.toString(), "", ""
+                        value.levelingSeats.toString(), value.sum.toString()/*, "", ""*/
                     ]
                 });
             }
