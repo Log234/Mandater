@@ -10,6 +10,7 @@ export interface ISettingsProps {
     districtSeats: number,
     levelingSeats: number,
     electionType: ElectionType,
+        // TODO: Reduce number of parameters/split line for readability
     updateCalculation: (year: number, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => any;
 }
 
@@ -54,6 +55,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                 <div className="form-group row">
                     <label htmlFor="electionThreshold" className="col-sm-5 col-form-label">Sperregrense</label>
                     <div className="col-sm-7">
+                        // TODO: Split long line, add bracket to lambda expression
                         <input className="form-control" classID="electionThreshold" type="number" name="electionThreshold" onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.updateCalculation(this.props.selectedYear, this.props.electionType, this.props.firstDivisor, parseFloat(event.target.value), this.props.districtSeats, this.props.levelingSeats)} placeholder={this.props.electionThreshold.toString()} min="0.0" step="0.1" max="15.0" />
                     </div>
                 </div>
