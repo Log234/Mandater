@@ -29,7 +29,7 @@ export async function initializeParliamentaryElectionData() {
             }
             defaultElection = election;
             const electionAlgorithm = new ElectionAlgorithm(defaultElection);
-            defaultPartyResults = electionAlgorithm.modifiedSaintLague();
+            defaultPartyResults = electionAlgorithm.sainteLague();
         }).catch(error => {
             console.log(error);
         });
@@ -52,7 +52,7 @@ export async function initializeParliamentaryElectionData() {
 
 export function updateElectionData(election: Election, selectedYear: number, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) {
     const electionAlgorithm = new ElectionAlgorithm(election, firstDivisor, electionThreshold, districtSeats, levelingSeats);
-    const results = electionAlgorithm.modifiedSaintLague();
+    const results = electionAlgorithm.sainteLague();
 
     const updateCalculationAction: UpdateCalculationAction = {
         type: constants.UPDATE_CALCULATION,

@@ -48,8 +48,10 @@
     <None Remove="ClientApp\containers\index.ts" />
     <None Remove="ClientApp\containers\PresentationContainer.tsx" />
     <None Remove="ClientApp\containers\SettingMenuContainer.tsx" />
+    <None Remove="ClientApp\enums\AlgorithmEnums.ts" />
     <None Remove="ClientApp\index.ts" />
     <None Remove="ClientApp\interfaces\AlgorithmOutput.ts" />
+    <None Remove="ClientApp\interfaces\AlgorithmPayload.ts" />
     <None Remove="ClientApp\interfaces\County.ts" />
     <None Remove="ClientApp\interfaces\Election.ts" />
     <None Remove="ClientApp\interfaces\ElectionState.ts" />
@@ -60,6 +62,8 @@
     <None Remove="ClientApp\interfaces\ProcessedResult.ts" />
     <None Remove="ClientApp\interfaces\Result.ts" />
     <None Remove="ClientApp\interfaces\TableData.ts" />
+    <None Remove="ClientApp\logic\AlgorithmUtils.ts" />
+    <None Remove="ClientApp\logic\SainteLague.ts" />
     <None Remove="ClientApp\logic\Validation.ts" />
     <None Remove="ClientApp\reducers\index.ts" />
     <None Remove="ClientApp\store\ElectionReducer.ts" />
@@ -75,6 +79,8 @@
     <TypeScriptCompile Include="ClientApp\containers\PresentationContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\index.ts" />
     <TypeScriptCompile Include="ClientApp\containers\SettingMenuContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\enums\AlgorithmEnums.ts" />
+    <TypeScriptCompile Include="ClientApp\interfaces\AlgorithmPayload.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\County.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Election.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\AlgorithmOutput.ts" />
@@ -86,6 +92,8 @@
     <TypeScriptCompile Include="ClientApp\interfaces\ProcessedResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Result.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\TableData.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\AlgorithmUtils.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\SainteLague.ts" />
     <TypeScriptCompile Include="ClientApp\logic\Validation.ts" />
     <TypeScriptCompile Include="ClientApp\reducers\index.ts" />
     <TypeScriptCompile Include="ClientApp\store\ElectionReducer.ts" />

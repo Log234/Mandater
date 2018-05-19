@@ -18,7 +18,7 @@ export class PresentationSettings extends React.Component<{}, {}> {
         //            let definitelyAnElection: Election = election;
         //            let test: ElectionAlgorithm = new ElectionAlgorithm(definitelyAnElection);
         //            test.firstDivisor = 1.4;
-        //            console.log(test.modifiedSaintLague());
+        //            console.log(test.SainteLague());
         //        }
         //    }).catch(error => {
         //        console.log(error);
