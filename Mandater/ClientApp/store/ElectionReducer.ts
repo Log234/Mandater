@@ -2,10 +2,13 @@
 import { Election } from "ClientApp/interfaces/Election";
 import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction } from "ClientApp/interfaces/ParliamentaryElectionActions";
 import axios from "axios";
-import { ElectionAlgorithm } from "../logic/Algorithm";
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import { ElectionState } from "ClientApp/interfaces/states/ElectionState";
 import * as constants from "../constants"
+import { AlgorithmType } from "../enums/AlgorithmEnums";
+import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
+import { computeAlgorithm } from "../logic/Algorithm";
+import { getAlgorithmType } from "../logic/AlgorithmUtils";
 
 // TODO: Make actions for updates of elections etc...
 
@@ -19,6 +22,7 @@ export async function initializeParliamentaryElectionData() {
     const electionYears: number[] = [];
     let defaultElection: any = {};
     let electionType: any = {};
+    let algorithmType: AlgorithmType = AlgorithmType.SainteLague;
     let defaultPartyResults: PartyResultDictionary = {};
     await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no/pe?deep=true")
         .then(res => {
@@ -28,8 +32,16 @@ export async function initializeParliamentaryElectionData() {
                 electionYears.push(e.year);
             }
             defaultElection = election;
-            const electionAlgorithm = new ElectionAlgorithm(defaultElection);
-            defaultPartyResults = electionAlgorithm.modifiedSaintLague();
+            algorithmType = getAlgorithmType(election.algorithm);
+            const payload: AlgorithmPayload = {
+                election: election,
+                algorithm: algorithmType,
+                firstDivisor: election.firstDivisor,
+                electionThreshold: election.threshold,
+                districtSeats: election.seats,
+                levelingSeats: election.levelingSeats
+            }
+            defaultPartyResults = computeAlgorithm(payload);
         }).catch(error => {
             console.log(error);
         });
@@ -40,6 +52,7 @@ export async function initializeParliamentaryElectionData() {
         partyResults: defaultPartyResults,
         electionYears: electionYears,
         selectedYear: defaultElection.year,
+        algorithm: algorithmType,
         firstDivisor: defaultElection.firstDivisor,
         electionThreshold: defaultElection.threshold,
         districtSeats: defaultElection.seats,
@@ -50,18 +63,18 @@ export async function initializeParliamentaryElectionData() {
     return initializeAction;
 }
 
-export function updateElectionData(election: Election, selectedYear: number, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) {
-    const electionAlgorithm = new ElectionAlgorithm(election, firstDivisor, electionThreshold, districtSeats, levelingSeats);
-    const results = electionAlgorithm.modifiedSaintLague();
+export function updateElectionData(payload: AlgorithmPayload) {
+    const results = computeAlgorithm(payload);
 
     const updateCalculationAction: UpdateCalculationAction = {
         type: constants.UPDATE_CALCULATION,
-        selectedYear: selectedYear,
         partyResults: results,
-        firstDivisor: firstDivisor,
-        electionThreshold: electionThreshold,
-        districtSeats: districtSeats,
-        levelingSeats: levelingSeats
+        selectedYear: payload.election.year,
+        algorithm: payload.algorithm,
+        firstDivisor: payload.firstDivisor,
+        electionThreshold: payload.electionThreshold,
+        districtSeats: payload.districtSeats,
+        levelingSeats: payload.levelingSeats
     };
     return updateCalculationAction;
 }
