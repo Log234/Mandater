@@ -26,7 +26,7 @@ export class TableComponent extends React.Component<TableProps, {}> {
 
         return (
             <div>
-                <table className="partyTable"> {/* TODO: Update this to ElectionOverview or some simple table class */}
+                <table className="partyTable">{/* TODO: Update this to ElectionOverview or some simple table class */}
                     <thead>
                         <tr key="header">
                             { header }
