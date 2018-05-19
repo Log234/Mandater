@@ -1,6 +1,6 @@
 ﻿import { ApplicationState } from "../store";
 import { connect } from "react-redux";
-import { SettingMenuComponent } from "../components/SettingMenuComponent";
+import { SettingMenuComponent, SettingMenuPayload } from "../components/SettingMenuComponent";
 import { Election } from "../interfaces/Election";
 import { updateElectionData } from "../store/ElectionReducer";
 import * as Index from "react/index";
@@ -20,31 +20,31 @@ const mapStateToProps = (state: ApplicationState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateCalculation: (year: number, electionType: ElectionType, algorithm: string, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => {
-        console.log(`Selected: ${year}`);
+    updateCalculation: (incomingPayload : SettingMenuPayload) => {
+        console.log(`Selected: ${incomingPayload.year}`);
 
-        if (!validateNumber(firstDivisor, 1)) {
+        if (!validateNumber(incomingPayload.firstDivisor, 1)) {
             return;
         }
 
         let algorithmType: AlgorithmType = AlgorithmType.SainteLague;
-        if (algorithm === "DH") {
+        if (incomingPayload.algorithm === "DH") {
             algorithmType = AlgorithmType.DHondt;
         }
 
-        let election = electionType.elections.find(element => element.year === year);
+        let election = incomingPayload.electionType.elections.find(element => element.year === incomingPayload.year);
         if (election !== undefined) {
             const payload: AlgorithmPayload = {
                 election: election,
                 algorithm: algorithmType,
-                firstDivisor: firstDivisor,
-                electionThreshold: electionThreshold,
-                districtSeats: districtSeats,
-                levelingSeats: levelingSeats
+                firstDivisor: incomingPayload.firstDivisor,
+                electionThreshold: incomingPayload.electionThreshold,
+                districtSeats: incomingPayload.districtSeats,
+                levelingSeats: incomingPayload.levelingSeats
             }
             let updateCalculationAction = updateElectionData(payload);
             dispatch(updateCalculationAction);
-            console.log(`Updated: ${year}`);
+            console.log(`Updated: ${incomingPayload.year}`);
         }
     }
 });
