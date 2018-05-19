@@ -33,32 +33,46 @@ export async function initializeParliamentaryElectionData() {
         }).catch(error => {
             console.log(error);
         });
-    
+
     const initializeAction: InitializeParliamentaryElectionAction = {
         type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
         electionType: electionType,
         partyResults: defaultPartyResults,
         electionYears: electionYears,
-        firstDivisor: defaultElection.firstDivisor
+        selectedYear: defaultElection.year,
+        firstDivisor: defaultElection.firstDivisor,
+        electionThreshold: defaultElection.threshold,
+        districtSeats: defaultElection.seats,
+        levelingSeats: defaultElection.levelingSeats
+        
     };
     console.log(`Initialized: ${electionYears}`);
     return initializeAction;
 }
 
-export function updateElectionData(election: Election) {
-    const electionAlgorithm = new ElectionAlgorithm(election);
+export function updateElectionData(election: Election, selectedYear: number, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) {
+    const electionAlgorithm = new ElectionAlgorithm(election, firstDivisor, electionThreshold, districtSeats, levelingSeats);
     const results = electionAlgorithm.modifiedSaintLague();
 
     const updateCalculationAction: UpdateCalculationAction = {
         type: constants.UPDATE_CALCULATION,
-        partyResults: results
+        selectedYear: selectedYear,
+        partyResults: results,
+        firstDivisor: firstDivisor,
+        electionThreshold: electionThreshold,
+        districtSeats: districtSeats,
+        levelingSeats: levelingSeats
     };
     return updateCalculationAction;
 }
 
 const unloadedState: ElectionState = {
-    firstDivisor: -1,
     electionYears: [],
+    selectedYear: -1,
+    firstDivisor: -1,
+    electionThreshold: -1,
+    districSeats: -1,
+    levelingSeats: -1,
     electionType: {
         countryId: -1,
         electionTypeId: -1,
@@ -83,19 +97,32 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 ...state, 
                 electionType: action.electionType,
                 electionYears: action.electionYears,
+                selectedYear: action.selectedYear,
                 firstDivisor: action.firstDivisor,
+                electionThreshold: action.electionThreshold,
+                districSeats: action.districtSeats,
+                levelingSeats: action.levelingSeats,
                 partyResults: action.partyResults
             };
         case constants.GET_MENU_DATA:
             return {
                 ...state,
                 electionYears: action.electionYears,
+                selectedYear: action.selectedYear,
                 firstDivisor: action.firstDivisor,
+                electionThreshold: action.electionThreshold,
+                districtSeats: action.districtSeats,
+                levelingSeats: action.levelingSeats
             };
         case constants.UPDATE_CALCULATION:
             return {
                 ...state,
-                partyResults: action.partyResults
+                selectedYear: action.selectedYear,
+                partyResults: action.partyResults,
+                firstDivisor: action.firstDivisor,
+                electionThreshold: action.electionThreshold,
+                districtSeats: action.districtSeats,
+                levelingSeats: action.levelingSeats
             };
         default:
             return state || unloadedState;
