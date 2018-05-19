@@ -1,4 +1,4 @@
-﻿import { Election } from "ClientApp/interfaces/Election";
+﻿import { Election } from "./Election";
 import { ElectionType } from "./ElectionType"
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import * as constants from "../constants";

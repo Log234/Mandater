@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 const mapStateToProps = (state: ApplicationState) => ({
     results: state.electionState.partyResults,
-    showGraph: "PartyTable"
+    tableMode: state.tableState.tableMode
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

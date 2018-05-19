@@ -5,7 +5,8 @@ import PresentationContainer from "../containers/PresentationContainer";
 import { PresentationMenu } from "../components/PresentationMenu";
 
 interface IProps {
-    initializeState: () => any
+    initializeState: () => any,
+    initializePresentationState: () => any;
 }
 
 export class LayoutComponent extends React.Component<IProps, {}> {
