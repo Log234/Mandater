@@ -30,5 +30,12 @@ export function getDenominator(algorithm: AlgorithmType, numberOfSeatsAssigned: 
     } else {
         return numberOfSeatsAssigned + 1;
     }
+}
 
+export function getAlgorithmType(type: number) {
+    if (type === 1) {
+        return AlgorithmType.SainteLague;
+    } else {
+        return AlgorithmType.DHondt;
+    }
 }

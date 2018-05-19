@@ -6,6 +6,8 @@ import { updateElectionData } from "../store/ElectionReducer";
 import * as Index from "react/index";
 import { ElectionType } from "../interfaces/ElectionType";
 import { validateNumber } from "../logic/Validation";
+import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
+import { AlgorithmType } from "../enums/AlgorithmEnums";
 
 const mapStateToProps = (state: ApplicationState) => ({
     selectOptions: state.electionState.electionYears,
@@ -18,16 +20,29 @@ const mapStateToProps = (state: ApplicationState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateCalculation: (year: number, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => {
+    updateCalculation: (year: number, electionType: ElectionType, algorithm: string, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => {
         console.log(`Selected: ${year}`);
 
         if (!validateNumber(firstDivisor, 1)) {
             return;
         }
 
+        let algorithmType: AlgorithmType = AlgorithmType.SainteLague;
+        if (algorithm === "DH") {
+            algorithmType = AlgorithmType.DHondt;
+        }
+
         let election = electionType.elections.find(element => element.year === year);
         if (election !== undefined) {
-            let updateCalculationAction = updateElectionData(election, year, firstDivisor, electionThreshold, districtSeats, levelingSeats);
+            const payload: AlgorithmPayload = {
+                election: election,
+                algorithm: algorithmType,
+                firstDivisor: firstDivisor,
+                electionThreshold: electionThreshold,
+                districtSeats: districtSeats,
+                levelingSeats: levelingSeats
+            }
+            let updateCalculationAction = updateElectionData(payload);
             dispatch(updateCalculationAction);
             console.log(`Updated: ${year}`);
         }

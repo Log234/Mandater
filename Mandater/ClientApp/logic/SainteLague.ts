@@ -4,7 +4,7 @@ import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionar
 import { distributeSeats } from "./AlgorithmUtils";
 import { AlgorithmType } from "ClientApp/enums/AlgorithmEnums";
 
-export function sainteLague(algorithm: AlgorithmType, payload: AlgorithmPayload) {
+export function sainteLague(payload: AlgorithmPayload) {
     let election = payload.election;
     // st. lague iterates over each county, and in turn, each party of the party, so first we have to create objects for parties
     let processedResults: Array<ProcessedResult> = [];
@@ -23,7 +23,7 @@ export function sainteLague(algorithm: AlgorithmType, payload: AlgorithmPayload)
     }
     let offset: number = 0;
     for (let county of election.counties) {
-        processedResults = distributeSeats(algorithm, payload.firstDivisor, county.seats, offset, county.results.length, processedResults);
+        processedResults = distributeSeats(payload.algorithm, payload.firstDivisor, county.seats, offset, county.results.length, processedResults);
         offset += county.results.length;
     }
     let partyResults: PartyResultDictionary = {};
@@ -65,7 +65,7 @@ export function sainteLague(algorithm: AlgorithmType, payload: AlgorithmPayload)
         }
     }
 
-    filteredResults = distributeSeats(algorithm, payload.firstDivisor, payload.districtSeats + payload.levelingSeats,
+    filteredResults = distributeSeats(payload.algorithm, payload.firstDivisor, payload.districtSeats + payload.levelingSeats,
         0,
         filteredResults.length,
         filteredResults);
@@ -82,7 +82,7 @@ export function sainteLague(algorithm: AlgorithmType, payload: AlgorithmPayload)
         }
     }
 
-    filteredStgTwo = distributeSeats(algorithm, payload.firstDivisor, payload.levelingSeats,
+    filteredStgTwo = distributeSeats(payload.algorithm, payload.firstDivisor, payload.levelingSeats,
         0,
         filteredStgTwo.length,
         filteredStgTwo);
