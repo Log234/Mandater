@@ -10,7 +10,6 @@ export interface ISettingsProps {
     districtSeats: number,
     levelingSeats: number,
     electionType: ElectionType,
-        // TODO: Reduce number of parameters/split line for readability
     updateCalculation: (payload : SettingMenuPayload) => any;
 }
 
