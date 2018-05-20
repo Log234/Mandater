@@ -1,6 +1,8 @@
 ﻿import { ProcessedResult } from "ClientApp/interfaces/ProcessedResult";
 import { AlgorithmType } from "../enums/AlgorithmEnums";
 
+const illegalPartyCodes: Set<string> = new Set(["BLANKE"]);
+
 export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, numSeats: number, offset: number, end: number, processedResults: ProcessedResult[]) {
     let tmp = 0;
     for (let i: number = 0; i < numSeats; i++) {
@@ -9,7 +11,7 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
         for (let j: number = offset; j < end + offset; j++) {
             let currentParty: ProcessedResult = processedResults[j];
             let currentQuotient: number = (currentParty.votes / getDenominator(algorithm, currentParty.seats, firstDivisor));
-            if (currentQuotient > currentMaxQuotient) {
+            if (currentQuotient > currentMaxQuotient && !illegalPartyCodes.has(currentParty.partyCode)) {
                 currentMaxQuotient = currentQuotient;
                 currentWinnerIndex = j;
             }
