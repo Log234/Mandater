@@ -12,7 +12,7 @@ export function sainteLague(payload: AlgorithmPayload) {
 
         for (let currentResult of county.results) {
             let currentParty: ProcessedResult = {
-                countyName: currentResult.countyName,
+                countyName: county.name,
                 partyName: currentResult.partyName,
                 partyCode: currentResult.partyCode,
                 votes: currentResult.votes,
