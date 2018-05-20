@@ -151,6 +151,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                 }
                             }
                             placeholder={this.props.levelingSeats.toString()}
+                            value={this.props.levelingSeats.toString()}
                             min="0"
                             step="1"
                             max="100" />
