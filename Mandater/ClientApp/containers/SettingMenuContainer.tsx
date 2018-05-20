@@ -5,6 +5,7 @@ import { updateElectionData, updateSettingsMenu } from "../store/ElectionReducer
 import { validateSettings } from "../logic/Validation";
 import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
 import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
+import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
 
 const mapStateToProps = (state: ApplicationState) => ({
     selectOptions: state.electionState.electionYears,
@@ -16,15 +17,19 @@ const mapStateToProps = (state: ApplicationState) => ({
         electionThreshold: state.electionState.electionThreshold,
         districtSeats: state.electionState.districSeats,
         levelingSeats: state.electionState.levelingSeats
+    },
+    placeholderPayload: {
+        firstDivisor: state.electionState.firstDivisorPlaceholder,
+        electionThreshold: state.electionState.electionThresholdPlaceholder,
+        districtSeats: state.electionState.districSeatsPlaceholder,
+        levelingSeats: state.electionState.levelingSeatsPlaceholder
     }
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateCalculation: (settingsPayload : SettingsMenuPayload) => {
+    updateCalculation: (settingsPayload : SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => {
         const election = settingsPayload.electionType.elections.find(element => element.year === settingsPayload.year);
-        const settingsAreValid = validateSettings(settingsPayload);
-
-        if (election !== undefined && settingsAreValid) {
+        if (election !== undefined && validateSettings(settingsPayload)) {
             const payload: AlgorithmPayload = {
                 election: election,
                 year: settingsPayload.year,
@@ -38,7 +43,7 @@ const mapDispatchToProps = (dispatch: any) => ({
             dispatch(updateCalculationAction);
         }
 
-        const updateSettingsMenuAction = updateSettingsMenu(settingsPayload);
+        const updateSettingsMenuAction = updateSettingsMenu(settingsPayload, placeholderPayload);
         dispatch(updateSettingsMenuAction);
     }
 });

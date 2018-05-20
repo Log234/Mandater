@@ -10,6 +10,8 @@ import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
 import { computeAlgorithm } from "../logic/Algorithm";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
 import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
+import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
+import { validateFirstDivisor, validateElectionThreshold, validateDistrictSeats, validateLevelingSeats } from "../logic/Validation";
 
 // TODO: Make actions for updates of elections etc...
 
@@ -76,27 +78,52 @@ export function updateElectionData(payload: AlgorithmPayload) {
     return updateCalculationAction;
 }
 
-export function updateSettingsMenu(payload: SettingsMenuPayload) {
-    const updateSettingsMenuAction: UpdateSettingsMenuAction = {
+export function updateSettingsMenu(payload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) {
+    let updateSettingsMenuAction: UpdateSettingsMenuAction = {
         type: constants.UPDATE_SETTINGSMENU,
         year: payload.year,
         algorithm: payload.algorithm,
         firstDivisor: payload.firstDivisor,
+        firstDivisorPlaceholder: placeholderPayload.firstDivisor,
         electionThreshold: payload.electionThreshold,
+        electionThresholdPlaceholder: placeholderPayload.electionThreshold,
         districtSeats: payload.districtSeats,
-        levelingSeats: payload.levelingSeats
+        districtSeatsPlaceholder: placeholderPayload.districtSeats,
+        levelingSeats: payload.levelingSeats,
+        levelingSeatsPlaceholder: placeholderPayload.levelingSeats
     };
+
+    if (validateFirstDivisor(payload.firstDivisor)) {
+        updateSettingsMenuAction.firstDivisorPlaceholder = payload.firstDivisor;
+    }
+
+    if (validateElectionThreshold(payload.electionThreshold)) {
+        updateSettingsMenuAction.electionThresholdPlaceholder = payload.electionThreshold;
+    }
+
+    if (validateDistrictSeats(payload.districtSeats)) {
+        updateSettingsMenuAction.districtSeatsPlaceholder = payload.districtSeats;
+    }
+
+    if (validateLevelingSeats(payload.levelingSeats)) {
+        updateSettingsMenuAction.levelingSeatsPlaceholder = payload.levelingSeats;
+    }
+
     return updateSettingsMenuAction;
 }
 
 const unloadedState: ElectionState = {
     electionYears: [],
     year: -1,
-    firstDivisor: -1,
     algorithm: AlgorithmType.Undefined,
+    firstDivisor: -1,
+    firstDivisorPlaceholder: -1,
     electionThreshold: -1,
+    electionThresholdPlaceholder: -1,
     districSeats: -1,
+    districSeatsPlaceholder: -1,
     levelingSeats: -1,
+    levelingSeatsPlaceholder: -1,
     electionType: {
         countryId: -1,
         electionTypeId: -1,
@@ -150,9 +177,13 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 year: action.year,
                 algorithm: action.algorithm,
                 firstDivisor: action.firstDivisor,
+                firstDivisorPlaceholder: action.firstDivisorPlaceholder,
                 electionThreshold: action.electionThreshold,
+                electionThresholdPlaceholder: action.electionThresholdPlaceholder,
                 districtSeats: action.districtSeats,
-                levelingSeats: action.levelingSeats
+                districtSeatsPlaceholder: action.districtSeatsPlaceholder,
+                levelingSeats: action.levelingSeats,
+                levelingSeatsPlaceholder: action.levelingSeatsPlaceholder
             };
         default:
             return state || unloadedState;

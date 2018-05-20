@@ -1,12 +1,14 @@
 ﻿import * as React from "react";
 import { ElectionType } from "../interfaces/ElectionType";
 import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
+import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
 
 export interface ISettingsProps {
     selectOptions: number[],
     payload: SettingsMenuPayload;
-    updateCalculation: (payload : SettingsMenuPayload) => any;
+    placeholderPayload: SettingsMenuPlaceholderPayload;
+    updateCalculation: (payload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => any;
 }
 
 
@@ -39,7 +41,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     this.props.updateCalculation({
                                         ...payload,
                                         year: parseInt(event.target.value)
-                                    });
+                                    }, this.props.placeholderPayload);
                                 }}
                             className="form-control"
                             name="year">
@@ -68,7 +70,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     this.props.updateCalculation({
                                         ...payload,
                                         algorithm: getAlgorithmType(parseInt(event.target.value))
-                                    });
+                                    }, this.props.placeholderPayload);
                                 }
                             }>
                             <option value="1">Sainte Lagüe</option>
@@ -89,10 +91,10 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     this.props.updateCalculation({
                                         ...payload,
                                         firstDivisor: parseFloat(event.target.value)
-                                    });
+                                    }, this.props.placeholderPayload);
                                 }
                             }
-                            placeholder={payload.firstDivisor.toString()}
+                            placeholder={this.props.placeholderPayload.firstDivisor.toString()}
                             value={payload.firstDivisor.toString()}
                             min="1.0" step="0.1" max="5.0" />
                     </div>
@@ -110,10 +112,10 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     this.props.updateCalculation({
                                         ...payload,
                                         electionThreshold: parseFloat(event.target.value)
-                                    });
+                                    }, this.props.placeholderPayload);
                                 }
                             }
-                            placeholder={payload.electionThreshold.toString()}
+                            placeholder={this.props.placeholderPayload.electionThreshold.toString()}
                             value={payload.electionThreshold.toString()}
                             min="0.0"
                             step="0.1"
@@ -133,10 +135,10 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     this.props.updateCalculation({
                                         ...payload,
                                         levelingSeats: parseInt(event.target.value)
-                                    });
+                                    }, this.props.placeholderPayload);
                                 }
                             }
-                            placeholder={payload.levelingSeats.toString()}
+                            placeholder={this.props.placeholderPayload.levelingSeats.toString()}
                             value={payload.levelingSeats.toString()}
                             min="0"
                             step="1"

@@ -38,7 +38,11 @@ export interface UpdateSettingsMenuAction {
     year: number,
     algorithm: AlgorithmType,
     firstDivisor: number,
+    firstDivisorPlaceholder: number,
     electionThreshold: number,
+    electionThresholdPlaceholder: number,
     districtSeats: number,
+    districtSeatsPlaceholder: number,
     levelingSeats: number;
+    levelingSeatsPlaceholder: number;
 }

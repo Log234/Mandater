@@ -1,4 +1,4 @@
-﻿export type SettingsMenuPayload = {
+﻿export type SettingsMenuPlaceholderPayload = {
     firstDivisor: number,
     electionThreshold: number,
     districtSeats: number,

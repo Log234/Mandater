@@ -8,8 +8,12 @@ export interface ElectionState {
     electionType: ElectionType,
     algorithm: AlgorithmType,
     firstDivisor: number,
+    firstDivisorPlaceholder: number,
     electionThreshold: number,
+    electionThresholdPlaceholder: number,
     districSeats: number,
+    districSeatsPlaceholder: number,
     levelingSeats: number,
+    levelingSeatsPlaceholder: number,
     partyResults: PartyResultDictionary;
 }
