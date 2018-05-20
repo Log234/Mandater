@@ -23,7 +23,9 @@ const mapDispatchToProps = (dispatch: any) => ({
     updateCalculation: (incomingPayload : SettingMenuPayload) => {
         console.log(`Selected: ${incomingPayload.year}`);
 
-        if (!validateNumber(incomingPayload.firstDivisor, 1)) {
+        if (!validateNumber(incomingPayload.firstDivisor, 1, 5, false)
+            && !validateNumber(incomingPayload.electionThreshold, 0, 15, false)
+            && !validateNumber(incomingPayload.levelingSeats, 0, 100, true)) {
             return;
         }
 
