@@ -23,21 +23,29 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
 }
 
 export function getDenominator(algorithm: AlgorithmType, numberOfSeatsAssigned: number, firstDivisor: number) {
-    if (algorithm === AlgorithmType.SainteLague) {
-        if (numberOfSeatsAssigned === 0) {
-            return firstDivisor;
-        } else {
-            return (2 * numberOfSeatsAssigned + 1);
-        }
-    } else {
-        return numberOfSeatsAssigned + 1;
+    switch (algorithm) {
+        case AlgorithmType.SainteLague:
+            if (numberOfSeatsAssigned === 0) {
+                return firstDivisor;
+            } else {
+                return (2 * numberOfSeatsAssigned + 1);
+            }
+        case AlgorithmType.DHondt:
+            return numberOfSeatsAssigned + 1;
+        default:
+            console.log(`ERROR! ${algorithm.toString()} does not have an associated denominator function!`);
+            return Number.MIN_SAFE_INTEGER;
     }
 }
 
 export function getAlgorithmType(type: number) {
-    if (type === 1) {
-        return AlgorithmType.SainteLague;
-    } else {
-        return AlgorithmType.DHondt;
+    switch (type) {
+        case 1:
+            return AlgorithmType.SainteLague;
+        case 2:
+            return AlgorithmType.DHondt;
+        default:
+            console.log(`ERROR! ${type} is not a valid algorithm ID.`);
+            return AlgorithmType.Undefined;
     }
 }

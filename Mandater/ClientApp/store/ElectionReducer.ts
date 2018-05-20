@@ -1,6 +1,6 @@
 ﻿import { Action, Reducer } from "redux";
 import { Election } from "ClientApp/interfaces/Election";
-import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction } from "ClientApp/interfaces/ParliamentaryElectionActions";
+import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction, UpdateSettingsMenuAction } from "ClientApp/interfaces/ParliamentaryElectionActions";
 import axios from "axios";
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import { ElectionState } from "ClientApp/interfaces/states/ElectionState";
@@ -9,12 +9,14 @@ import { AlgorithmType } from "../enums/AlgorithmEnums";
 import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
 import { computeAlgorithm } from "../logic/Algorithm";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
+import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
 
 // TODO: Make actions for updates of elections etc...
 
 type KnownAction = GetMenuDataAction
-    | InitializeParliamentaryElectionAction
-    | UpdateCalculationAction;
+                   | InitializeParliamentaryElectionAction
+                   | UpdateCalculationAction
+                   | UpdateSettingsMenuAction;
 
 // ACTION CREATORS
 
@@ -35,6 +37,7 @@ export async function initializeParliamentaryElectionData() {
             algorithmType = getAlgorithmType(election.algorithm);
             const payload: AlgorithmPayload = {
                 election: election,
+                year: election.year,
                 algorithm: algorithmType,
                 firstDivisor: election.firstDivisor,
                 electionThreshold: election.threshold,
@@ -51,7 +54,7 @@ export async function initializeParliamentaryElectionData() {
         electionType: electionType,
         partyResults: defaultPartyResults,
         electionYears: electionYears,
-        selectedYear: defaultElection.year,
+        year: defaultElection.year,
         algorithm: algorithmType,
         firstDivisor: defaultElection.firstDivisor,
         electionThreshold: defaultElection.threshold,
@@ -68,21 +71,29 @@ export function updateElectionData(payload: AlgorithmPayload) {
 
     const updateCalculationAction: UpdateCalculationAction = {
         type: constants.UPDATE_CALCULATION,
-        partyResults: results,
-        selectedYear: payload.election.year,
+        partyResults: results
+    };
+    return updateCalculationAction;
+}
+
+export function updateSettingsMenu(payload: SettingsMenuPayload) {
+    const updateSettingsMenuAction: UpdateSettingsMenuAction = {
+        type: constants.UPDATE_SETTINGSMENU,
+        year: payload.year,
         algorithm: payload.algorithm,
         firstDivisor: payload.firstDivisor,
         electionThreshold: payload.electionThreshold,
         districtSeats: payload.districtSeats,
         levelingSeats: payload.levelingSeats
     };
-    return updateCalculationAction;
+    return updateSettingsMenuAction;
 }
 
 const unloadedState: ElectionState = {
     electionYears: [],
-    selectedYear: -1,
+    year: -1,
     firstDivisor: -1,
+    algorithm: AlgorithmType.Undefined,
     electionThreshold: -1,
     districSeats: -1,
     levelingSeats: -1,
@@ -107,10 +118,11 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
     switch (action.type) {
         case constants.INITIALIZE_PARLIAMENTARY_ELECTION:
             return {
-                ...state, 
+                ...state,
                 electionType: action.electionType,
                 electionYears: action.electionYears,
-                selectedYear: action.selectedYear,
+                year: action.year,
+                algorithm: action.algorithm,
                 firstDivisor: action.firstDivisor,
                 electionThreshold: action.electionThreshold,
                 districSeats: action.districtSeats,
@@ -121,7 +133,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
             return {
                 ...state,
                 electionYears: action.electionYears,
-                selectedYear: action.selectedYear,
+                year: action.selectedYear,
                 firstDivisor: action.firstDivisor,
                 electionThreshold: action.electionThreshold,
                 districtSeats: action.districtSeats,
@@ -130,8 +142,13 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
         case constants.UPDATE_CALCULATION:
             return {
                 ...state,
-                selectedYear: action.selectedYear,
                 partyResults: action.partyResults,
+            };
+        case constants.UPDATE_SETTINGSMENU:
+            return {
+                ...state,
+                year: action.year,
+                algorithm: action.algorithm,
                 firstDivisor: action.firstDivisor,
                 electionThreshold: action.electionThreshold,
                 districtSeats: action.districtSeats,

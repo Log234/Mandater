@@ -1,26 +1,12 @@
 ﻿import * as React from "react";
 import { ElectionType } from "../interfaces/ElectionType";
+import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
+import { getAlgorithmType } from "../logic/AlgorithmUtils";
 
 export interface ISettingsProps {
     selectOptions: number[],
-    selectedYear: number,
-    algorithm: string,
-    firstDivisor: number,
-    electionThreshold: number,
-    districtSeats: number,
-    levelingSeats: number,
-    electionType: ElectionType,
-    updateCalculation: (payload : SettingMenuPayload) => any;
-}
-
-export interface SettingMenuPayload {
-    year: number,
-    electionType: ElectionType,
-    algorithm: string,
-    firstDivisor: number,
-    electionThreshold: number,
-    districtSeats: number,
-    levelingSeats: number,
+    payload: SettingsMenuPayload;
+    updateCalculation: (payload : SettingsMenuPayload) => any;
 }
 
 
@@ -31,14 +17,14 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
     
  
     render() {
-        const payload: SettingMenuPayload = {
-            year : this.props.selectedYear,
-            algorithm: this.props.algorithm,
-            districtSeats: this.props.districtSeats,
-            electionThreshold: this.props.electionThreshold,
-            electionType: this.props.electionType,
-            firstDivisor: this.props.firstDivisor,
-            levelingSeats: this.props.levelingSeats
+        const payload: SettingsMenuPayload = {
+            year: this.props.payload.year,
+            electionType: this.props.payload.electionType,
+            algorithm: this.props.payload.algorithm,
+            firstDivisor: this.props.payload.firstDivisor,
+            electionThreshold: this.props.payload.electionThreshold,
+            districtSeats: this.props.payload.districtSeats,
+            levelingSeats: this.props.payload.levelingSeats
         }
         return (<div className="settings-menu">
             <h1 className="h2">Stortingsvalg</h1>
@@ -81,12 +67,12 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                 (event: React.ChangeEvent<HTMLSelectElement>) => {
                                     this.props.updateCalculation({
                                         ...payload,
-                                        algorithm: event.target.value
+                                        algorithm: getAlgorithmType(parseInt(event.target.value))
                                     });
                                 }
                             }>
-                            <option value="SL">Sainte Lagüe</option>
-                            <option value="DH">d'Hondt</option>>
+                            <option value="1">Sainte Lagüe</option>
+                            <option value="2">d'Hondt</option>>
                         </select>
                     </div>
                 </div>
@@ -106,8 +92,8 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     });
                                 }
                             }
-                            placeholder={this.props.firstDivisor.toString()}
-                            value={this.props.firstDivisor.toString()}
+                            placeholder={payload.firstDivisor.toString()}
+                            value={payload.firstDivisor.toString()}
                             min="1.0" step="0.1" max="5.0" />
                     </div>
                 </div>
@@ -127,8 +113,8 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     });
                                 }
                             }
-                            placeholder={this.props.electionThreshold.toString()}
-                            value={this.props.electionThreshold.toString()}
+                            placeholder={payload.electionThreshold.toString()}
+                            value={payload.electionThreshold.toString()}
                             min="0.0"
                             step="0.1"
                             max="15.0" />
@@ -150,8 +136,8 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     });
                                 }
                             }
-                            placeholder={this.props.levelingSeats.toString()}
-                            value={this.props.levelingSeats.toString()}
+                            placeholder={payload.levelingSeats.toString()}
+                            value={payload.levelingSeats.toString()}
                             min="0"
                             step="1"
                             max="100" />

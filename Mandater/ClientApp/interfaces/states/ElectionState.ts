@@ -1,13 +1,15 @@
 ﻿import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import { ElectionType } from "../ElectionType";
+import { AlgorithmType } from "../../enums/AlgorithmEnums";
 
 export interface ElectionState {
     electionYears: number[],
-    selectedYear: number,
+    year: number,
+    electionType: ElectionType,
+    algorithm: AlgorithmType,
     firstDivisor: number,
     electionThreshold: number,
     districSeats: number,
     levelingSeats: number,
-    electionType: ElectionType,
     partyResults: PartyResultDictionary;
 }

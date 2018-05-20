@@ -19,7 +19,7 @@ export type InitializeParliamentaryElectionAction =  {
     type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
     electionType: ElectionType,
     electionYears: number[],
-    selectedYear: number,
+    year: number,
     algorithm: AlgorithmType,
     firstDivisor: number,
     electionThreshold: number,
@@ -30,8 +30,12 @@ export type InitializeParliamentaryElectionAction =  {
 
 export interface UpdateCalculationAction {
     type: constants.UPDATE_CALCULATION,
-    partyResults: PartyResultDictionary,
-    selectedYear: number,
+    partyResults: PartyResultDictionary
+}
+
+export interface UpdateSettingsMenuAction {
+    type: constants.UPDATE_SETTINGSMENU,
+    year: number,
     algorithm: AlgorithmType,
     firstDivisor: number,
     electionThreshold: number,
