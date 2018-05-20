@@ -72,7 +72,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label className="col-sm-5 col-form-label">Beregningsmetode</label>
+                    <label className="col-sm-5 col-form-label">Algoritme</label>
                     <div className="col-sm-7">
                         <select
                             className="form-control"
