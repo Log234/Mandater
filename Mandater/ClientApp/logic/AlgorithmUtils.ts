@@ -33,7 +33,7 @@ export function getDenominator(algorithm: AlgorithmType, numberOfSeatsAssigned: 
         case AlgorithmType.DHondt:
             return numberOfSeatsAssigned + 1;
         default:
-            console.log(`ERROR! ${algorithm.toString()} does not have an associated denominator function!`);
+            console.error(`ERROR! ${algorithm.toString()} does not have an associated denominator function!`);
             return Number.MIN_SAFE_INTEGER;
     }
 }
@@ -45,7 +45,7 @@ export function getAlgorithmType(type: number) {
         case 2:
             return AlgorithmType.DHondt;
         default:
-            console.log(`ERROR! ${type} is not a valid algorithm ID.`);
+            console.error(`ERROR! ${type} is not a valid algorithm ID.`);
             return AlgorithmType.Undefined;
     }
 }
