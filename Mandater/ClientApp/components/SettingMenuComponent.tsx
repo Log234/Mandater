@@ -74,7 +74,17 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">Beregningsmetode</label>
                     <div className="col-sm-7">
-                        <select className="form-control" name="calcMethod" onChange={(event: React.ChangeEvent<HTMLSelectElement>) => this.props.updateCalculation({...payload, algorithm : event.target.value})}>
+                        <select
+                            className="form-control"
+                            name="calcMethod"
+                            onChange={
+                                (event: React.ChangeEvent<HTMLSelectElement>) => {
+                                    this.props.updateCalculation({
+                                        ...payload,
+                                        algorithm: event.target.value
+                                    });
+                                }
+                            }>
                             <option value="SL">Sainte Lagüe</option>
                             <option value="DH">d'Hondt</option>>
                         </select>

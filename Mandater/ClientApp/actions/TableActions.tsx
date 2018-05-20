@@ -4,6 +4,10 @@ import { TableMode } from "../interfaces/states/TableState";
 /**
  * 
  */
+export interface ChangeTableAction {
+    type: constants.CHANGE_TABLE,
+    tableMode: TableMode
+}
 export interface InitializeTableAction {
     type: constants.INITIALIZE_TABLE,
     tableMode: TableMode;
@@ -15,4 +19,12 @@ export function initializeTable() {
     }
     console.log(`Action of type ${initializeAction.type} created`);
     return initializeAction;
+}
+export function changeTable(mode : TableMode) {
+    const changeTableAction: ChangeTableAction = {
+        type: constants.CHANGE_TABLE,
+        tableMode: mode
+    }
+    console.log(`Action of type ${changeTableAction.type} created`);
+    return changeTableAction;
 }

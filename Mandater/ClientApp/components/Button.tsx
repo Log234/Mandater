@@ -1,16 +1,18 @@
 ﻿import * as React from "react";
 
-type ButtonProps = {
+export interface ButtonProps {
     title: string,
     onPress: () => any,
     accessibilityLabel?: string,
 }
 
-const Button = (props: ButtonProps) => {
-    return <button
-               onClick={props.onPress}>
-               {props.title}
-           </button>;
-};
+export class Button<P> extends React.Component<P & ButtonProps, {}> {
+    render() {
+        return <button
+                   title={this.props.accessibilityLabel}
+                   onClick={this.props.onPress}>d
+                   {this.props.title}
+               </button>;
+    }
+}
 
-export default Button;

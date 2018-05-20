@@ -2,7 +2,7 @@
 import { connect } from "react-redux";
 import { ApplicationState } from "../store";
 import { initializeParliamentaryElectionData } from "../store/ElectionReducer";
-import { initializePresentation } from "../actions";
+import { initializeTable } from "../actions/TableActions";
 
 const mapStateToProps = (state: ApplicationState) => {
     return {};
@@ -11,9 +11,9 @@ const mapStateToProps = (state: ApplicationState) => {
 const mapDispatchToProps = (dispatch: any) => ({
     initializeState: async () => {
         const requestAndLoadAction = await initializeParliamentaryElectionData();
-        const presentationAction = initializePresentation();
+        const tableAction = initializeTable();
         dispatch(requestAndLoadAction);
-        dispatch(presentationAction);
+        dispatch(tableAction);
     }
 });
 
