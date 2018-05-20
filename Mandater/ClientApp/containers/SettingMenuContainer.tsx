@@ -1,36 +1,50 @@
 ﻿import { ApplicationState } from "../store";
 import { connect } from "react-redux";
 import { SettingMenuComponent } from "../components/SettingMenuComponent";
-import { Election } from "../interfaces/Election";
-import { updateElectionData } from "../store/ElectionReducer";
-import * as Index from "react/index";
-import { ElectionType } from "../interfaces/ElectionType";
-import { validateNumber } from "../logic/Validation";
+import { updateElectionData, updateSettingsMenu } from "../store/ElectionReducer";
+import { validateSettings } from "../logic/Validation";
+import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
+import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
+import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
 
 const mapStateToProps = (state: ApplicationState) => ({
     selectOptions: state.electionState.electionYears,
-    selectedYear: state.electionState.selectedYear,
-    firstDivisor: state.electionState.firstDivisor,
-    electionThreshold: state.electionState.electionThreshold,
-    districtSeats: state.electionState.districSeats,
-    levelingSeats: state.electionState.levelingSeats,
-    electionType: state.electionState.electionType
+    payload: {
+        year: state.electionState.year,
+        electionType: state.electionState.electionType,
+        algorithm: state.electionState.algorithm,
+        firstDivisor: state.electionState.firstDivisor,
+        electionThreshold: state.electionState.electionThreshold,
+        districtSeats: state.electionState.districSeats,
+        levelingSeats: state.electionState.levelingSeats
+    },
+    placeholderPayload: {
+        firstDivisor: state.electionState.firstDivisorPlaceholder,
+        electionThreshold: state.electionState.electionThresholdPlaceholder,
+        districtSeats: state.electionState.districSeatsPlaceholder,
+        levelingSeats: state.electionState.levelingSeatsPlaceholder
+    }
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateCalculation: (year: number, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => {
-        console.log(`Selected: ${year}`);
-
-        if (!validateNumber(firstDivisor, 1)) {
-            return;
-        }
-
-        let election = electionType.elections.find(element => element.year === year);
-        if (election !== undefined) {
-            let updateCalculationAction = updateElectionData(election, year, firstDivisor, electionThreshold, districtSeats, levelingSeats);
+    updateCalculation: (settingsPayload : SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => {
+        const election = settingsPayload.electionType.elections.find(element => element.year === settingsPayload.year);
+        if (election !== undefined && validateSettings(settingsPayload)) {
+            const payload: AlgorithmPayload = {
+                election: election,
+                year: settingsPayload.year,
+                algorithm: settingsPayload.algorithm,
+                firstDivisor: settingsPayload.firstDivisor,
+                electionThreshold: settingsPayload.electionThreshold,
+                districtSeats: settingsPayload.districtSeats,
+                levelingSeats: settingsPayload.levelingSeats
+            }
+            const updateCalculationAction = updateElectionData(payload);
             dispatch(updateCalculationAction);
-            console.log(`Updated: ${year}`);
         }
+
+        const updateSettingsMenuAction = updateSettingsMenu(settingsPayload, placeholderPayload);
+        dispatch(updateSettingsMenuAction);
     }
 });
 

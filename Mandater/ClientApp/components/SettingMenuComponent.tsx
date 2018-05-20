@@ -1,36 +1,58 @@
 ﻿import * as React from "react";
 import { ElectionType } from "../interfaces/ElectionType";
-import { Election } from "../interfaces/Election";
+import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
+import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
+import { getAlgorithmType } from "../logic/AlgorithmUtils";
 
 export interface ISettingsProps {
     selectOptions: number[],
-    selectedYear: number,
-    firstDivisor: number,
-    electionThreshold: number,
-    districtSeats: number,
-    levelingSeats: number,
-    electionType: ElectionType,
-        // TODO: Reduce number of parameters/split line for readability
-    updateCalculation: (year: number, electionType: ElectionType, firstDivisor: number, electionThreshold: number, districtSeats: number, levelingSeats: number) => any;
+    payload: SettingsMenuPayload;
+    placeholderPayload: SettingsMenuPlaceholderPayload;
+    updateCalculation: (payload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => any;
 }
 
 
 export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
+    constructor(props : ISettingsProps) {
+        super(props);
+    }
+    
+ 
     render() {
+        const payload: SettingsMenuPayload = {
+            year: this.props.payload.year,
+            electionType: this.props.payload.electionType,
+            algorithm: this.props.payload.algorithm,
+            firstDivisor: this.props.payload.firstDivisor,
+            electionThreshold: this.props.payload.electionThreshold,
+            districtSeats: this.props.payload.districtSeats,
+            levelingSeats: this.props.payload.levelingSeats
+        }
         return (<div className="settings-menu">
             <h1 className="h2">Stortingsvalg</h1>
             <form>
                 <div className="form-group row">
                     <label className="col-sm-5 col-form-label">År</label>
                     <div className="col-sm-7">
-                        <select id="year" onChange={(event : React.ChangeEvent<HTMLSelectElement>) => this.props.updateCalculation(parseInt(event.target.value), this.props.electionType, this.props.firstDivisor, this.props.electionThreshold, this.props.districtSeats, this.props.levelingSeats)} className="form-control" name="year">
+                        <select
+                            id="year"
+                            onChange={
+                                (event: React.ChangeEvent<HTMLSelectElement>) => {
+                                    this.props.updateCalculation({
+                                        ...payload,
+                                        year: parseInt(event.target.value)
+                                    }, this.props.placeholderPayload);
+                                }}
+                            className="form-control"
+                            name="year">
                             {
-                                this.props.selectOptions.map(function (item, index) {
+                                this.props.selectOptions.map((item, index) => {
                                     return (
                                         <option
                                             key={index} // By convention all children should have a unique key prop
-                                            value={item}
-                                        > {item} </option>
+                                            value={item}>
+                                            {item}
+                                        </option>
                                     );
                                 })
                             }
@@ -38,25 +60,66 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label className="col-sm-5 col-form-label">Beregningsmetode</label>
+                    <label className="col-sm-5 col-form-label">Algoritme</label>
                     <div className="col-sm-7">
-                        <select className="form-control" name="calcMethod">
-                            <option value="SL">Sainte Lagues</option>
+                        <select
+                            className="form-control"
+                            name="calcMethod"
+                            onChange={
+                                (event: React.ChangeEvent<HTMLSelectElement>) => {
+                                    this.props.updateCalculation({
+                                        ...payload,
+                                        algorithm: getAlgorithmType(parseInt(event.target.value))
+                                    }, this.props.placeholderPayload);
+                                }
+                            }>
+                            <option value="1">Sainte Lagüe</option>
+                            <option value="2">d'Hondt</option>>
                         </select>
                     </div>
                 </div>
                 <div className="form-group row">
                     <label htmlFor="firstDivisor" className="col-sm-5 col-form-label">Første delingstall</label>
                     <div className="col-sm-7">
-                        {/* TODO: Split long line, add bracket to lambda expression*/}
-                        <input className="form-control" classID="firstDivisor" type="number" name="firstDivisor" onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.updateCalculation(this.props.selectedYear, this.props.electionType, parseFloat(event.target.value), this.props.electionThreshold, this.props.districtSeats, this.props.levelingSeats)} placeholder={this.props.firstDivisor.toString()} min="1.0" step="0.1" max="5.0" />
+                        <input
+                            className="form-control"
+                            classID="firstDivisor"
+                            type="number"
+                            name="firstDivisor"
+                            onChange={
+                                (event: React.ChangeEvent<HTMLInputElement>) => {
+                                    this.props.updateCalculation({
+                                        ...payload,
+                                        firstDivisor: parseFloat(event.target.value)
+                                    }, this.props.placeholderPayload);
+                                }
+                            }
+                            placeholder={this.props.placeholderPayload.firstDivisor.toString()}
+                            value={payload.firstDivisor.toString()}
+                            min="1.0" step="0.1" max="5.0" />
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label htmlFor="electionThreshold" className="col-sm-5 col-form-label">Sperregrense</label>
+                    <label htmlFor="electionThreshold"className="col-sm-5 col-form-label">Sperregrense</label>
                     <div className="col-sm-7">
-                        {/* TODO: Split long line, add bracket to lambda expression*/}
-                        <input className="form-control" classID="electionThreshold" type="number" name="electionThreshold" onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.updateCalculation(this.props.selectedYear, this.props.electionType, this.props.firstDivisor, parseFloat(event.target.value), this.props.districtSeats, this.props.levelingSeats)} placeholder={this.props.electionThreshold.toString()} min="0.0" step="0.1" max="15.0" />
+                        <input
+                            className="form-control"
+                            classID="electionThreshold"
+                            type="number"
+                            name="electionThreshold"
+                            onChange={
+                                (event: React.ChangeEvent<HTMLInputElement>) => {
+                                    this.props.updateCalculation({
+                                        ...payload,
+                                        electionThreshold: parseFloat(event.target.value)
+                                    }, this.props.placeholderPayload);
+                                }
+                            }
+                            placeholder={this.props.placeholderPayload.electionThreshold.toString()}
+                            value={payload.electionThreshold.toString()}
+                            min="0.0"
+                            step="0.1"
+                            max="15.0" />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -69,16 +132,14 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                             name="levelingSeat"
                             onChange={
                                 (event: React.ChangeEvent<HTMLInputElement>) => {
-                                    this.props.updateCalculation(
-                                        this.props.selectedYear,
-                                        this.props.electionType,
-                                        this.props.firstDivisor,
-                                        this.props.electionThreshold,
-                                        this.props.districtSeats,
-                                        parseInt(event.target.value));
+                                    this.props.updateCalculation({
+                                        ...payload,
+                                        levelingSeats: parseInt(event.target.value)
+                                    }, this.props.placeholderPayload);
                                 }
                             }
-                            placeholder={this.props.levelingSeats.toString()}
+                            placeholder={this.props.placeholderPayload.levelingSeats.toString()}
+                            value={payload.levelingSeats.toString()}
                             min="0"
                             step="1"
                             max="100" />

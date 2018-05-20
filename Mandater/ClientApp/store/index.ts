@@ -1,22 +1,22 @@
-
-import * as UserInterface from "./UserInterface";
-import { combineReducers } from "redux";
-import { reducer } from "./UserInterface";
-import { createStore } from "redux";
 import * as ElectionReducer from "./ElectionReducer"
 import { ElectionState } from "../interfaces/states/ElectionState"
-import configureStore from "ClientApp/configureStore";
+import { TableState } from "../interfaces/states/TableState";
+import { VisualizationState } from "../interfaces/states/VisualizationState";
+import TableReducer from "../reducers/TableReducer";
 
 // The top-level state object
 export interface ApplicationState {
-    electionState : ElectionState
+    electionState: ElectionState,
+    tableState: TableState,
+    visualizationState: VisualizationState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
-    electionState: ElectionReducer.reducer
+    electionState: ElectionReducer.reducer,
+    tableState: TableReducer
 };
 
 //export const store = createStore(reducers);

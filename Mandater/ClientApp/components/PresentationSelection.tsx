@@ -1,7 +1,9 @@
 ﻿import * as React from "react";
+import { TableMode } from "../interfaces/states/TableState";
+import TableButtonContainer from "../containers/TableButtonContainer";
 
 type PresentationSelectionProps = {
-    // TODO: Specify what props PresentationSelection needs
+    tables: {[id: string] : TableMode}
 }
 
 export class PresentationSelection extends React.Component {
@@ -20,10 +22,10 @@ export class PresentationSelection extends React.Component {
 
     render() {
         return <div className="presentation-selection">
-                   <h2>Presentasjonstyper</h2>
-                   <button onClick={ (event: any) => this.toggleResultsTable("PartyTable") }>Partitabell</button>
-                   <button onClick={ (event: any) => this.toggleResultsTable("CountyTable") }>Fylkestabell</button>
-               </div>;
+            <h2>Presentasjonstyper</h2>
+            <TableButtonContainer title={"Distriktsoversikt"} tableMode={TableMode.DistrictOverview} />
+            <TableButtonContainer title={"Landsoversikt"} tableMode={TableMode.ElectionOverview} />
+        </div>;
 
     }
 }

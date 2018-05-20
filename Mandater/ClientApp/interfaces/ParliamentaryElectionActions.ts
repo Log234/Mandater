@@ -1,12 +1,13 @@
-﻿import { Election } from "ClientApp/interfaces/Election";
-import { ElectionType } from "./ElectionType"
+﻿import { ElectionType } from "./ElectionType"
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import * as constants from "../constants";
+import { AlgorithmType } from "../enums/AlgorithmEnums";
 
 export interface GetMenuDataAction {
     type: constants.GET_MENU_DATA,
     electionYears: number[],
     selectedYear: number,
+    algorithm: AlgorithmType,
     firstDivisor: number,
     electionThreshold: number,
     districtSeats: number,
@@ -18,7 +19,8 @@ export type InitializeParliamentaryElectionAction =  {
     type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
     electionType: ElectionType,
     electionYears: number[],
-    selectedYear: number,
+    year: number,
+    algorithm: AlgorithmType,
     firstDivisor: number,
     electionThreshold: number,
     districtSeats: number,
@@ -28,10 +30,19 @@ export type InitializeParliamentaryElectionAction =  {
 
 export interface UpdateCalculationAction {
     type: constants.UPDATE_CALCULATION,
-    partyResults: PartyResultDictionary,
-    selectedYear: number,
+    partyResults: PartyResultDictionary
+}
+
+export interface UpdateSettingsMenuAction {
+    type: constants.UPDATE_SETTINGSMENU,
+    year: number,
+    algorithm: AlgorithmType,
     firstDivisor: number,
+    firstDivisorPlaceholder: number,
     electionThreshold: number,
+    electionThresholdPlaceholder: number,
     districtSeats: number,
+    districtSeatsPlaceholder: number,
     levelingSeats: number;
+    levelingSeatsPlaceholder: number;
 }

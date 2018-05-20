@@ -1,4 +1,4 @@
-﻿import { ProcessedResult } from "ClientApp/interfaces/ProcessedResult";
+﻿import { ProcessedResult } from "../interfaces/ProcessedResult";
 
 export interface PartyResult {
     partyName: string,
