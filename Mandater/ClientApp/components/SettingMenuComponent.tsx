@@ -3,12 +3,14 @@ import { ElectionType } from "../interfaces/ElectionType";
 import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
 import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
+import { Button } from "./Button";
 
 export interface ISettingsProps {
     selectOptions: number[],
-    payload: SettingsMenuPayload;
-    placeholderPayload: SettingsMenuPlaceholderPayload;
-    updateCalculation: (payload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => any;
+    payload: SettingsMenuPayload,
+    placeholderPayload: SettingsMenuPlaceholderPayload,
+    updateCalculation: (payload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => any,
+    toggleAutoCompute: (autoCompute: boolean) => any;
 }
 
 
@@ -26,8 +28,11 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
             firstDivisor: this.props.payload.firstDivisor,
             electionThreshold: this.props.payload.electionThreshold,
             districtSeats: this.props.payload.districtSeats,
-            levelingSeats: this.props.payload.levelingSeats
-        }
+            levelingSeats: this.props.payload.levelingSeats,
+            autoCompute: this.props.payload.autoCompute,
+            forceCompute: false
+    }
+
         return (<div className="settings-menu">
             <h1 className="h2">Stortingsvalg</h1>
             <form>
@@ -151,6 +156,31 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         <input className="form-control" classID="districtSeat" type="number" name="districSeat" min="0" step="1" max="500" />
                     </div>
                 </div>*/}
+                <div className="form-group row">
+                    <label htmlFor="autoCompute" className="col-sm-5 col-form-label">Oppdater automatisk</label>
+                    <div className="col-sm-7">
+                        <input
+                            className="col-sm-5"
+                            classID="autoCompute"
+                            type="checkbox"
+                            name="autoCompute"
+                            checked={this.props.payload.autoCompute}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                this.props.toggleAutoCompute(event.target.checked);
+                            }} />
+                        {!this.props.payload.autoCompute &&
+                            <Button title={"Kalkuler"}
+                                onPress={
+                                    () => {
+                                        this.props.updateCalculation({
+                                            ...payload,
+                                            forceCompute: true
+                                        }, this.props.placeholderPayload);
+                                    }
+                                }
+                                type="button" />}
+                    </div>
+                </div>
             </form>
         </div>
         );

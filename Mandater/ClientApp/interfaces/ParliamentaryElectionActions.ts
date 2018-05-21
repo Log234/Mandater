@@ -22,10 +22,15 @@ export type InitializeParliamentaryElectionAction =  {
     year: number,
     algorithm: AlgorithmType,
     firstDivisor: number,
+    firstDivisorPlaceholder: number,
     electionThreshold: number,
+    electionThresholdPlaceholder: number,
     districtSeats: number,
+    districtSeatsPlaceholder: number,
     levelingSeats: number,
-    partyResults: PartyResultDictionary;
+    levelingSeatsPlaceholder: number;
+    partyResults: PartyResultDictionary,
+    autoCompute: boolean;
 }
 
 export interface UpdateCalculationAction {
@@ -43,6 +48,11 @@ export interface UpdateSettingsMenuAction {
     electionThresholdPlaceholder: number,
     districtSeats: number,
     districtSeatsPlaceholder: number,
-    levelingSeats: number;
+    levelingSeats: number,
     levelingSeatsPlaceholder: number;
+}
+
+export interface ToggleAutoComputeAction {
+    type: constants.TOGGLE_AUTO_COMPUTE,
+    autoCompute: boolean;
 }

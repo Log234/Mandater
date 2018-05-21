@@ -1,6 +1,6 @@
 ﻿import { Action, Reducer } from "redux";
 import { Election } from "ClientApp/interfaces/Election";
-import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction, UpdateSettingsMenuAction } from "ClientApp/interfaces/ParliamentaryElectionActions";
+import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction, UpdateSettingsMenuAction, ToggleAutoComputeAction } from "ClientApp/interfaces/ParliamentaryElectionActions";
 import axios from "axios";
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import { ElectionState } from "ClientApp/interfaces/states/ElectionState";
@@ -18,7 +18,8 @@ import { validateFirstDivisor, validateElectionThreshold, validateDistrictSeats,
 type KnownAction = GetMenuDataAction
                    | InitializeParliamentaryElectionAction
                    | UpdateCalculationAction
-                   | UpdateSettingsMenuAction;
+                   | UpdateSettingsMenuAction
+                   | ToggleAutoComputeAction;
 
 // ACTION CREATORS
 
@@ -59,11 +60,16 @@ export async function initializeParliamentaryElectionData() {
         year: defaultElection.year,
         algorithm: algorithmType,
         firstDivisor: defaultElection.firstDivisor,
+        firstDivisorPlaceholder: defaultElection.firstDivisor,
         electionThreshold: defaultElection.threshold,
+        electionThresholdPlaceholder: defaultElection.threshold,
         districtSeats: defaultElection.seats,
-        levelingSeats: defaultElection.levelingSeats
-        
-    };
+        districtSeatsPlaceholder: defaultElection.seats,
+        levelingSeats: defaultElection.levelingSeats,
+        levelingSeatsPlaceholder: defaultElection.levelingSeats,
+        autoCompute: true
+
+};
     console.log(`Initialized: ${electionYears}`);
     return initializeAction;
 }
@@ -112,6 +118,14 @@ export function updateSettingsMenu(payload: SettingsMenuPayload, placeholderPayl
     return updateSettingsMenuAction;
 }
 
+export function toggleAutoCompute(autoCompute: boolean) {
+    const toggleAutoComputeAction: ToggleAutoComputeAction = {
+        type: constants.TOGGLE_AUTO_COMPUTE,
+        autoCompute: autoCompute
+    }
+    return toggleAutoComputeAction;
+}
+
 const unloadedState: ElectionState = {
     electionYears: [],
     year: -1,
@@ -130,7 +144,8 @@ const unloadedState: ElectionState = {
         internationalName: "",
         elections: []
     },
-    partyResults: {}
+    partyResults: {},
+    autoCompute: true
 };
 
 
@@ -151,10 +166,15 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 year: action.year,
                 algorithm: action.algorithm,
                 firstDivisor: action.firstDivisor,
+                firstDivisorPlaceholder: action.firstDivisorPlaceholder,
                 electionThreshold: action.electionThreshold,
-                districSeats: action.districtSeats,
+                electionThresholdPlaceholder: action.electionThresholdPlaceholder,
+                districtSeats: action.districtSeats,
+                districtSeatsPlaceholder: action.districtSeatsPlaceholder,
                 levelingSeats: action.levelingSeats,
-                partyResults: action.partyResults
+                levelingSeatsPlaceholder: action.levelingSeatsPlaceholder,
+                partyResults: action.partyResults,
+                autoCompute: action.autoCompute
             };
         case constants.GET_MENU_DATA:
             return {
@@ -184,6 +204,11 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 districtSeatsPlaceholder: action.districtSeatsPlaceholder,
                 levelingSeats: action.levelingSeats,
                 levelingSeatsPlaceholder: action.levelingSeatsPlaceholder
+            };
+        case constants.TOGGLE_AUTO_COMPUTE:
+            return {
+                ...state,
+                autoCompute: action.autoCompute
             };
         default:
             return state || unloadedState;
