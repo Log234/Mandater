@@ -1,4 +1,4 @@
-import * as ElectionReducer from "./ElectionReducer"
+import { reducer } from "../reducers/ElectionReducer"
 import { ElectionState } from "../interfaces/states/ElectionState"
 import { TableState } from "../interfaces/states/TableState";
 import { VisualizationState } from "../interfaces/states/VisualizationState";
@@ -15,7 +15,7 @@ export interface ApplicationState {
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
-    electionState: ElectionReducer.reducer,
+    electionState: reducer,
     tableState: TableReducer
 };
 

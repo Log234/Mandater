@@ -104,7 +104,7 @@
     <TypeScriptCompile Include="ClientApp\logic\SainteLague.ts" />
     <TypeScriptCompile Include="ClientApp\logic\Validation.ts" />
     <TypeScriptCompile Include="ClientApp\reducers\index.ts" />
-    <TypeScriptCompile Include="ClientApp\store\ElectionReducer.ts" />
+    <TypeScriptCompile Include="ClientApp\reducers\ElectionReducer.ts" />
   </ItemGroup>
 
   <ItemGroup>

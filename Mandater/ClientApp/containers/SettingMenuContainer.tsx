@@ -1,7 +1,7 @@
 ﻿import { ApplicationState } from "../store";
 import { connect } from "react-redux";
 import { SettingMenuComponent } from "../components/SettingMenuComponent";
-import { updateElectionData, updateSettingsMenu, toggleAutoCompute } from "../store/ElectionReducer";
+import { updateElectionData, updateSettingsMenu, toggleAutoCompute } from "../reducers/ElectionReducer";
 import { validateSettings } from "../logic/Validation";
 import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
 import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
