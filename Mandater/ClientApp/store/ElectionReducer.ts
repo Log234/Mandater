@@ -134,8 +134,8 @@ const unloadedState: ElectionState = {
     firstDivisorPlaceholder: -1,
     electionThreshold: -1,
     electionThresholdPlaceholder: -1,
-    districSeats: -1,
-    districSeatsPlaceholder: -1,
+    districtSeats: -1,
+    districtSeatsPlaceholder: -1,
     levelingSeats: -1,
     levelingSeatsPlaceholder: -1,
     electionType: {

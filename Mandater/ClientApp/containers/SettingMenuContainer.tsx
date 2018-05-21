@@ -15,7 +15,7 @@ const mapStateToProps = (state: ApplicationState) => ({
         algorithm: state.electionState.algorithm,
         firstDivisor: state.electionState.firstDivisor,
         electionThreshold: state.electionState.electionThreshold,
-        districtSeats: state.electionState.districSeats,
+        districtSeats: state.electionState.districtSeats,
         levelingSeats: state.electionState.levelingSeats,
         autoCompute: state.electionState.autoCompute,
         clicked: false
@@ -23,7 +23,7 @@ const mapStateToProps = (state: ApplicationState) => ({
     placeholderPayload: {
         firstDivisor: state.electionState.firstDivisorPlaceholder,
         electionThreshold: state.electionState.electionThresholdPlaceholder,
-        districtSeats: state.electionState.districSeatsPlaceholder,
+        districtSeats: state.electionState.districtSeatsPlaceholder,
         levelingSeats: state.electionState.levelingSeatsPlaceholder
     }
 });
