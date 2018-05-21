@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\actionCreators\ElectionActionCreator.tsx" />
     <None Remove="ClientApp\components\new.js" />
     <None Remove="ClientApp\components\PresentationComponent.tsx" />
     <None Remove="ClientApp\components\PresentationMenu.tsx" />
@@ -76,6 +77,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\actionCreators\ElectionActionCreator.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationSettings.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationMenu.tsx" />
@@ -95,7 +97,7 @@
     <TypeScriptCompile Include="ClientApp\interfaces\SettingsMenuPlaceholderPayload.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\SettingsMenuPayload.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\states\ElectionState.ts" />
-    <TypeScriptCompile Include="ClientApp\interfaces\ParliamentaryElectionActions.ts" />
+    <TypeScriptCompile Include="ClientApp\actions\ElectionActions.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\PartyResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\ProcessedResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Result.ts" />

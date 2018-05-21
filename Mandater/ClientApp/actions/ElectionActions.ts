@@ -1,4 +1,4 @@
-﻿import { ElectionType } from "./ElectionType"
+﻿import { ElectionType } from "../interfaces/ElectionType"
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import * as constants from "../constants";
 import { AlgorithmType } from "../enums/AlgorithmEnums";
