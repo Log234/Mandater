@@ -29,7 +29,7 @@ export async function initializeParliamentaryElectionData() {
     let electionType: any = {};
     let algorithmType: AlgorithmType = AlgorithmType.SainteLague;
     let defaultPartyResults: PartyResultDictionary = {};
-    await axios.get("http://mandater-testing.azurewebsites.net/api/v1.0.0/no/pe?deep=true")
+    await axios.get("https://mandater-testing.azurewebsites.net/api/v1.0.0/no/pe?deep=true")
         .then(res => {
             electionType = res.data;
             const election: Election = electionType.elections[0]; // most recent
