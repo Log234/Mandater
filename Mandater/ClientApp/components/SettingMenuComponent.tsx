@@ -171,7 +171,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         {!this.props.payload.autoCompute &&
                             <Button title={"Kalkuler"}
                                 onPress={
-                                    (event: React.MouseEvent<HTMLButtonElement>) => {
+                                    () => {
                                         this.props.updateCalculation({
                                             ...payload,
                                             clicked: true
