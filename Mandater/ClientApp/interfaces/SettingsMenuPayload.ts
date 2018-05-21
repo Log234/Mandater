@@ -8,5 +8,7 @@ export type SettingsMenuPayload = {
     firstDivisor: number,
     electionThreshold: number,
     districtSeats: number,
-    levelingSeats: number;
+    levelingSeats: number,
+    autoCompute: boolean,
+    clicked: boolean;
 }

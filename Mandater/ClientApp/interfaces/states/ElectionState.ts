@@ -15,5 +15,6 @@ export interface ElectionState {
     districSeatsPlaceholder: number,
     levelingSeats: number,
     levelingSeatsPlaceholder: number,
-    partyResults: PartyResultDictionary;
+    partyResults: PartyResultDictionary,
+    autoCompute: boolean;
 }
