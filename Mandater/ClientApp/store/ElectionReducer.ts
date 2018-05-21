@@ -60,9 +60,13 @@ export async function initializeParliamentaryElectionData() {
         year: defaultElection.year,
         algorithm: algorithmType,
         firstDivisor: defaultElection.firstDivisor,
+        firstDivisorPlaceholder: defaultElection.firstDivisor,
         electionThreshold: defaultElection.threshold,
+        electionThresholdPlaceholder: defaultElection.threshold,
         districtSeats: defaultElection.seats,
+        districtSeatsPlaceholder: defaultElection.seats,
         levelingSeats: defaultElection.levelingSeats,
+        levelingSeatsPlaceholder: defaultElection.levelingSeats,
         autoCompute: true
 
 };
@@ -162,9 +166,13 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 year: action.year,
                 algorithm: action.algorithm,
                 firstDivisor: action.firstDivisor,
+                firstDivisorPlaceholder: action.firstDivisorPlaceholder,
                 electionThreshold: action.electionThreshold,
-                districSeats: action.districtSeats,
+                electionThresholdPlaceholder: action.electionThresholdPlaceholder,
+                districtSeats: action.districtSeats,
+                districtSeatsPlaceholder: action.districtSeatsPlaceholder,
                 levelingSeats: action.levelingSeats,
+                levelingSeatsPlaceholder: action.levelingSeatsPlaceholder,
                 partyResults: action.partyResults,
                 autoCompute: action.autoCompute
             };
