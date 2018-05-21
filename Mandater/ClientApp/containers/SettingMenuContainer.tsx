@@ -31,7 +31,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
     updateCalculation: (settingsPayload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => {
         const election = settingsPayload.electionType.elections.find(element => element.year === settingsPayload.year);
-        if ((settingsPayload.autoCompute || settingsPayload.clicked) && election !== undefined && validateSettings(settingsPayload)) {
+        if ((settingsPayload.autoCompute || settingsPayload.forceCompute) && election !== undefined && validateSettings(settingsPayload)) {
             const payload: AlgorithmPayload = {
                 election: election,
                 year: settingsPayload.year,

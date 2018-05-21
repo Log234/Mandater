@@ -10,5 +10,5 @@ export type SettingsMenuPayload = {
     districtSeats: number,
     levelingSeats: number,
     autoCompute: boolean,
-    clicked: boolean;
+    forceCompute: boolean;
 }

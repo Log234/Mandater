@@ -30,7 +30,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
             districtSeats: this.props.payload.districtSeats,
             levelingSeats: this.props.payload.levelingSeats,
             autoCompute: this.props.payload.autoCompute,
-            clicked: false
+            forceCompute: false
     }
 
         return (<div className="settings-menu">
@@ -174,7 +174,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     () => {
                                         this.props.updateCalculation({
                                             ...payload,
-                                            clicked: true
+                                            forceCompute: true
                                         }, this.props.placeholderPayload);
                                     }
                                 }
