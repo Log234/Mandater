@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mandater.Data;
+using Mandater.Models;
 using Mandater.Utilities;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,8 @@ namespace Mandater.Controllers
         /// </summary>
         /// <param name="deep">Optional boolean parameter, the method returns a deep list if true</param>
         /// <returns>List of countries</returns>
+        [ProducesResponseType(typeof(IEnumerable<Country>), 200)]
+        [ProducesResponseType(500)]
         [HttpGet]
         public IActionResult GetCountries(bool? deep)
         {
@@ -67,6 +71,8 @@ namespace Mandater.Controllers
         /// <param name="deep">Optional boolean parameter, the method returns a deep list if true</param>
         /// <param name="countryCode">Two character country code, ISO 3166-1 alpha-2</param>
         /// <returns>Country</returns>
+        [ProducesResponseType(typeof(Country), 200)]
+        [ProducesResponseType(500)]
         [HttpGet("{countryCode}")]
         public IActionResult GetCountry(string countryCode, bool? deep)
         {
@@ -104,6 +110,8 @@ namespace Mandater.Controllers
         /// <param name="electionCode">Two character election type code</param>
         /// <param name="countryCode">Two character country code, ISO 3166-1 alpha-2</param>
         /// <returns>ElectionType of a given country</returns>
+        [ProducesResponseType(typeof(ElectionType), 200)]
+        [ProducesResponseType(500)]
         [HttpGet("{countryCode}/{electionCode}")]
         public IActionResult GetElectionType(string countryCode, string electionCode, bool? deep)
         {
@@ -149,6 +157,8 @@ namespace Mandater.Controllers
         /// <param name="electionCode">Two character election type code</param>
         /// <param name="year">Four digit election year</param>
         /// <returns>Election of a given type and a given year for a given country</returns>
+        [ProducesResponseType(typeof(Election), 200)]
+        [ProducesResponseType(500)]
         [HttpGet("{countryCode}/{electionCode}/{year}")]
         public IActionResult GetElection(string countryCode, string electionCode, int year, bool? deep)
         {
