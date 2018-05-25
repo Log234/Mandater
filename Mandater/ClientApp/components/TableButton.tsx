@@ -1,5 +1,5 @@
 ﻿import {ButtonProps, Button} from "../components/Button"
-import { TableMode } from "../interfaces/states/TableState";
+import { TableMode } from "../states/TableState";
 import * as React from "react";
 
 export interface TableButtonProps extends ButtonProps {

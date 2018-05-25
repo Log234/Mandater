@@ -1,5 +1,5 @@
 ﻿import * as React from "react";
-import { TableMode } from "../interfaces/states/TableState";
+import { TableMode } from "../states/TableState";
 import TableButtonContainer from "../containers/TableButtonContainer";
 
 type PresentationSelectionProps = {

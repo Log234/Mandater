@@ -1,7 +1,7 @@
-import * as ElectionReducer from "./ElectionReducer"
-import { ElectionState } from "../interfaces/states/ElectionState"
-import { TableState } from "../interfaces/states/TableState";
-import { VisualizationState } from "../interfaces/states/VisualizationState";
+import ElectionReducer from "../reducers/ElectionReducer"
+import { ElectionState } from "../states/ElectionState"
+import { TableState } from "../states/TableState";
+import { VisualizationState } from "../states/VisualizationState";
 import TableReducer from "../reducers/TableReducer";
 
 // The top-level state object
@@ -15,7 +15,7 @@ export interface ApplicationState {
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
-    electionState: ElectionReducer.reducer,
+    electionState: ElectionReducer,
     tableState: TableReducer
 };
 

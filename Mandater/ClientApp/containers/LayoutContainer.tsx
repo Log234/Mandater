@@ -1,7 +1,7 @@
 ﻿import { LayoutComponent } from "../components/LayoutComponent";
 import { connect } from "react-redux";
 import { ApplicationState } from "../store";
-import { initializeParliamentaryElectionData } from "../store/ElectionReducer";
+import { initializeParliamentaryElectionData } from "../actions/ElectionActionCreator";
 import { initializeTable } from "../actions/TableActions";
 
 const mapStateToProps = (state: ApplicationState) => {

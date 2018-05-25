@@ -1,8 +1,8 @@
-﻿import { ProcessedResult } from "ClientApp/interfaces/ProcessedResult";
-import { AlgorithmPayload } from "ClientApp/interfaces/AlgorithmPayload";
+﻿import { ProcessedResult } from "../interfaces/ProcessedResult";
+import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
 import { distributeSeats } from "./AlgorithmUtils";
-import { AlgorithmType } from "ClientApp/enums/AlgorithmEnums";
+import { AlgorithmType } from "../types/Algorithms";
 
 export function sainteLague(payload: AlgorithmPayload) {
     let election = payload.election;

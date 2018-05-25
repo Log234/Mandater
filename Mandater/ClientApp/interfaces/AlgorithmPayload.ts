@@ -1,5 +1,5 @@
 ﻿import { Election } from "ClientApp/interfaces/Election";
-import { AlgorithmType } from "../enums/AlgorithmEnums";
+import { AlgorithmType } from "../types/Algorithms";
 
 export type AlgorithmPayload = {
     election: Election,

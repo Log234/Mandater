@@ -1,4 +1,4 @@
-﻿import { AlgorithmType } from "../enums/AlgorithmEnums";
+﻿import { AlgorithmType } from "../types/Algorithms";
 import { ElectionType } from "./ElectionType";
 
 export type SettingsMenuPayload = {
