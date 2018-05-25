@@ -1,7 +1,7 @@
-﻿import * as constants from "../constants"
-import { Action, Reducer } from "redux";
+﻿import { Action, Reducer } from "redux";
 import { ElectionState, unloadedState } from "../interfaces/states/ElectionState";
 import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction, UpdateSettingsMenuAction, ToggleAutoComputeAction } from "../actions/ElectionActions";
+import { ElectionActionEnum as ElectionActionEnum } from "../enums/ActionTypeEnums";
 
 // TODO: Make actions for updates of elections etc...
 
@@ -20,7 +20,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
     // Include known action if applicable
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case constants.INITIALIZE_PARLIAMENTARY_ELECTION:
+        case ElectionActionEnum.InitializeParliamentaryElection:
             return {
                 ...state,
                 electionType: action.electionType,
@@ -38,7 +38,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 partyResults: action.partyResults,
                 autoCompute: action.autoCompute
             };
-        case constants.GET_MENU_DATA:
+        case ElectionActionEnum.GetMenuData:
             return {
                 ...state,
                 electionYears: action.electionYears,
@@ -48,12 +48,12 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 districtSeats: action.districtSeats,
                 levelingSeats: action.levelingSeats
             };
-        case constants.UPDATE_CALCULATION:
+        case ElectionActionEnum.UpdateCalculation:
             return {
                 ...state,
                 partyResults: action.partyResults,
             };
-        case constants.UPDATE_SETTINGSMENU:
+        case ElectionActionEnum.UpdateSettingsMenu:
             return {
                 ...state,
                 year: action.year,
@@ -67,7 +67,7 @@ export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAc
                 levelingSeats: action.levelingSeats,
                 levelingSeatsPlaceholder: action.levelingSeatsPlaceholder
             };
-        case constants.TOGGLE_AUTO_COMPUTE:
+        case ElectionActionEnum.ToggleAutoCompute:
             return {
                 ...state,
                 autoCompute: action.autoCompute

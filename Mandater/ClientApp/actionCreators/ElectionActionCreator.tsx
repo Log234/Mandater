@@ -1,5 +1,4 @@
 ﻿import axios from "axios";
-import * as constants from "../constants"
 import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
 import { AlgorithmType } from "../enums/AlgorithmEnums";
@@ -10,6 +9,7 @@ import { InitializeParliamentaryElectionAction, UpdateCalculationAction, UpdateS
 import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
 import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
 import { validateFirstDivisor, validateElectionThreshold, validateLevelingSeats, validateDistrictSeats } from "../logic/Validation";
+import { ElectionActionEnum } from "../enums/ActionTypeEnums";
 
 export async function initializeParliamentaryElectionData() {
     const electionYears: number[] = [];
@@ -41,7 +41,7 @@ export async function initializeParliamentaryElectionData() {
         });
 
     const initializeAction: InitializeParliamentaryElectionAction = {
-        type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
+        type: ElectionActionEnum.InitializeParliamentaryElection,
         electionType: electionType,
         partyResults: defaultPartyResults,
         electionYears: electionYears,
@@ -66,7 +66,7 @@ export function updateElectionData(payload: AlgorithmPayload) {
     const results = computeAlgorithm(payload);
 
     const updateCalculationAction: UpdateCalculationAction = {
-        type: constants.UPDATE_CALCULATION,
+        type: ElectionActionEnum.UpdateCalculation,
         partyResults: results
     };
     return updateCalculationAction;
@@ -74,7 +74,7 @@ export function updateElectionData(payload: AlgorithmPayload) {
 
 export function updateSettingsMenu(payload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) {
     let updateSettingsMenuAction: UpdateSettingsMenuAction = {
-        type: constants.UPDATE_SETTINGSMENU,
+        type: ElectionActionEnum.UpdateSettingsMenu,
         year: payload.year,
         algorithm: payload.algorithm,
         firstDivisor: payload.firstDivisor,
@@ -108,7 +108,7 @@ export function updateSettingsMenu(payload: SettingsMenuPayload, placeholderPayl
 
 export function toggleAutoCompute(autoCompute: boolean) {
     const toggleAutoComputeAction: ToggleAutoComputeAction = {
-        type: constants.TOGGLE_AUTO_COMPUTE,
+        type: ElectionActionEnum.ToggleAutoCompute,
         autoCompute: autoCompute
     }
     return toggleAutoComputeAction;

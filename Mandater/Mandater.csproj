@@ -53,6 +53,7 @@
     <None Remove="ClientApp\containers\index.ts" />
     <None Remove="ClientApp\containers\PresentationContainer.tsx" />
     <None Remove="ClientApp\containers\SettingMenuContainer.tsx" />
+    <None Remove="ClientApp\enums\ActionTypeEnums.ts" />
     <None Remove="ClientApp\enums\AlgorithmEnums.ts" />
     <None Remove="ClientApp\index.ts" />
     <None Remove="ClientApp\interfaces\AlgorithmOutput.ts" />
@@ -72,7 +73,6 @@
     <None Remove="ClientApp\logic\AlgorithmUtils.ts" />
     <None Remove="ClientApp\logic\SainteLague.ts" />
     <None Remove="ClientApp\logic\Validation.ts" />
-    <None Remove="ClientApp\reducers\index.ts" />
     <None Remove="ClientApp\store\ElectionReducer.ts" />
   </ItemGroup>
 
@@ -81,12 +81,12 @@
     <TypeScriptCompile Include="ClientApp\components\PresentationComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationSettings.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationMenu.tsx" />
-    <TypeScriptCompile Include="ClientApp\actions\index.ts" />
     <TypeScriptCompile Include="ClientApp\components\SettingMenuComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TableComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\PresentationContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\index.ts" />
     <TypeScriptCompile Include="ClientApp\containers\SettingMenuContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\enums\ActionTypeEnums.ts" />
     <TypeScriptCompile Include="ClientApp\enums\AlgorithmEnums.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\AlgorithmPayload.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\County.ts" />
@@ -105,7 +105,6 @@
     <TypeScriptCompile Include="ClientApp\logic\AlgorithmUtils.ts" />
     <TypeScriptCompile Include="ClientApp\logic\SainteLague.ts" />
     <TypeScriptCompile Include="ClientApp\logic\Validation.ts" />
-    <TypeScriptCompile Include="ClientApp\reducers\index.ts" />
     <TypeScriptCompile Include="ClientApp\reducers\ElectionReducer.ts" />
   </ItemGroup>
 

@@ -1,10 +1,10 @@
 ﻿import { ElectionType } from "../interfaces/ElectionType"
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
-import * as constants from "../constants";
 import { AlgorithmType } from "../enums/AlgorithmEnums";
+import { ElectionActionEnum as ElectionAction } from "../enums/ActionTypeEnums";
 
 export interface GetMenuDataAction {
-    type: constants.GET_MENU_DATA,
+    type: ElectionAction.GetMenuData,
     electionYears: number[],
     selectedYear: number,
     algorithm: AlgorithmType,
@@ -16,7 +16,7 @@ export interface GetMenuDataAction {
 }
 
 export type InitializeParliamentaryElectionAction =  {
-    type: constants.INITIALIZE_PARLIAMENTARY_ELECTION,
+    type: ElectionAction.InitializeParliamentaryElection,
     electionType: ElectionType,
     electionYears: number[],
     year: number,
@@ -34,12 +34,12 @@ export type InitializeParliamentaryElectionAction =  {
 }
 
 export interface UpdateCalculationAction {
-    type: constants.UPDATE_CALCULATION,
+    type: ElectionAction.UpdateCalculation,
     partyResults: PartyResultDictionary
 }
 
 export interface UpdateSettingsMenuAction {
-    type: constants.UPDATE_SETTINGSMENU,
+    type: ElectionAction.UpdateSettingsMenu,
     year: number,
     algorithm: AlgorithmType,
     firstDivisor: number,
@@ -53,6 +53,6 @@ export interface UpdateSettingsMenuAction {
 }
 
 export interface ToggleAutoComputeAction {
-    type: constants.TOGGLE_AUTO_COMPUTE,
+    type: ElectionAction.ToggleAutoCompute,
     autoCompute: boolean;
 }

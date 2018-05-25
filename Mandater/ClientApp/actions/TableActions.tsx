@@ -1,20 +1,20 @@
-﻿import * as constants from "../constants"
-import { TableMode } from "../interfaces/states/TableState";
+﻿import { TableMode } from "../interfaces/states/TableState";
+import { TableActionEnum as TableEnum } from "../enums/ActionTypeEnums";
 // ACTION CREATORS
 /**
  * 
  */
 export interface ChangeTableAction {
-    type: constants.CHANGE_TABLE,
-    tableMode: TableMode
+    type: TableEnum.ChangeTable,
+    tableMode: TableMode;
 }
 export interface InitializeTableAction {
-    type: constants.INITIALIZE_TABLE,
+    type: TableEnum.InitializeTable,
     tableMode: TableMode;
 }
 export function initializeTable() {
     const initializeAction: InitializeTableAction = {
-        type: constants.INITIALIZE_TABLE,
+        type: TableEnum.InitializeTable,
         tableMode: TableMode.ElectionOverview
     }
     console.log(`Action of type ${initializeAction.type} created`);
@@ -22,7 +22,7 @@ export function initializeTable() {
 }
 export function changeTable(mode : TableMode) {
     const changeTableAction: ChangeTableAction = {
-        type: constants.CHANGE_TABLE,
+        type: TableEnum.ChangeTable,
         tableMode: mode
     }
     console.log(`Action of type ${changeTableAction.type} created`);
