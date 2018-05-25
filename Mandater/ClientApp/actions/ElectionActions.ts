@@ -1,7 +1,7 @@
 ﻿import { ElectionType } from "../interfaces/ElectionType"
 import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
-import { AlgorithmType } from "../enums/AlgorithmEnums";
-import { ElectionActionEnum as ElectionAction } from "../enums/ActionTypeEnums";
+import { AlgorithmType } from "../types/Algorithms";
+import { ElectionAction as ElectionAction } from "../types/ActionTypes";
 
 export interface GetMenuDataAction {
     type: ElectionAction.GetMenuData,

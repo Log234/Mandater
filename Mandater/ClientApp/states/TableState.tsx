@@ -6,3 +6,7 @@
 export interface TableState {
     tableMode: TableMode,
 }
+
+export const unloadedState: TableState = {
+    tableMode: TableMode.ElectionOverview
+}

@@ -2,7 +2,7 @@
 import { TableComponent } from "./TableComponent";
 import { ITableData, ITableRow } from "../interfaces/TableData";
 import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
-import { TableMode } from "../interfaces/states/TableState";
+import { TableMode } from "../states/TableState";
 import { Dictionary } from "../interfaces/Dictionary"
 import { PartyResult } from "../interfaces/PartyResult";
 import { ProcessedResult } from "../interfaces/ProcessedResult";

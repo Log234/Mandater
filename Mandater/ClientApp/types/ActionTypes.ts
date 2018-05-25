@@ -1,4 +1,4 @@
-﻿export enum ElectionActionEnum {
+﻿export enum ElectionAction {
     GetMenuData = "GET_MENU_DATA",
     InitializeParliamentaryElection = "INITIALIZE_PARLIAMENTARY_ELECTION",
     UpdateCalculation = "UPDATE_CALCULATION",
@@ -6,7 +6,7 @@
     ToggleAutoCompute = "TOGGLE_AUTO_COMPUTE"
 }
 
-export enum TableActionEnum {
+export enum TableAction {
     InitializeTable = "INITIALIZE_TABLE",
     ChangeTable = "CHANGE_TABLE"
 }

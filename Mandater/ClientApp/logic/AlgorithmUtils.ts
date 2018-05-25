@@ -1,5 +1,5 @@
 ﻿import { ProcessedResult } from "ClientApp/interfaces/ProcessedResult";
-import { AlgorithmType } from "../enums/AlgorithmEnums";
+import { AlgorithmType } from "../types/Algorithms";
 
 const illegalPartyCodes: Set<string> = new Set(["BLANKE"]);
 

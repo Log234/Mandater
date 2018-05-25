@@ -1,5 +1,5 @@
-﻿import { TableMode } from "../interfaces/states/TableState";
-import { TableActionEnum as TableEnum } from "../enums/ActionTypeEnums";
+﻿import { TableMode } from "../states/TableState";
+import { TableAction as TableEnum } from "../types/ActionTypes";
 // ACTION CREATORS
 /**
  * 

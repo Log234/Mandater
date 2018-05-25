@@ -1,7 +1,7 @@
 ﻿import { Action, Reducer } from "redux";
-import { ElectionState, unloadedState } from "../interfaces/states/ElectionState";
+import { ElectionState, unloadedState } from "../states/ElectionState";
 import { GetMenuDataAction, InitializeParliamentaryElectionAction, UpdateCalculationAction, UpdateSettingsMenuAction, ToggleAutoComputeAction } from "../actions/ElectionActions";
-import { ElectionActionEnum as ElectionActionEnum } from "../enums/ActionTypeEnums";
+import { ElectionAction as ElectionActionEnum } from "../types/ActionTypes";
 
 // TODO: Make actions for updates of elections etc...
 
@@ -16,8 +16,7 @@ type KnownAction = GetMenuDataAction
 
 
 // ReSharper disable TsResolvedFromInaccessibleModule
-export const reducer: Reducer<ElectionState> = (state: ElectionState, incomingAction: Action) => {
-    // Include known action if applicable
+export default function (state: ElectionState, incomingAction: Action) {
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case ElectionActionEnum.InitializeParliamentaryElection:
