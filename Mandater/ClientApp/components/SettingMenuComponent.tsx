@@ -10,7 +10,8 @@ export interface ISettingsProps {
     payload: SettingsMenuPayload,
     placeholderPayload: SettingsMenuPlaceholderPayload,
     updateCalculation: (payload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => any,
-    toggleAutoCompute: (autoCompute: boolean) => any;
+    toggleAutoCompute: (autoCompute: boolean) => any,
+    resetToHistoricalSettings: (settingsPayload: SettingsMenuPayload) => any;
 }
 
 
@@ -179,6 +180,18 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     }
                                 }
                                 type="button" />}
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <label htmlFor="reset" className="col-sm-5 col-form-label">Historiske instillinger</label>
+                    <div className="col-sm-7">
+                        <Button title={"Gjenopprett"}
+                            onPress={
+                                () => {
+                                    this.props.resetToHistoricalSettings(payload);
+                                }
+                            }
+                            type="button" />
                     </div>
                 </div>
             </form>

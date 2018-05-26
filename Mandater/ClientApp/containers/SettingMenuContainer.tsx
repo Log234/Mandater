@@ -6,6 +6,9 @@ import { validateSettings } from "../logic/Validation";
 import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
 import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
 import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
+import { ElectionType } from "../interfaces/ElectionType";
+import { AlgorithmType } from "../types/Algorithms";
+import { getAlgorithmType } from "../logic/AlgorithmUtils";
 
 const mapStateToProps = (state: ApplicationState) => ({
     selectOptions: state.electionState.electionYears,
@@ -44,13 +47,48 @@ const mapDispatchToProps = (dispatch: any) => ({
             const updateCalculationAction = updateElectionData(payload);
             dispatch(updateCalculationAction);
         }
-
         const updateSettingsMenuAction = updateSettingsMenu(settingsPayload, placeholderPayload);
         dispatch(updateSettingsMenuAction);
     },
     toggleAutoCompute: (isChecked: boolean) => {
         const toggleAutoComputeAction = toggleAutoCompute(isChecked);
         dispatch(toggleAutoComputeAction);
+    },
+    resetToHistoricalSettings: (settingsPayload: SettingsMenuPayload) => {
+        const election = settingsPayload.electionType.elections.find(element => element.year === settingsPayload.year);
+        if (election !== undefined) {
+            const algorithmType = getAlgorithmType(election.algorithm);
+            if (settingsPayload.autoCompute) {
+                const payload: AlgorithmPayload = {
+                    election: election,
+                    year: settingsPayload.year,
+                    algorithm: algorithmType,
+                    firstDivisor: election.firstDivisor,
+                    electionThreshold: election.threshold,
+                    districtSeats: election.seats,
+                    levelingSeats: election.levelingSeats
+                }
+                const updateCalculationAction = updateElectionData(payload);
+                dispatch(updateCalculationAction);
+            }
+
+            const newSettingsPayload: SettingsMenuPayload = {
+                ...settingsPayload,
+                algorithm: algorithmType,
+                firstDivisor: election.firstDivisor,
+                electionThreshold: election.threshold,
+                districtSeats: election.seats,
+                levelingSeats: election.levelingSeats
+            }
+            const newPlaceholderPayload: SettingsMenuPlaceholderPayload = {
+                firstDivisor: election.firstDivisor,
+                electionThreshold: election.threshold,
+                districtSeats: election.seats,
+                levelingSeats: election.levelingSeats
+            }
+            const updateSettingsMenuAction = updateSettingsMenu(newSettingsPayload, newPlaceholderPayload);
+            dispatch(updateSettingsMenuAction);
+        }
     }
 });
 
