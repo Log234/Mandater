@@ -4,6 +4,8 @@ import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
 import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
 import { Button } from "./Button";
+import { CSSProperties } from "react";
+import { SmartNumericInput } from "./SmartNumericInput";
 
 export interface ISettingsProps {
     selectOptions: number[],
@@ -161,8 +163,9 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                     <label htmlFor="autoCompute" className="col-sm-5 col-form-label">Oppdater automatisk</label>
                     <div className="col-sm-7">
                         <input
-                            className="col-sm-5"
+                            className="form-control"
                             classID="autoCompute"
+                            style={{width: "34px", margin: "0px 15px 0px 0px"}}
                             type="checkbox"
                             name="autoCompute"
                             checked={this.props.payload.autoCompute}
@@ -170,7 +173,8 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                 this.props.toggleAutoCompute(event.target.checked);
                             }} />
                         {!this.props.payload.autoCompute &&
-                            <Button title={"Kalkuler"}
+                            <Button
+                                title={"Kalkuler"}
                                 onPress={
                                     () => {
                                         this.props.updateCalculation({

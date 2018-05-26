@@ -48,6 +48,7 @@
     <None Remove="ClientApp\components\PresentationMenu.tsx" />
     <None Remove="ClientApp\components\PresentationSettings.tsx" />
     <None Remove="ClientApp\components\SettingMenuComponent.tsx" />
+    <None Remove="ClientApp\components\SmartNumericInput.tsx" />
     <None Remove="ClientApp\components\TableComponent.tsx" />
     <None Remove="ClientApp\containers\index.ts" />
     <None Remove="ClientApp\containers\PresentationContainer.tsx" />
@@ -81,6 +82,7 @@
     <TypeScriptCompile Include="ClientApp\components\PresentationSettings.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PresentationMenu.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SettingMenuComponent.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\SmartNumericInput.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TableComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\PresentationContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\index.ts" />
