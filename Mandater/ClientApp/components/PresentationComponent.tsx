@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import { TableComponent } from "./TableComponent";
-import { ITableData, ITableRow } from "../interfaces/TableData";
+import { ITableData } from "../interfaces/TableData";
 import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 import { TableMode } from "../states/TableState";
 import { Dictionary } from "../interfaces/Dictionary"

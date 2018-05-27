@@ -1,14 +1,12 @@
 ﻿import { ProcessedResult } from "../interfaces/ProcessedResult";
-import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
-import { PartyResultDictionary } from "ClientApp/interfaces/PartyResultDictionary";
+import { ComputationPayload } from "../interfaces/ComputationPayload";
+import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 import { distributeSeats } from "./AlgorithmUtils";
-import { AlgorithmType } from "../types/Algorithms";
 
-export function sainteLague(payload: AlgorithmPayload) {
-    let election = payload.election;
+export function sainteLague(payload: ComputationPayload) {
     // st. lague iterates over each county, and in turn, each party of the party, so first we have to create objects for parties
     let processedResults: Array<ProcessedResult> = [];
-    for (let county of election.counties) {
+    for (let county of payload.counties) {
 
         for (let currentResult of county.results) {
             let currentParty: ProcessedResult = {
@@ -22,7 +20,7 @@ export function sainteLague(payload: AlgorithmPayload) {
         }
     }
     let offset: number = 0;
-    for (let county of election.counties) {
+    for (let county of payload.counties) {
         processedResults = distributeSeats(payload.algorithm, payload.firstDivisor, county.seats, offset, county.results.length, processedResults);
         offset += county.results.length;
     }

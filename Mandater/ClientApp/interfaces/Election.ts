@@ -1,4 +1,4 @@
-﻿import { County } from "ClientApp/interfaces/County";
+﻿import { County } from "../interfaces/County";
 
 export interface Election {
     electionId: number,

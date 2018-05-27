@@ -3,8 +3,8 @@ import { PresentationComponent } from "../components/PresentationComponent";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state: ApplicationState) => ({
-    results: state.electionState.partyResults,
-    tableMode: state.tableState.tableMode
+    results: state.ComputationState.partyResults,
+    tableMode: state.TableState.tableMode
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

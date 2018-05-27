@@ -1,4 +1,4 @@
-﻿import { PartyResult } from "ClientApp/interfaces/PartyResult";
+﻿import { PartyResult } from "../interfaces/PartyResult";
 
 export interface PartyResultDictionary {
     [id: string]: PartyResult
