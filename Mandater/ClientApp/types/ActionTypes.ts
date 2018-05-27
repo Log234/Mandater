@@ -1,9 +1,16 @@
-﻿export enum ElectionAction {
-    GetMenuData = "GET_MENU_DATA",
-    InitializeParliamentaryElection = "INITIALIZE_PARLIAMENTARY_ELECTION",
-    UpdateCalculation = "UPDATE_CALCULATION",
-    UpdateSettingsMenu = "UPDATE_SETTINGS_MENU",
+﻿export enum RequestedDataAction {
+    InitializeRequestedData = "INITIALIZE_REQUESTED_DATA"
+}
+
+export enum SettingAction {
+    InitializeSettings = "INITIALIZE_SETTINGS",
+    UpdateSettings = "UPDATE_SETTINGS",
     ToggleAutoCompute = "TOGGLE_AUTO_COMPUTE"
+}
+
+export enum ComputationAction {
+    InitializeComputation = "INITIALIZE_COMPUTATION",
+    UpdateResults = "UPDATE_CALCULATION",
 }
 
 export enum TableAction {

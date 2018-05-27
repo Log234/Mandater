@@ -1,4 +1,4 @@
-﻿import { ProcessedResult } from "ClientApp/interfaces/ProcessedResult";
+﻿import { ProcessedResult } from "../interfaces/ProcessedResult";
 import { AlgorithmType } from "../types/Algorithms";
 
 const illegalPartyCodes: Set<string> = new Set(["BLANKE"]);
@@ -45,7 +45,6 @@ export function getAlgorithmType(type: number) {
         case 2:
             return AlgorithmType.DHondt;
         default:
-            console.error(`ERROR! ${type} is not a valid algorithm ID.`);
             return AlgorithmType.Undefined;
     }
 }

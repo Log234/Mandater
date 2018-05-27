@@ -1,94 +1,84 @@
 ﻿import { ApplicationState } from "../store";
 import { connect } from "react-redux";
 import { SettingMenuComponent } from "../components/SettingMenuComponent";
-import { updateElectionData, updateSettingsMenu, toggleAutoCompute } from "../actions/ElectionActionCreator";
-import { validateSettings } from "../logic/Validation";
-import { AlgorithmPayload } from "../interfaces/AlgorithmPayload";
-import { SettingsMenuPayload } from "../interfaces/SettingsMenuPayload";
-import { SettingsMenuPlaceholderPayload } from "../interfaces/SettingsMenuPlaceholderPayload";
-import { ElectionType } from "../interfaces/ElectionType";
-import { AlgorithmType } from "../types/Algorithms";
+import { updateElectionData } from "../actions/ComputationActions";
+import { updateSettings, toggleAutoCompute } from "../actions/SettingActions";
+import { ComputationPayload } from "../interfaces/ComputationPayload";
+import { SettingsPayload } from "../interfaces/SettingsPayload";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
+import { Election } from "../interfaces/Election";
 
 const mapStateToProps = (state: ApplicationState) => ({
-    selectOptions: state.electionState.electionYears,
-    payload: {
-        year: state.electionState.year,
-        electionType: state.electionState.electionType,
-        algorithm: state.electionState.algorithm,
-        firstDivisor: state.electionState.firstDivisor,
-        electionThreshold: state.electionState.electionThreshold,
-        districtSeats: state.electionState.districtSeats,
-        levelingSeats: state.electionState.levelingSeats,
-        autoCompute: state.electionState.autoCompute,
-        clicked: false
-    },
-    placeholderPayload: {
-        firstDivisor: state.electionState.firstDivisorPlaceholder,
-        electionThreshold: state.electionState.electionThresholdPlaceholder,
-        districtSeats: state.electionState.districtSeatsPlaceholder,
-        levelingSeats: state.electionState.levelingSeatsPlaceholder
-    }
+    computationPayload: {
+        counties: state.ComputationState.counties,
+        algorithm: state.ComputationState.algorithm,
+        firstDivisor: state.ComputationState.firstDivisor,
+        electionThreshold: state.ComputationState.electionThreshold,
+        districtSeats: state.ComputationState.districtSeats,
+        levelingSeats: state.ComputationState.levelingSeats
+    } as ComputationPayload,
+    settingsPayload: {
+        electionYears: state.SettingsState.electionYears,
+        year: state.SettingsState.year,
+        algorithm: state.SettingsState.algorithm,
+        firstDivisor: state.SettingsState.firstDivisor,
+        electionThreshold: state.SettingsState.electionThreshold,
+        districtSeats: state.SettingsState.districtSeats,
+        levelingSeats: state.SettingsState.levelingSeats,
+        autoCompute: state.SettingsState.autoCompute,
+        forceCompute: false
+    } as SettingsPayload,
+    electionType: state.RequestedDataState.electionType
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    updateCalculation: (settingsPayload: SettingsMenuPayload, placeholderPayload: SettingsMenuPlaceholderPayload) => {
-        const election = settingsPayload.electionType.elections.find(element => element.year === settingsPayload.year);
-        if ((settingsPayload.autoCompute || settingsPayload.forceCompute) && election !== undefined && validateSettings(settingsPayload)) {
-            const payload: AlgorithmPayload = {
-                election: election,
-                year: settingsPayload.year,
-                algorithm: settingsPayload.algorithm,
-                firstDivisor: settingsPayload.firstDivisor,
-                electionThreshold: settingsPayload.electionThreshold,
-                districtSeats: settingsPayload.districtSeats,
-                levelingSeats: settingsPayload.levelingSeats
+    updateCalculation: (computationPayload: ComputationPayload, autoCompute: boolean, forceCompute: boolean) => {
+        console.log(`Force: ${forceCompute}`);
+        if (autoCompute || forceCompute) {
+            const payload: ComputationPayload = {
+                counties: computationPayload.counties,
+                algorithm: computationPayload.algorithm,
+                firstDivisor: computationPayload.firstDivisor,
+                electionThreshold: computationPayload.electionThreshold,
+                districtSeats: computationPayload.districtSeats,
+                levelingSeats: computationPayload.levelingSeats
             }
             const updateCalculationAction = updateElectionData(payload);
             dispatch(updateCalculationAction);
         }
-        const updateSettingsMenuAction = updateSettingsMenu(settingsPayload, placeholderPayload);
-        dispatch(updateSettingsMenuAction);
+    },
+    updateSettings: (settingsPayload: SettingsPayload) => {
+        const updateSettingsAction = updateSettings(settingsPayload);
+        dispatch(updateSettingsAction);
     },
     toggleAutoCompute: (isChecked: boolean) => {
         const toggleAutoComputeAction = toggleAutoCompute(isChecked);
         dispatch(toggleAutoComputeAction);
     },
-    resetToHistoricalSettings: (settingsPayload: SettingsMenuPayload) => {
-        const election = settingsPayload.electionType.elections.find(element => element.year === settingsPayload.year);
-        if (election !== undefined) {
-            const algorithmType = getAlgorithmType(election.algorithm);
-            if (settingsPayload.autoCompute) {
-                const payload: AlgorithmPayload = {
-                    election: election,
-                    year: settingsPayload.year,
-                    algorithm: algorithmType,
-                    firstDivisor: election.firstDivisor,
-                    electionThreshold: election.threshold,
-                    districtSeats: election.seats,
-                    levelingSeats: election.levelingSeats
-                }
-                const updateCalculationAction = updateElectionData(payload);
-                dispatch(updateCalculationAction);
-            }
-
-            const newSettingsPayload: SettingsMenuPayload = {
-                ...settingsPayload,
-                algorithm: algorithmType,
+    resetToHistoricalSettings: (settingsPayload: SettingsPayload, election: Election) => {
+        if (settingsPayload.autoCompute) {
+            const payload: ComputationPayload = {
+                counties: election.counties,
+                algorithm: getAlgorithmType(election.algorithm),
                 firstDivisor: election.firstDivisor,
                 electionThreshold: election.threshold,
                 districtSeats: election.seats,
                 levelingSeats: election.levelingSeats
             }
-            const newPlaceholderPayload: SettingsMenuPlaceholderPayload = {
-                firstDivisor: election.firstDivisor,
-                electionThreshold: election.threshold,
-                districtSeats: election.seats,
-                levelingSeats: election.levelingSeats
-            }
-            const updateSettingsMenuAction = updateSettingsMenu(newSettingsPayload, newPlaceholderPayload);
-            dispatch(updateSettingsMenuAction);
+            const updateCalculationAction = updateElectionData(payload);
+            dispatch(updateCalculationAction);
         }
+
+        const newSettingsPayload: SettingsPayload = {
+            ...settingsPayload,
+            algorithm: election.algorithm,
+            firstDivisor: election.firstDivisor.toString(),
+            electionThreshold: election.threshold.toString(),
+            districtSeats: election.seats.toString(),
+            levelingSeats: election.levelingSeats.toString()
+        }
+        const updateSettingsAction = updateSettings(newSettingsPayload);
+        dispatch(updateSettingsAction);
     }
 });
 
