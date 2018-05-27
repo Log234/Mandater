@@ -1,4 +1,4 @@
-﻿export type SettingsPayload = {
+﻿export interface SettingsPayload {
     electionYears: string[],
     year: string,
     algorithm: number,
