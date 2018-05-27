@@ -19,6 +19,7 @@ export interface ISettingsProps {
 
 export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
     render() {
+        const curAlgorithm = this.props.settingsPayload.algorithm;
         return (<div className="settings-menu">
             <h1 className="h2">Stortingsvalg</h1>
             <form>
@@ -77,8 +78,8 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     });
                                 }
                             }>
-                            <option value="1">Sainte Lagüe</option>
-                            <option value="2">d'Hondt</option>>
+                            <option value="1" selected={curAlgorithm === 1}>Sainte Lagüe</option>
+                            <option value="2" selected={curAlgorithm === 2}>d'Hondt</option>>
                                 </select>
                     </div>
                 </div>
