@@ -5,11 +5,11 @@ export interface SmartNumericInputProps {
     title: string,
     onChange: (stringValue: string, numericValue: number) => any,
     value: string,
-    default: number,
+    defaultValue: number,
     min: number,
     max: number,
     integer?: boolean,
-    slider?: boolean
+    slider?: boolean;
 }
 
 export class SmartNumericInput extends React.Component<SmartNumericInputProps, {}> {
@@ -44,6 +44,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                         className="form-control"
                         classID={this.props.name + "Slider"}
                         type="range"
+                        style={{width: "66%"}}
                         onChange=
                         {
                             (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +64,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
 
     validateInput(input: string): { stringValue: string, numericValue: number } {
         const regex = RegExp("(^-$)|(^-?\\d+(\\.\\d*)?$)");
-        const defaultValue = this.props.default;
+        const defaultValue = this.props.defaultValue;
         let value = 0;
 
         if (regex.test(input) === false && input !== "") { // Matches any numbers as well as "", "-" and "3."
