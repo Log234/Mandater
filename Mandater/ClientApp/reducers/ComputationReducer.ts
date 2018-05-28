@@ -15,7 +15,7 @@ export default function (state: ComputationState, incomingAction: Action) {
         case ElectionActionEnum.InitializeComputation:
             return {
                 ...state,
-                counties: action.counties,
+                election: action.election,
                 algorithm: action.algorithm,
                 firstDivisor: action.firstDivisor,
                 electionThreshold: action.electionThreshold,
@@ -26,7 +26,7 @@ export default function (state: ComputationState, incomingAction: Action) {
         case ElectionActionEnum.UpdateResults:
             return {
                 ...state,
-                counties: action.counties,
+                election: action.election,
                 algorithm: action.algorithm,
                 firstDivisor: action.firstDivisor,
                 electionThreshold: action.electionThreshold,

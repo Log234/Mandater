@@ -6,7 +6,7 @@ import { distributeSeats } from "./AlgorithmUtils";
 export function sainteLague(payload: ComputationPayload) {
     // st. lague iterates over each county, and in turn, each party of the party, so first we have to create objects for parties
     let processedResults: Array<ProcessedResult> = [];
-    for (let county of payload.counties) {
+    for (let county of payload.election.counties) {
 
         for (let currentResult of county.results) {
             let currentParty: ProcessedResult = {
@@ -20,7 +20,7 @@ export function sainteLague(payload: ComputationPayload) {
         }
     }
     let offset: number = 0;
-    for (let county of payload.counties) {
+    for (let county of payload.election.counties) {
         processedResults = distributeSeats(payload.algorithm, payload.firstDivisor, county.seats, offset, county.results.length, processedResults);
         offset += county.results.length;
     }
