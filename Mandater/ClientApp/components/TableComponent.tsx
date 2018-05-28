@@ -1,5 +1,5 @@
 ﻿import * as React from "react";
-import { ITableData as TableData } from "../interfaces/TableData";
+import { TableData } from "../interfaces/TableData";
 
 type TableProps = {
     tableData: TableData
