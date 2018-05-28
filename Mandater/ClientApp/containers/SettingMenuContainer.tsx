@@ -10,7 +10,7 @@ import { Election } from "../interfaces/Election";
 
 const mapStateToProps = (state: ApplicationState) => ({
     computationPayload: {
-        counties: state.ComputationState.counties,
+        election: state.ComputationState.election,
         algorithm: state.ComputationState.algorithm,
         firstDivisor: state.ComputationState.firstDivisor,
         electionThreshold: state.ComputationState.electionThreshold,
@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch: any) => ({
         console.log(`Force: ${forceCompute}`);
         if (autoCompute || forceCompute) {
             const payload: ComputationPayload = {
-                counties: computationPayload.counties,
+                election: computationPayload.election,
                 algorithm: computationPayload.algorithm,
                 firstDivisor: computationPayload.firstDivisor,
                 electionThreshold: computationPayload.electionThreshold,
@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     resetToHistoricalSettings: (settingsPayload: SettingsPayload, election: Election) => {
         if (settingsPayload.autoCompute) {
             const payload: ComputationPayload = {
-                counties: election.counties,
+                election: election,
                 algorithm: getAlgorithmType(election.algorithm),
                 firstDivisor: election.firstDivisor,
                 electionThreshold: election.threshold,

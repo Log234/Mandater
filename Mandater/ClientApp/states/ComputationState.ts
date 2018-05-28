@@ -1,19 +1,30 @@
 ﻿import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
-import { County } from "../interfaces/County";
 import { AlgorithmType } from "../types/Algorithms";
+import { Election } from "../interfaces/Election";
 
 export interface ComputationState {
-    counties: County[];
+    election: Election;
     algorithm: AlgorithmType,
     firstDivisor: number,
     electionThreshold: number,
     districtSeats: number,
     levelingSeats: number,
-    partyResults: PartyResultDictionary
+    partyResults: PartyResultDictionary;
 }
 
 export const unloadedState: ComputationState = {
-    counties: [],
+    election: {
+        countryId: -1,
+        electionTypeId: -1,
+        electionId: -1,
+        counties: [],
+        year: -1,
+        algorithm: 0,
+        firstDivisor: -1,
+        threshold: -1,
+        seats: -1,
+        levelingSeats: -1
+    },
     algorithm: AlgorithmType.Undefined,
     firstDivisor: -1,
     electionThreshold: -1,
