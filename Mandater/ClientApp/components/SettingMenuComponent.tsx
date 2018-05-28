@@ -20,10 +20,9 @@ export interface ISettingsProps {
 
 export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
     render() {
-        const curAlgorithm = this.props.settingsPayload.algorithm;
         const election = this.props.electionType.elections.find(e => e.year === parseInt(this.props.settingsPayload.year));
         if (election === undefined) {
-            return <div>Election is undefined!</div>;
+            return <div>Laster inn data...</div>;
         }
 
         return (
@@ -35,6 +34,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         <div className="col-sm-7">
                             <select
                                 id="year"
+                                value={this.props.settingsPayload.year}
                                 onChange={
                                     (event: React.ChangeEvent<HTMLSelectElement>) => {
                                         const year = parseInt(event.target.value);
@@ -72,6 +72,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                             <select
                                 className="form-control"
                                 name="calcMethod"
+                                value={this.props.settingsPayload.algorithm.toString()}
                                 onChange={
                                     (event: React.ChangeEvent<HTMLSelectElement>) => {
                                         const algorithm = parseInt(event.target.value);
@@ -85,8 +86,8 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                         });
                                     }
                                 }>
-                                <option value="1" selected={curAlgorithm === 1}>Sainte Lagüe</option>
-                                <option value="2" selected={curAlgorithm === 2}>d'Hondt</option>>
+                                <option value="1">Sainte Lagüe</option>
+                                <option value="2">d'Hondt</option>>
                                 </select>
                         </div>
                     </div>
@@ -206,7 +207,6 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                             <Button title={"Gjenopprett"}
                                 onPress={
                                     () => {
-                                        const election = this.props.electionType.elections.find(e => e.year === parseInt(this.props.settingsPayload.year));
                                         if (election !== undefined) {
                                             this.props.resetToHistoricalSettings(this.props.settingsPayload, election);
                                         }
