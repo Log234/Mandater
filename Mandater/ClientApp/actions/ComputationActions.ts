@@ -5,8 +5,6 @@ import { Election } from "../interfaces/Election";
 import { ComputationPayload } from "../interfaces/ComputationPayload";
 import { computeAlgorithm } from "../logic/Algorithm";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
-import { AlgorithmType } from "../types/Algorithms";
-import { County } from "../interfaces/County";
 
 export interface InitializeComputationAction extends ComputationPayload {
     type: ComputationAction.InitializeComputation,
@@ -20,8 +18,8 @@ export interface UpdateResultsAction extends ComputationPayload {
 
 export function initializeComputation(electionType: ElectionType) {
     const election: Election = electionType.elections[0]; // Most recent election
-    const payload = {
-        counties: election.counties,
+    const payload: ComputationPayload = {
+        election: election,
         algorithm: getAlgorithmType(election.algorithm),
         firstDivisor: election.firstDivisor,
         electionThreshold: election.threshold,

@@ -1,8 +1,8 @@
 ﻿import { AlgorithmType } from "../types/Algorithms";
-import { County } from "../interfaces/County";
+import { Election } from "./Election";
 
 export interface ComputationPayload {
-    counties: County[],
+    election: Election,
     algorithm: AlgorithmType,
     firstDivisor: number,
     electionThreshold: number,

@@ -20,11 +20,6 @@ export interface ISettingsProps {
 
 export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
     render() {
-        const election = this.props.electionType.elections.find(e => e.year === parseInt(this.props.settingsPayload.year));
-        if (election === undefined) {
-            return <div>Laster inn data...</div>;
-        }
-
         return (
             <div className="settings-menu">
                 <h1 className="h2">Stortingsvalg</h1>
@@ -42,7 +37,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                         if (election !== undefined) {
                                             this.props.updateCalculation({
                                                 ...this.props.computationPayload,
-                                                counties: election.counties
+                                                election: election
                                             }, this.props.settingsPayload.autoCompute, false);
                                             this.props.updateSettings({
                                                 ...this.props.settingsPayload,
@@ -109,7 +104,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         }
                         min={1}
                         max={5}
-                        defaultValue={election.firstDivisor}
+                        defaultValue={this.props.computationPayload.election.firstDivisor}
                         integer={false}
                         slider={false}
                     />
@@ -131,7 +126,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         }
                         min={0}
                         max={15}
-                        defaultValue={election.threshold}
+                        defaultValue={this.props.computationPayload.election.threshold}
                         integer={false}
                         slider={false}
                     />
@@ -153,7 +148,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         }
                         min={0}
                         max={100}
-                        defaultValue={election.levelingSeats}
+                        defaultValue={this.props.computationPayload.election.levelingSeats}
                         integer={true}
                         slider={false}
                     />
@@ -186,7 +181,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                             if (election !== undefined && election !== null) {
                                                 this.props.updateCalculation(
                                                     {
-                                                        counties: election.counties,
+                                                        election: election,
                                                         algorithm: getAlgorithmType(this.props.settingsPayload.algorithm),
                                                         firstDivisor: parseFloat(this.props.settingsPayload.firstDivisor),
                                                         electionThreshold: parseFloat(this.props.settingsPayload.electionThreshold),
@@ -207,9 +202,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                             <Button title={"Gjenopprett"}
                                 onPress={
                                     () => {
-                                        if (election !== undefined) {
-                                            this.props.resetToHistoricalSettings(this.props.settingsPayload, election);
-                                        }
+                                        this.props.resetToHistoricalSettings(this.props.settingsPayload, this.props.computationPayload.election);
                                     }
                                 }
                                 type="button" />
