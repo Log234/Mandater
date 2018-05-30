@@ -4,10 +4,10 @@ import { PresentationSettings, PresentationSettingsProps } from "../components/P
 
 function mapStateToProps(state : ApplicationState) {
     return {
-        results : state.ComputationState.partyResults
+        results : state.computationState.partyResults
     } as PresentationSettingsProps;
 }
 
-const PresentationSettingsContainer = connect(mapStateToProps, {})(PresentationSettings);
+const presentationSettingsContainer = connect(mapStateToProps, {})((PresentationSettings) as any);
 
-export default PresentationSettingsContainer;
+export default presentationSettingsContainer;

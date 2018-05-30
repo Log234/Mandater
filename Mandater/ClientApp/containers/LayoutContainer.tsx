@@ -1,16 +1,11 @@
 ﻿import { LayoutComponent } from "../components/LayoutComponent";
 import { connect } from "react-redux";
-import { ApplicationState } from "../store";
 import { initializeComputation } from "../actions/ComputationActions";
 import { initializePresentation } from "../actions/PresentationActions";
 import { initializeRequestedData } from "../actions/RequestedDataActions";
 import { initializeSettings } from "../actions/SettingActions";
 import { ElectionType } from "../interfaces/ElectionType";
 import { request } from "../logic/ApiRequests";
-
-const mapStateToProps = (state: ApplicationState) => {
-    return {};
-};
 
 const mapDispatchToProps = (dispatch: any) => ({
     initializeState: async () => {
@@ -38,4 +33,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)((LayoutComponent) as any)
+export default connect(null, mapDispatchToProps)((LayoutComponent) as any)

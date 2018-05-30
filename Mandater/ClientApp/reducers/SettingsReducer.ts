@@ -1,4 +1,4 @@
-﻿import { Action, Reducer } from "redux";
+﻿import { Action } from "redux";
 import { InitializeSettingsAction, UpdateSettingsAction, ToggleAutoComputeAction } from "../actions/SettingActions";
 import { SettingsState, unloadedState } from "../states/SettingState";
 import { SettingAction } from "../types/ActionTypes";

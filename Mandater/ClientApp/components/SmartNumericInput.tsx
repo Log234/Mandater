@@ -15,7 +15,7 @@ export interface SmartNumericInputProps {
 export class SmartNumericInput extends React.Component<SmartNumericInputProps, {}> {
 
     render() {
-        let value = this.validateInput(this.props.value);
+        const value = this.validateInput(this.props.value);
         return (
             <div className="form-group row">
                 <label htmlFor={this.props.name} className="col-sm-5 col-form-label">{this.props.title}</label>
@@ -62,7 +62,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
     validateInput(input: string): { stringValue: string, numericValue: number } {
         const regex = RegExp("(^-$)|(^-?\\d+(\\.\\d*)?$)");
         const defaultValue = this.props.defaultValue;
-        let value = 0;
+        let value: number;
 
         if (regex.test(input) === false && input !== "") { // Matches any numbers as well as "", "-" and "3."
             return this.validateInput(this.props.value);
@@ -81,7 +81,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                 return this.validateInput(this.props.value);
             } else {
                 if (input.indexOf(".") === input.length - 1) {
-                    let prefix = input.substring(0, input.indexOf("."));
+                    const prefix = input.substring(0, input.indexOf("."));
                     value = parseInt(prefix);
                 } else {
                     value = parseFloat(input);

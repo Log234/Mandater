@@ -1,11 +1,6 @@
-﻿import { ApplicationState } from "../store";
-import { PresentationSelectionButton, PresentationSelectionButtonProps } from "../components/PresentationSelectionButton";
+﻿import { PresentationSelectionButton, PresentationSelectionButtonProps } from "../components/PresentationSelectionButton";
 import { connect } from "react-redux";
 import { changePresentation } from "../actions/PresentationActions";
-
-const mapStateToProps = (state : ApplicationState) => {
-    return {};
-};
 
 const mapDispatchToProps = (dispatch: any, ownProps: PresentationSelectionButtonProps|undefined) => ({
     onPress: () => {
@@ -16,4 +11,4 @@ const mapDispatchToProps = (dispatch: any, ownProps: PresentationSelectionButton
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)((PresentationSelectionButton) as any)   
+export default connect(null, mapDispatchToProps)((PresentationSelectionButton) as any)   

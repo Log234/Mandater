@@ -8,7 +8,7 @@ export interface ButtonProps {
     type?: string;
 }
 
-export class Button<P> extends React.Component<P & ButtonProps, {}> {
+export class Button<TP> extends React.Component<TP & ButtonProps, {}> {
     render() {
         return <button
                     title={this.props.accessibilityLabel}

@@ -1,6 +1,6 @@
-﻿import { PresentationState, unloadedState } from "../states/PresentationState";
-import { Action, Reducer } from "redux";
-import { InitializePresentationAction, ChangePresentationAction, PresentationAction as KnownAction } from "../actions/PresentationActions";
+﻿import { unloadedState } from "../states/PresentationState";
+import { Action } from "redux";
+import { PresentationAction as KnownAction } from "../actions/PresentationActions";
 import { PresentationAction } from "../types/ActionTypes";
 import { ApplicationState } from "../store";
 

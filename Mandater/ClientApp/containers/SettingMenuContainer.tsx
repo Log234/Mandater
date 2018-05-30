@@ -10,25 +10,25 @@ import { Election } from "../interfaces/Election";
 
 const mapStateToProps = (state: ApplicationState) => ({
     computationPayload: {
-        election: state.ComputationState.election,
-        algorithm: state.ComputationState.algorithm,
-        firstDivisor: state.ComputationState.firstDivisor,
-        electionThreshold: state.ComputationState.electionThreshold,
-        districtSeats: state.ComputationState.districtSeats,
-        levelingSeats: state.ComputationState.levelingSeats
+        election: state.computationState.election,
+        algorithm: state.computationState.algorithm,
+        firstDivisor: state.computationState.firstDivisor,
+        electionThreshold: state.computationState.electionThreshold,
+        districtSeats: state.computationState.districtSeats,
+        levelingSeats: state.computationState.levelingSeats
     } as ComputationPayload,
     settingsPayload: {
-        electionYears: state.SettingsState.electionYears,
-        year: state.SettingsState.year,
-        algorithm: state.SettingsState.algorithm,
-        firstDivisor: state.SettingsState.firstDivisor,
-        electionThreshold: state.SettingsState.electionThreshold,
-        districtSeats: state.SettingsState.districtSeats,
-        levelingSeats: state.SettingsState.levelingSeats,
-        autoCompute: state.SettingsState.autoCompute,
+        electionYears: state.settingsState.electionYears,
+        year: state.settingsState.year,
+        algorithm: state.settingsState.algorithm,
+        firstDivisor: state.settingsState.firstDivisor,
+        electionThreshold: state.settingsState.electionThreshold,
+        districtSeats: state.settingsState.districtSeats,
+        levelingSeats: state.settingsState.levelingSeats,
+        autoCompute: state.settingsState.autoCompute,
         forceCompute: false
     } as SettingsPayload,
-    electionType: state.RequestedDataState.electionType
+    electionType: state.requestedDataState.electionType
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

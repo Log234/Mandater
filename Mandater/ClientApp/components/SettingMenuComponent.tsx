@@ -161,7 +161,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                             <input
                                 className="form-control"
                                 classID="autoCompute"
-                                style={{ width: "34px", margin: "0px 15px 0px 0px" }}
+                                style={{ width: "34px", margin: "0 15px 0 0" }}
                                 type="checkbox"
                                 name="autoCompute"
                                 checked={this.props.settingsPayload.autoCompute}
