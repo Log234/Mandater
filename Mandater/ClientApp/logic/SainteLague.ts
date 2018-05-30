@@ -25,6 +25,7 @@ export function sainteLague(payload: ComputationPayload) {
         offset += county.results.length;
     }
     let partyResults: PartyResultDictionary = {};
+
     let total: number = 0;
     for (let result of processedResults) {
         if (partyResults[result.partyName] == undefined) {
@@ -38,7 +39,9 @@ export function sainteLague(payload: ComputationPayload) {
                 percent: 0,
                 totalVotes: 0,
             };
+
         }
+
         partyResults[result.partyName].resultsPerCounty.push(result);
         partyResults[result.partyName].districtSeats += result.seats;
         partyResults[result.partyName].sum += result.seats;
