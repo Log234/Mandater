@@ -12,8 +12,14 @@ export interface InitializePresentationAction {
     type: PresentationAction.InitializePresentation,
     initialPresentation: PresentationType;
 }
+export interface ChangeDecimalsAction {
+    type: PresentationAction.ChangeDecimals,
+    decimals: string;
+}
 
-export type PresentationAction = ChangePresentationAction | InitializePresentationAction
+export type PresentationAction = ChangePresentationAction 
+                                 | InitializePresentationAction 
+                                 | ChangeDecimalsAction
 
 export function initializePresentation() {
     const action = {

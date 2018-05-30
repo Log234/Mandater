@@ -1,7 +1,11 @@
 ﻿import * as React from "react";
 import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
+import { SmartNumericInput } from "./SmartNumericInput";
+
 export interface PresentationSettingsProps {
     displayedDecimals?: number,
+    decimals: string,
+    changeDecimals: (decimals: string) => void,
     results: PartyResultDictionary;
 }
 export class PresentationSettings extends React.Component<PresentationSettingsProps> {
@@ -21,6 +25,8 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
         }
         return options;
     }
+    
+    
     render() {
         return <div className="presentation-settings">
             <h2>Presentasjonsinnstillinger</h2>
@@ -29,10 +35,17 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
                     <input className="form-check-input" type="checkbox" name="no-seats-setting" />
                     <label htmlFor="no-seats-setting">Vis partier uten mandater</label>
                 </div>
-                <div className="form-group row">
-                    <label style={{width: "100%"}}htmlFor="decimal-places">Antall desimaler</label>
-                    <input className="form-control" onChange={this.onChange} type="range" min={2} value={4}  max={16} name="decimal-places-setting" />
-                </div>
+                <SmartNumericInput 
+                    name="decimalPlaces"
+                    defaultValue={2}
+                    min={2}
+                    max={16}
+                    integer={true}
+                    slider={true}
+                    title="Antall desimaler"
+                    value={this.props.decimals}
+                    onChange={this.props.changeDecimals}
+                    />
                 <div className="form-group row">
                     <label htmlFor="chosen-parties">Valgte partier</label>
                     <select style={{width:"100%"}} multiple>

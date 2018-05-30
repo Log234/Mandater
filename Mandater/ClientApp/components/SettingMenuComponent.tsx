@@ -126,7 +126,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         max={15}
                         defaultValue={this.props.computationPayload.election.threshold}
                         integer={false}
-                        slider={false}/>
+                        slider={true}/>
                     <SmartNumericInput
                         name="levelingSeats"
                         title="Utjevningsmandater"
@@ -147,7 +147,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         max={100}
                         defaultValue={this.props.computationPayload.election.levelingSeats}
                         integer={true}
-                        slider={false}/>
+                        slider={true}/>
                     { /*<div className="form-group row">
                     <label htmlFor="districtSeat" className="col-sm-5 col-form-label">Distriksmandater</label>
                     <div className="col-sm-7">

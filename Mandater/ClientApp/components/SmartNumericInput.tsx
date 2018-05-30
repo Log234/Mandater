@@ -9,7 +9,8 @@ export interface SmartNumericInputProps {
     min: number,
     max: number,
     integer?: boolean,
-    slider?: boolean;
+    slider?: boolean,
+    style?: React.CSSProperties;
 }
 
 export class SmartNumericInput extends React.Component<SmartNumericInputProps, {}> {

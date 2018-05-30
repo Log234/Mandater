@@ -15,5 +15,6 @@ export enum ComputationAction {
 
 export enum PresentationAction {
     InitializePresentation = "INITIALIZE_PRESENTATION",
-    ChangePresentation = "CHANGE_PRESENTATION"
+    ChangePresentation = "CHANGE_PRESENTATION",
+    ChangeDecimals = "CHANGE_DECIMALS"
 }
