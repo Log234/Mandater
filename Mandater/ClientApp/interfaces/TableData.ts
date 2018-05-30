@@ -1,9 +1,9 @@
-﻿export interface ITableData {
+﻿export interface TableData {
     tableHeaders: string[],
-    tableRows: ITableRow[];
+    tableRows: TableRow[];
 }
 
-export interface ITableRow {
+export interface TableRow {
     key: string,
     rowData: string[];
 }

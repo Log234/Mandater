@@ -1,30 +1,32 @@
 ﻿import * as React from "react";
-import { TableMode } from "../states/TableState";
-import TableButtonContainer from "../containers/TableButtonContainer";
+import { default as PresentationSelectionButton } from "../containers/PresentationSelectionButtonContainer";
+import { PresentationType } from "../types/PresentationType";
+import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 
-type PresentationSelectionProps = {
-    tables: {[id: string] : TableMode}
+export interface PresentationSelectionProps {
+    currentSelection: PresentationType,
+    results : PartyResultDictionary;
 }
 
 export class PresentationSelection extends React.Component {
+    static defaultProps = {
+        currentSelection: PresentationType.ElectionTable
+    } as PresentationSelectionProps;
     constructor(props: PresentationSelectionProps) {
         super(props);
-        this.toggleResultsTable = this.toggleResultsTable.bind(this);
-    }
-
-    toggleResultsTable(view: any) {
-        const action = {
-            type: "CHANGE_GRAPH",
-            showGraph: view
-        };
-        console.log(view);
     }
 
     render() {
         return <div className="presentation-selection">
             <h2>Presentasjonstyper</h2>
-            <TableButtonContainer title={"Distriktsoversikt"} tableMode={TableMode.DistrictOverview} />
-            <TableButtonContainer title={"Landsoversikt"} tableMode={TableMode.ElectionOverview} />
+            <PresentationSelectionButton
+                className="btn-block"
+                title={"Landsoversikt"}
+                presentationSelected={PresentationType.ElectionTable} />
+            <PresentationSelectionButton
+                className="btn-block"
+                title={"Distriktsoversikt"}
+                presentationSelected={PresentationType.DistrictTable} />
         </div>;
 
     }

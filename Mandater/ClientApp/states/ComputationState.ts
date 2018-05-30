@@ -1,5 +1,5 @@
 ﻿import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
-import { AlgorithmType } from "../types/Algorithms";
+import { AlgorithmType } from "../types/AlgorithmType";
 import { Election } from "../interfaces/Election";
 
 export interface ComputationState {

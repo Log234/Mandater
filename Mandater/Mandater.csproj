@@ -64,7 +64,6 @@
     <None Remove="ClientApp\states\SettingState.ts" />
     <None Remove="ClientApp\types\ActionTypes.ts" />
     <None Remove="ClientApp\index.ts" />
-    <None Remove="ClientApp\interfaces\AlgorithmOutput.ts" />
     <None Remove="ClientApp\interfaces\County.ts" />
     <None Remove="ClientApp\interfaces\Election.ts" />
     <None Remove="ClientApp\interfaces\ElectionState.ts" />
@@ -103,7 +102,6 @@
     <TypeScriptCompile Include="ClientApp\interfaces\ComputationPayload.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\County.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Election.ts" />
-    <TypeScriptCompile Include="ClientApp\interfaces\AlgorithmOutput.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\ElectionType.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\PartyResultDictionary.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\SettingsPayload.ts" />

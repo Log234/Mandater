@@ -1,5 +1,4 @@
-﻿import axios from "axios";
-import { RequestedDataAction } from "../types/ActionTypes";
+﻿import { RequestedDataAction } from "../types/ActionTypes";
 import { ElectionType } from "../interfaces/ElectionType";
 
 export interface InitializeRequestedDataAction {
@@ -11,6 +10,6 @@ export function initializeRequestedData(electionType: ElectionType): InitializeR
     const action: InitializeRequestedDataAction = {
         type: RequestedDataAction.InitializeRequestedData,
         electionType: electionType
-    }
+    };
     return action;
 }

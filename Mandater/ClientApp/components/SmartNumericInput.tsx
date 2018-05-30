@@ -9,13 +9,14 @@ export interface SmartNumericInputProps {
     min: number,
     max: number,
     integer?: boolean,
-    slider?: boolean;
+    slider?: boolean,
+    style?: React.CSSProperties;
 }
 
 export class SmartNumericInput extends React.Component<SmartNumericInputProps, {}> {
 
     render() {
-        let value = this.validateInput(this.props.value);
+        const value = this.validateInput(this.props.value);
         return (
             <div className="form-group row">
                 <label htmlFor={this.props.name} className="col-sm-5 col-form-label">{this.props.title}</label>
@@ -41,31 +42,28 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                     />
                     {this.props.slider &&
                         <input
-                        className="form-control"
-                        classID={this.props.name + "Slider"}
-                        type="range"
-                        style={{width: "66%"}}
-                        onChange=
-                        {
-                            (event: React.ChangeEvent<HTMLInputElement>) => {
-                                const value = this.props.integer ? parseInt(event.target.value) : parseFloat(event.target.value);
+                            className="form-control"
+                            classID={this.props.name + "Slider"}
+                            type="range"
+                            style={{ width: "66%" }}
+                            onChange=
+                            { (event: React.ChangeEvent<HTMLInputElement>) => {
+                                const value =
+                                    this.props.integer ? parseInt(event.target.value) : parseFloat(event.target.value);
                                 this.props.onChange(event.target.value, value);
-                            }
-                        }
-                        value={value.numericValue}
-                        min={this.props.min}
-                        step={this.props.integer ? 1 : 0.1}
-                        max={this.props.max}
-                        />
-                    }
+                            } }
+                            value={value.numericValue}
+                            min={this.props.min}
+                            step={this.props.integer ? 1 : 0.1}
+                            max={this.props.max}/> }
                 </div>
-            </div>)
+            </div>);
     }
 
     validateInput(input: string): { stringValue: string, numericValue: number } {
         const regex = RegExp("(^-$)|(^-?\\d+(\\.\\d*)?$)");
         const defaultValue = this.props.defaultValue;
-        let value = 0;
+        let value: number;
 
         if (regex.test(input) === false && input !== "") { // Matches any numbers as well as "", "-" and "3."
             return this.validateInput(this.props.value);
@@ -84,7 +82,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                 return this.validateInput(this.props.value);
             } else {
                 if (input.indexOf(".") === input.length - 1) {
-                    let prefix = input.substring(0, input.indexOf("."));
+                    const prefix = input.substring(0, input.indexOf("."));
                     value = parseInt(prefix);
                 } else {
                     value = parseFloat(input);

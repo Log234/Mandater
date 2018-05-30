@@ -18,4 +18,4 @@ export const unloadedState: SettingsState = {
     districtSeats: "",
     levelingSeats: "",
     autoCompute: true
-}
+};

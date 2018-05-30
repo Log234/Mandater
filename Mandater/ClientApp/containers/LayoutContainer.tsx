@@ -1,16 +1,11 @@
 ﻿import { LayoutComponent } from "../components/LayoutComponent";
 import { connect } from "react-redux";
-import { ApplicationState } from "../store";
 import { initializeComputation } from "../actions/ComputationActions";
-import { initializeTable } from "../actions/TableActions";
+import { initializePresentation } from "../actions/PresentationActions";
 import { initializeRequestedData } from "../actions/RequestedDataActions";
 import { initializeSettings } from "../actions/SettingActions";
 import { ElectionType } from "../interfaces/ElectionType";
 import { request } from "../logic/ApiRequests";
-
-const mapStateToProps = (state: ApplicationState) => {
-    return {};
-}
 
 const mapDispatchToProps = (dispatch: any) => ({
     initializeState: async () => {
@@ -20,18 +15,22 @@ const mapDispatchToProps = (dispatch: any) => ({
             electionTypeId: -1,
             countryId: -1,
             elections: []
-        }
-        
+        };
+
         const electionType = await request<ElectionType>(uri, failover);
         const initializeRequestDataAction = initializeRequestedData(electionType);
         const initializeComputationAction = initializeComputation(electionType);
         const initializeSettingsAction = initializeSettings(electionType);
-        const tableAction = initializeTable();
+        const initializePresentationAction = initializePresentation();
         dispatch(initializeRequestDataAction);
+        console.log(`Action of type ${initializeRequestDataAction.type} dispatched`);
         dispatch(initializeComputationAction);
+        console.log(`Action of type ${initializeComputationAction.type} dispatched`);
         dispatch(initializeSettingsAction);
-        dispatch(tableAction);
+        console.log(`Action of type ${initializeSettingsAction.type} dispatched`);
+        dispatch(initializePresentationAction);
+        console.log(`Action of type ${initializePresentationAction.type} dispatched`);
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)((LayoutComponent) as any)
+export default connect(null, mapDispatchToProps)((LayoutComponent) as any)

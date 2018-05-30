@@ -47,17 +47,16 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                     }}
                                 className="form-control"
                                 name="year">
-                                {
-                                    this.props.settingsPayload.electionYears.map((item, index) => {
-                                        return (
-                                            <option
+                                { this.props.settingsPayload.electionYears.map((item, index) => {
+                                    return (<option
                                                 key={index} // By convention all children should have a unique key prop
+
+
+
                                                 value={item}>
                                                 {item}
-                                            </option>
-                                        );
-                                    })
-                                }
+                                            </option>);
+                                }) }
                             </select>
                         </div>
                     </div>
@@ -83,7 +82,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                 }>
                                 <option value="1">Sainte Lagüe</option>
                                 <option value="2">d'Hondt</option>>
-                                </select>
+                            </select>
                         </div>
                     </div>
                     <SmartNumericInput
@@ -106,8 +105,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         max={5}
                         defaultValue={this.props.computationPayload.election.firstDivisor}
                         integer={false}
-                        slider={false}
-                    />
+                        slider={false}/>
                     <SmartNumericInput
                         name="electionThreshold"
                         title="Sperregrense"
@@ -128,8 +126,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         max={15}
                         defaultValue={this.props.computationPayload.election.threshold}
                         integer={false}
-                        slider={false}
-                    />
+                        slider={true}/>
                     <SmartNumericInput
                         name="levelingSeats"
                         title="Utjevningsmandater"
@@ -150,27 +147,27 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         max={100}
                         defaultValue={this.props.computationPayload.election.levelingSeats}
                         integer={true}
-                        slider={false}
-                    />
-                    {/*<div className="form-group row">
+                        slider={true}/>
+                    { /*<div className="form-group row">
                     <label htmlFor="districtSeat" className="col-sm-5 col-form-label">Distriksmandater</label>
                     <div className="col-sm-7">
                         <input className="form-control" classID="districtSeat" type="number" name="districSeat" min="0" step="1" max="500" />
                     </div>
-                </div>*/}
+                </div>*/
+                    }
                     <div className="form-group row">
                         <label htmlFor="autoCompute" className="col-sm-5 col-form-label">Oppdater automatisk</label>
                         <div className="col-sm-7">
                             <input
                                 className="form-control"
                                 classID="autoCompute"
-                                style={{ width: "34px", margin: "0px 15px 0px 0px" }}
+                                style={{ width: "34px", margin: "0 15px 0 0" }}
                                 type="checkbox"
                                 name="autoCompute"
                                 checked={this.props.settingsPayload.autoCompute}
                                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                     this.props.toggleAutoCompute(event.target.checked);
-                                }} />
+                                }}/>
                             {!this.props.settingsPayload.autoCompute &&
                                 <Button
                                     title={"Kalkuler"}
@@ -200,16 +197,17 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         <label htmlFor="reset" className="col-sm-5 col-form-label">Historiske instillinger</label>
                         <div className="col-sm-7">
                             <Button title={"Gjenopprett"}
-                                onPress={
+                                    onPress={
                                     () => {
                                         this.props.resetToHistoricalSettings(this.props.settingsPayload, this.props.computationPayload.election);
                                     }
                                 }
-                                type="button" />
+                                    type="button"/>
                         </div>
                     </div>
                 </form>
             </div>
-        );
-    }
+);
 }
+}
+;;
