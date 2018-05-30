@@ -1,15 +1,15 @@
 ﻿import * as React from "react";
-import { TableComponent } from "./TableComponent";
-import { ITableData } from "../interfaces/TableData";
-import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
-import { TableMode } from "../states/TableState";
-import { Dictionary } from "../interfaces/Dictionary"
+import { Dictionary } from "../interfaces/Dictionary";
 import { PartyResult } from "../interfaces/PartyResult";
+import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 import { ProcessedResult } from "../interfaces/ProcessedResult";
+import { TableData as ITableData } from "../interfaces/TableData";
+import { PresentationType } from "../types/PresentationType";
+import { TableComponent } from "./TableComponent";
 
-type PresentationProps = {
+export interface PresentationProps {
     results: PartyResultDictionary,
-    tableMode: TableMode;
+    currentPresentation: PresentationType;
 }
 
 export class PresentationComponent extends React.Component<PresentationProps, {}> {
@@ -19,7 +19,7 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
             tableHeaders: [],
             tableRows: []
         };
-        if (this.props.tableMode === TableMode.ElectionOverview) {
+        if (this.props.currentPresentation === PresentationType.ElectionTable) {
             tableData = {
                 tableHeaders: ["Parti", "Stemmer", "%", "Distrikt", "Utjevning", "Sum"/*, "Differanse", "Prop."*/],
                 tableRows: []
@@ -37,7 +37,7 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
                 }
             }
         }
-        else if (this.props.tableMode === TableMode.DistrictOverview) {
+        else if (this.props.currentPresentation === PresentationType.DistrictTable) {
             tableData = {
                 tableHeaders:
                     [""], // These have to be parties that have received seats in the calculation, first header is blank
@@ -52,7 +52,7 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
                 }
             }
             const countyNames : string[] = [];
-            const countyResults: Dictionary<ProcessedResult[]> = {}
+            const countyResults: Dictionary<ProcessedResult[]> = {};
             // Filters out ones with mandates
             const filteredArray = array.filter(result => result.sum >= 1);
             // Generates tableHeaders

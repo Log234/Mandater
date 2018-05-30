@@ -13,7 +13,8 @@ export enum ComputationAction {
     UpdateResults = "UPDATE_CALCULATION",
 }
 
-export enum TableAction {
-    InitializeTable = "INITIALIZE_TABLE",
-    ChangeTable = "CHANGE_TABLE"
+export enum PresentationAction {
+    InitializePresentation = "INITIALIZE_PRESENTATION",
+    ChangePresentation = "CHANGE_PRESENTATION",
+    ChangeDecimals = "CHANGE_DECIMALS"
 }

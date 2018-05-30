@@ -1,4 +1,4 @@
-﻿import { AlgorithmType } from "../types/Algorithms";
+﻿import { AlgorithmType } from "../types/AlgorithmType";
 import { Election } from "./Election";
 
 export interface ComputationPayload {

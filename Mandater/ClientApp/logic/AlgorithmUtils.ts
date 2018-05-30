@@ -1,5 +1,6 @@
 ﻿import { ProcessedResult } from "../interfaces/ProcessedResult";
-import { AlgorithmType } from "../types/Algorithms";
+import { AlgorithmType } from "../types/AlgorithmType";
+
 
 const illegalPartyCodes: Set<string> = new Set(["BLANKE"]);
 

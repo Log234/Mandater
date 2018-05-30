@@ -12,11 +12,13 @@ export default function (state: RequestedDataState, incomingAction: Action) {
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case RequestedDataAction.InitializeRequestedData:
+            console.log(`Action of type ${action.type} reduced`);
             return {
                 ...state,
                 electionType: action.electionType
             };
         default:
+            console.log(`Action of type ${incomingAction.type} reduced to default`);
             return state || unloadedState;
     }
 };

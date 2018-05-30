@@ -11,4 +11,4 @@ export const unloadedState: RequestedDataState = {
         internationalName: "UNDEFINED",
         elections: []
     }
-}
+};
