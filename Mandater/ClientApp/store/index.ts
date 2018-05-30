@@ -13,7 +13,7 @@ export interface ApplicationState {
     SettingsState: SettingsState,
     ComputationState: ComputationState,
     RequestedDataState: RequestedDataState,
-    PresentationState: PresentationState
+    PresentationState: PresentationState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using

@@ -10,7 +10,7 @@ import { request } from "../logic/ApiRequests";
 
 const mapStateToProps = (state: ApplicationState) => {
     return {};
-}
+};
 
 const mapDispatchToProps = (dispatch: any) => ({
     initializeState: async () => {
@@ -20,21 +20,21 @@ const mapDispatchToProps = (dispatch: any) => ({
             electionTypeId: -1,
             countryId: -1,
             elections: []
-        }
-        
+        };
+
         const electionType = await request<ElectionType>(uri, failover);
         const initializeRequestDataAction = initializeRequestedData(electionType);
         const initializeComputationAction = initializeComputation(electionType);
         const initializeSettingsAction = initializeSettings(electionType);
         const initializePresentationAction = initializePresentation();
         dispatch(initializeRequestDataAction);
-        console.log(`Action of type ${initializeRequestDataAction.type} dispatched`)
+        console.log(`Action of type ${initializeRequestDataAction.type} dispatched`);
         dispatch(initializeComputationAction);
-        console.log(`Action of type ${initializeComputationAction.type} dispatched`)
+        console.log(`Action of type ${initializeComputationAction.type} dispatched`);
         dispatch(initializeSettingsAction);
-        console.log(`Action of type ${initializeSettingsAction.type} dispatched`)
+        console.log(`Action of type ${initializeSettingsAction.type} dispatched`);
         dispatch(initializePresentationAction);
-        console.log(`Action of type ${initializePresentationAction.type} dispatched`)
+        console.log(`Action of type ${initializePresentationAction.type} dispatched`);
     }
 });
 

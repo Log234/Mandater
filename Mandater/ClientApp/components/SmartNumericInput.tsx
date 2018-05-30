@@ -41,25 +41,22 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                     />
                     {this.props.slider &&
                         <input
-                        className="form-control"
-                        classID={this.props.name + "Slider"}
-                        type="range"
-                        style={{width: "66%"}}
-                        onChange=
-                        {
-                            (event: React.ChangeEvent<HTMLInputElement>) => {
-                                const value = this.props.integer ? parseInt(event.target.value) : parseFloat(event.target.value);
+                            className="form-control"
+                            classID={this.props.name + "Slider"}
+                            type="range"
+                            style={{ width: "66%" }}
+                            onChange=
+                            { (event: React.ChangeEvent<HTMLInputElement>) => {
+                                const value =
+                                    this.props.integer ? parseInt(event.target.value) : parseFloat(event.target.value);
                                 this.props.onChange(event.target.value, value);
-                            }
-                        }
-                        value={value.numericValue}
-                        min={this.props.min}
-                        step={this.props.integer ? 1 : 0.1}
-                        max={this.props.max}
-                        />
-                    }
+                            } }
+                            value={value.numericValue}
+                            min={this.props.min}
+                            step={this.props.integer ? 1 : 0.1}
+                            max={this.props.max}/> }
                 </div>
-            </div>)
+            </div>);
     }
 
     validateInput(input: string): { stringValue: string, numericValue: number } {

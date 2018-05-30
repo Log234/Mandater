@@ -2,22 +2,21 @@
 import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 export interface PresentationSettingsProps {
     displayedDecimals?: number,
-    results: PartyResultDictionary
+    results: PartyResultDictionary;
 }
 export class PresentationSettings extends React.Component<PresentationSettingsProps> {
     static defaultProps = {
 
-    } as PresentationSettingsProps
+    } as PresentationSettingsProps;
     onChange() {
-
+        // TODO: Complete function
     }
     createPartyList() {
         const options = [] as React.ReactNode[];
-        console.log(this.props.results);
         for (let key in this.props.results) {
             if (this.props.results.hasOwnProperty(key)) {
                 const result = this.props.results[key];
-                options.push(<option key={result.partyCode}>{result.partyName}</option>)
+                options.push(<option key={result.partyCode}>{result.partyName}</option>);
             }
         }
         return options;

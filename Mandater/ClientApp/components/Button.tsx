@@ -2,7 +2,7 @@
 
 export interface ButtonProps {
     title: string,
-    onPress: () => any,
+    onPress?: () => any,
     accessibilityLabel?: string,
     className?: string,
     type?: string;

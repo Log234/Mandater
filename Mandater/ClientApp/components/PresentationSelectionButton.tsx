@@ -3,7 +3,7 @@ import * as React from "react";
 import { PresentationType } from "../types/PresentationType";
 
 export interface PresentationSelectionButtonProps extends ButtonProps {
-    selected : PresentationType
+    presentationSelected : PresentationType
 }
 
 export class PresentationSelectionButton extends Button<PresentationSelectionButtonProps> {

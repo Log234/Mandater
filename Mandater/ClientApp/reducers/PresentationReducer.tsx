@@ -12,15 +12,15 @@ export default function (state: ApplicationState, incomingAction: Action) {
             return {
                 ...state,
                 currentPresentation: action.initialPresentation
-            } as ApplicationState
+            } as ApplicationState;
         case PresentationAction.ChangePresentation:
             console.log(`Action of type ${action.type} reduced`);
             return {
                 ...state,
                 currentPresentation: action.presentationSelected
-            } as ApplicationState
+            } as ApplicationState;
         default:
             console.log(`Action of type ${incomingAction.type} reduced to default`);
-            return state || unloadedState
+            return state || unloadedState;
     }
 }

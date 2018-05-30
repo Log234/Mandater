@@ -52,7 +52,7 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
                 }
             }
             const countyNames : string[] = [];
-            const countyResults: Dictionary<ProcessedResult[]> = {}
+            const countyResults: Dictionary<ProcessedResult[]> = {};
             // Filters out ones with mandates
             const filteredArray = array.filter(result => result.sum >= 1);
             // Generates tableHeaders

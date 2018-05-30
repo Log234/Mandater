@@ -6,4 +6,4 @@ export interface PresentationState {
 
 export const unloadedState: PresentationState = {
     currentPresentation: PresentationType.ElectionTable
-}
+};

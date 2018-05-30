@@ -44,7 +44,7 @@ export default function (state: SettingsState, incomingAction: Action) {
             return {
                 ...state,
                 autoCompute: action.autoCompute
-            }
+            };
         default:
             console.log(`Action of type ${incomingAction.type} reduced to default`);
             return state || unloadedState;

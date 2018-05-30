@@ -2,7 +2,7 @@
 import { TableData } from "../interfaces/TableData";
 
 type TableProps = {
-    tableData: TableData
+    tableData: TableData;
 }
 
 export class TableComponent extends React.Component<TableProps, {}> {

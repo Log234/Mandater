@@ -5,18 +5,15 @@ import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 
 export interface PresentationSelectionProps {
     currentSelection: PresentationType,
-    results : PartyResultDictionary
+    results : PartyResultDictionary;
 }
 
 export class PresentationSelection extends React.Component {
     static defaultProps = {
         currentSelection: PresentationType.ElectionTable
-    } as PresentationSelectionProps
+    } as PresentationSelectionProps;
     constructor(props: PresentationSelectionProps) {
         super(props);
-    }
-    populatePartyChoices() {
-
     }
 
     render() {

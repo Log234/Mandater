@@ -3,12 +3,12 @@ import { PresentationComponent, PresentationProps } from "../components/Presenta
 import { connect } from "react-redux";
 
 const mapStateToProps = (state: ApplicationState) => {
-    console.log("PresentationContainer mapped state to props")
+    console.log("PresentationContainer mapped state to props");
     return {
         results: state.ComputationState.partyResults,
         currentPresentation: state.PresentationState.currentPresentation
-    } as PresentationProps
-}
+    } as PresentationProps;
+};
 
 const mapDispatchToProps = (dispatch: any) => ({
 
@@ -16,5 +16,5 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 export default connect(
     mapStateToProps,
-    {}
+    mapDispatchToProps
 )((PresentationComponent) as any)

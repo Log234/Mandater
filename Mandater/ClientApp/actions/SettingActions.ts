@@ -1,5 +1,4 @@
 ﻿import { SettingAction } from "../types/ActionTypes";
-import { AlgorithmType } from "../types/AlgorithmType";
 import { ElectionType } from "../interfaces/ElectionType";
 import { SettingsPayload } from "../interfaces/SettingsPayload";
 
@@ -47,7 +46,7 @@ export function initializeSettings(electionType: ElectionType) {
         districtSeats: election.seats.toString(),
         levelingSeats: election.levelingSeats.toString(),
         autoCompute: true
-    }
+    };
     return initializeSettingsAction;
 }
 

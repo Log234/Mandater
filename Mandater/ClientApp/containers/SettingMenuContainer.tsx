@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch: any) => ({
                 electionThreshold: computationPayload.electionThreshold,
                 districtSeats: computationPayload.districtSeats,
                 levelingSeats: computationPayload.levelingSeats
-            }
+            };
             const updateCalculationAction = updateElectionData(payload);
             dispatch(updateCalculationAction);
         }
@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch: any) => ({
                 electionThreshold: election.threshold,
                 districtSeats: election.seats,
                 levelingSeats: election.levelingSeats
-            }
+            };
             const updateCalculationAction = updateElectionData(payload);
             dispatch(updateCalculationAction);
         }
@@ -76,7 +76,7 @@ const mapDispatchToProps = (dispatch: any) => ({
             electionThreshold: election.threshold.toString(),
             districtSeats: election.seats.toString(),
             levelingSeats: election.levelingSeats.toString()
-        }
+        };
         const updateSettingsAction = updateSettings(newSettingsPayload);
         dispatch(updateSettingsAction);
     }

@@ -5,7 +5,7 @@ import { PresentationSettings, PresentationSettingsProps } from "../components/P
 function mapStateToProps(state : ApplicationState) {
     return {
         results : state.ComputationState.partyResults
-    } as PresentationSettingsProps
+    } as PresentationSettingsProps;
 }
 
 const PresentationSettingsContainer = connect(mapStateToProps, {})(PresentationSettings);

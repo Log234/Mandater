@@ -4,15 +4,16 @@ import { connect } from "react-redux";
 import { changePresentation } from "../actions/PresentationActions";
 
 const mapStateToProps = (state : ApplicationState) => {
-    return {}
-}
+    return {};
+};
 
-const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
+const mapDispatchToProps = (dispatch: any, ownProps: PresentationSelectionButtonProps|undefined) => ({
     onPress: () => {
-        const action = changePresentation(ownProps.presentationSelected);
+        const props = ownProps as PresentationSelectionButtonProps;
+        const action = changePresentation(props.presentationSelected);
         dispatch(action);
         console.log(`Action ${action.type} dispatched`);
     }
-} as PresentationSelectionButtonProps);
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)((PresentationSelectionButton) as any)   
