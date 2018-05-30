@@ -1,17 +1,20 @@
 ﻿import { ApplicationState } from "../store";
-import { PresentationComponent } from "../components/PresentationComponent";
+import { PresentationComponent, PresentationProps } from "../components/PresentationComponent";
 import { connect } from "react-redux";
 
-const mapStateToProps = (state: ApplicationState) => ({
-    results: state.ComputationState.partyResults,
-    tableMode: state.TableState.tableMode
-});
+const mapStateToProps = (state: ApplicationState) => {
+    console.log("PresentationContainer mapped state to props")
+    return {
+        results: state.ComputationState.partyResults,
+        currentPresentation: state.PresentationState.currentPresentation
+    } as PresentationProps
+}
 
 const mapDispatchToProps = (dispatch: any) => ({
 
 });
 
 export default connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )((PresentationComponent) as any)
+    mapStateToProps,
+    {}
+)((PresentationComponent) as any)

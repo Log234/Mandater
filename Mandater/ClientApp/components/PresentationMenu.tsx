@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import { PresentationSelection } from "./PresentationSelection";
-import { PresentationSettings } from "./PresentationSettings";
+import { default as PresentationSettings } from "../containers/PresentationSettingsContainer";
 
 export class PresentationMenu extends React.Component<{}, {}> {
     public render() {

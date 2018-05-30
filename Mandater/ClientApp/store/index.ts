@@ -1,20 +1,19 @@
 import ComputationReducer from "../reducers/ComputationReducer"
 import { ComputationState } from "../states/ComputationState"
-import { TableState } from "../states/TableState";
 import { VisualizationState } from "../states/VisualizationState";
-import TableReducer from "../reducers/TableReducer";
 import { SettingsState } from "../states/SettingState";
 import { RequestedDataState } from "../states/RequestedDataState";
 import RequestedDataReducer from "../reducers/RequestedDataReducer";
 import SettingsReducer from "../reducers/SettingsReducer";
+import PresentationReducer from "../reducers/PresentationReducer";
+import { PresentationState } from "../states/PresentationState";
 
 // The top-level state object
 export interface ApplicationState {
     SettingsState: SettingsState,
     ComputationState: ComputationState,
     RequestedDataState: RequestedDataState,
-    TableState: TableState,
-    VisualizationState: VisualizationState;
+    PresentationState: PresentationState
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -24,7 +23,7 @@ export const reducers = {
     SettingsState: SettingsReducer,
     ComputationState: ComputationReducer,
     RequestedDataState: RequestedDataReducer,
-    TableState: TableReducer
+    PresentationState: PresentationReducer
 };
 
 //export const store = createStore(reducers);

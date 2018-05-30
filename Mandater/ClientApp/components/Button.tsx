@@ -4,8 +4,8 @@ export interface ButtonProps {
     title: string,
     onPress: () => any,
     accessibilityLabel?: string,
-    type?: string,
-    style?: React.CSSProperties;
+    className?: string,
+    type?: string;
 }
 
 export class Button<P> extends React.Component<P & ButtonProps, {}> {
@@ -14,7 +14,7 @@ export class Button<P> extends React.Component<P & ButtonProps, {}> {
                     title={this.props.accessibilityLabel}
                     onClick={this.props.onPress}
                     type={this.props.type}
-                    style={this.props.style}
+                    className={this.props.className}
                     >
                     {this.props.title}
                </button>;

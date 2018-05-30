@@ -1,5 +1,5 @@
 ﻿import { SettingAction } from "../types/ActionTypes";
-import { AlgorithmType } from "../types/Algorithms";
+import { AlgorithmType } from "../types/AlgorithmType";
 import { ElectionType } from "../interfaces/ElectionType";
 import { SettingsPayload } from "../interfaces/SettingsPayload";
 
