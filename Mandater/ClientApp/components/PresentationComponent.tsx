@@ -40,7 +40,7 @@ export class PresentationComponent extends React.Component<PresentationProps, {}
         else if (this.props.currentPresentation === PresentationType.DistrictTable) {
             tableData = {
                 tableHeaders:
-                    [""], // These have to be parties that have received seats in the calculation, first header is blank
+                    [""], // These have to be partyCodes that have received seats in the calculation, first header is blank
                 tableRows: [], // [countyName]
             };
 

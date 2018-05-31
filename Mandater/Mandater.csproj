@@ -62,6 +62,7 @@
     <None Remove="ClientApp\interfaces\DecomposedTable.ts" />
     <None Remove="ClientApp\interfaces\SettingsPayload.ts" />
     <None Remove="ClientApp\logic\ApiRequests.ts" />
+    <None Remove="ClientApp\logic\LagueDhont.ts" />
     <None Remove="ClientApp\logic\TableFunctions.ts" />
     <None Remove="ClientApp\reducers\RequestedDataReducer.ts" />
     <None Remove="ClientApp\reducers\SettingsReducer.ts" />
@@ -80,7 +81,6 @@
     <None Remove="ClientApp\interfaces\Result.ts" />
     <None Remove="ClientApp\interfaces\TableData.ts" />
     <None Remove="ClientApp\logic\AlgorithmUtils.ts" />
-    <None Remove="ClientApp\logic\SainteLague.ts" />
     <None Remove="ClientApp\store\ElectionReducer.ts" />
     <None Remove="ClientApp\types\Algorithms.ts" />
     <None Remove="ClientApp\types\TableTypes.ts" />
@@ -123,7 +123,7 @@
     <TypeScriptCompile Include="ClientApp\interfaces\Result.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\TableData.ts" />
     <TypeScriptCompile Include="ClientApp\logic\AlgorithmUtils.ts" />
-    <TypeScriptCompile Include="ClientApp\logic\SainteLague.ts" />
+    <TypeScriptCompile Include="ClientApp\logic\LagueDhont.ts" />
     <TypeScriptCompile Include="ClientApp\reducers\ComputationReducer.ts" />
     <TypeScriptCompile Include="ClientApp\types\TableTypes.ts" />
   </ItemGroup>

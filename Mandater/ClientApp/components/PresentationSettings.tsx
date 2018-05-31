@@ -47,7 +47,7 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
                     onChange={this.props.changeDecimals}
                     />
                 <div className="form-group row">
-                    <label htmlFor="chosen-parties">Valgte partier</label>
+                    <label htmlFor="chosen-partyCodes">Valgte partier</label>
                     <select style={{width:"100%"}} multiple>
                         {this.createPartyList()}
                     </select>

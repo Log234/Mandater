@@ -15,16 +15,29 @@ export class ComputationResults {
         this.computationSets = newSets;
     }
 
+    getPartyCodes(): string[] {
+        return this.computationSets.partyCodes;
+    }
+
+    getPartyNames(): string[] {
+        return this.computationSets.partyNames;
+    }
+
+    getDistricts(): string[] {
+        return this.computationSets.districts;
+    }
+
     getPresentationTypes(): PresentationType[] {
         return this.computationSets.getPresentationTypes();
     }
 
     getPresentationTable(tableType: PresentationType,
+        district?: string,
         ntnFilters?: NumberToNumberFilter[],
         ntsFilter?: NumberToStringFilter,
         stsFilters?: StringToStringFilter[]): string[][] {
 
-        const decomposedTable = this.computationSets.getTable(tableType);
+        const decomposedTable = this.computationSets.getTable(tableType, district);
 
         // Filter out rows or collumns depending on their numerical values
         let numberData = decomposedTable;

@@ -1,26 +1,90 @@
-﻿import { ProcessedResult } from "../interfaces/ProcessedResult";
-import { AlgorithmType } from "../types/AlgorithmType";
+﻿import { AlgorithmType } from "../types/AlgorithmType";
+import { Result } from "../interfaces/Result";
+import { DecomposedTable } from "../interfaces/DecomposedTable";
 
+export interface LagueDhontDistributionResult {
+    partyIndex: { [id: string]: number },
+    quotientsPerSeat: DecomposedTable<number>,
+    winnerPerSeat: DecomposedTable<number>,
+    seatsWonByParty: DecomposedTable<number>;
+}
 
-const illegalPartyCodes: Set<string> = new Set(["BLANKE"]);
+const illegalPartyCodes = new Set(["BLANKE"]);
 
-export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, numSeats: number, offset: number, end: number, processedResults: ProcessedResult[]) {
-    let tmp = 0;
+export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, numSeats: number, results: Result[], seats?: {[id: string]: number}): LagueDhontDistributionResult {
+    let seatsWon: { [id: string]: number } = {};
+
+    if (seats === undefined) {
+        for (let party of results) {
+            seatsWon[party.partyCode] = 0;
+        }
+    } else {
+        seatsWon = seats;
+    }
+    
+    const partyIndex: { [id: string]: number } = {};
+    const quotientsPerSeat: DecomposedTable<number> = {
+        header: ["Mandat"],
+        rowId: [],
+        body: []
+    }
+    const winnerPerSeat: DecomposedTable<number> = {
+        header: ["Mandat"],
+        rowId: [],
+        body: []
+    }
+    const seatsWonByParty: DecomposedTable<number> = {
+        header: [""],
+        rowId: ["Antall"],
+        body: []
+    }
+
+    let index = 0;
+    for (let party of results) {
+        partyIndex[party.partyCode] = index;
+        quotientsPerSeat.header.push(party.partyCode);
+        winnerPerSeat.header.push(party.partyCode);
+        seatsWonByParty.header.push(party.partyCode);
+        index++;
+    }
+
+    seatsWonByParty.body.push(Array(results.length).fill(0));
+
     for (let i: number = 0; i < numSeats; i++) {
-        let currentWinnerIndex = -1;
-        let currentMaxQuotient: number = -1;
-        for (let j: number = offset; j < end + offset; j++) {
-            let currentParty: ProcessedResult = processedResults[j];
-            let currentQuotient: number = (currentParty.votes / getDenominator(algorithm, currentParty.seats, firstDivisor));
-            if (currentQuotient > currentMaxQuotient && !illegalPartyCodes.has(currentParty.partyCode)) {
+        const seatNumber = (i + 1).toString();
+        quotientsPerSeat.rowId.push(seatNumber);
+        winnerPerSeat.rowId.push(seatNumber);
+
+        const quotients = Array(results.length).fill(0);
+        const winner = Array(results.length).fill(0);
+
+        let currentWinner = "";
+        let currentMaxQuotient = -1;
+
+        for (let result of results) {
+            const currentQuotient = (result.votes / getDenominator(algorithm, seatsWon[result.partyCode], firstDivisor));
+            quotients[partyIndex[result.partyCode]] = currentQuotient;
+
+            if (currentQuotient > currentMaxQuotient && !illegalPartyCodes.has(result.partyCode)) {
                 currentMaxQuotient = currentQuotient;
-                currentWinnerIndex = j;
+                currentWinner = result.partyCode;
             }
         }
-        processedResults[currentWinnerIndex].seats += 1;
-        tmp += 1;
+        seatsWonByParty.body[0][partyIndex[currentWinner]] += 1;
+        seatsWon[currentWinner] += 1;
+        winner[partyIndex[currentWinner]] = 1;
+        winnerPerSeat.body.push(winner);
     }
-    return processedResults;
+
+    const completedResult: LagueDhontDistributionResult =
+        {
+            partyIndex,
+            quotientsPerSeat,
+            winnerPerSeat,
+            seatsWonByParty
+        }
+
+    return completedResult;
 }
 
 export function getDenominator(algorithm: AlgorithmType, numberOfSeatsAssigned: number, firstDivisor: number) {
