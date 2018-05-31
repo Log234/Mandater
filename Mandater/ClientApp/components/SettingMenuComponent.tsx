@@ -105,7 +105,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         max={5}
                         defaultValue={this.props.computationPayload.election.firstDivisor}
                         integer={false}
-                        slider={false}/>
+                        slider={true}/>
                     <SmartNumericInput
                         name="electionThreshold"
                         title="Sperregrense"

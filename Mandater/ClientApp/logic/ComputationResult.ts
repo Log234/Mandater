@@ -1,8 +1,8 @@
-﻿import { ComputationSets } from "./ComputationSets";
-import { NumberToNumberFilter, NumberToStringFilter, StringToStringFilter } from "./ArrayFilters";
-import { TableTypes } from "../types/TableTypes";
+﻿import { ComputationSets } from "../interfaces/ComputationSets";
+import { NumberToNumberFilter, NumberToStringFilter, StringToStringFilter } from "../interfaces/ArrayFilters";
 import { composeTable } from "../logic/TableFunctions";
-import { DecomposedTable } from "./DecomposedTable";
+import { DecomposedTable } from "../interfaces/DecomposedTable";
+import { PresentationType } from "../types/PresentationType";
 
 export class ComputationResults {
     computationSets: ComputationSets;
@@ -15,11 +15,11 @@ export class ComputationResults {
         this.computationSets = newSets;
     }
 
-    getTableTypes(): TableTypes[] {
-        return this.computationSets.getTableTypes();
+    getPresentationTypes(): PresentationType[] {
+        return this.computationSets.getPresentationTypes();
     }
 
-    getPresentationTable(tableType: TableTypes,
+    getPresentationTable(tableType: PresentationType,
         ntnFilters?: NumberToNumberFilter[],
         ntsFilter?: NumberToStringFilter,
         stsFilters?: StringToStringFilter[]): string[][] {
@@ -58,7 +58,7 @@ export class ComputationResults {
             }
         }
 
-        // Attach collumn headers and row identifiers
+        // Attach column headers and row identifiers
         const finalTable = composeTable(stringData);
 
         return finalTable;

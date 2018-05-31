@@ -1,7 +1,7 @@
-﻿import { TableTypes } from "../types/TableTypes";
-import { DecomposedTable } from "./DecomposedTable";
+﻿import { DecomposedTable } from "./DecomposedTable";
+import { PresentationType } from "../types/PresentationType";
 
 export interface ComputationSets {
-    getTableTypes: () => TableTypes[],
-    getTable: (tableType: TableTypes) => DecomposedTable<number>;
+    getPresentationTypes: () => PresentationType[],
+    getTable: (tableType: PresentationType) => DecomposedTable<number>;
 }
