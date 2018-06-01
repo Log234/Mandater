@@ -10,5 +10,5 @@ export interface Election {
     levelingSeats: number,
     countryId: number,
     electionTypeId: number,
-    counties: Array<County>;
+    counties: County[];
 }
