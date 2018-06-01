@@ -66,20 +66,21 @@ export class LagueDhontSets implements ComputationSets {
         let totalVotes = 0;
         for (let i = 0; i < this.districts.length; i++) {
             for (let j = 0; j < this.votesPerDistrict.body[i].length; j++) {
-                if (curVotes[this.votesPerDistrict.header[j]] === undefined) {
-                    curVotes[this.votesPerDistrict.header[j]] = 0;
-                    districtSeats[this.districtSeatsPerDistrict.header[j]] = 0;
+                const index = j + 1;
+                if (curVotes[this.votesPerDistrict.header[index]] === undefined) {
+                    curVotes[this.votesPerDistrict.header[index]] = 0;
+                    districtSeats[this.districtSeatsPerDistrict.header[index]] = 0;
                 }
-                curVotes[this.districtSeatsPerDistrict.header[j]] += this.votesPerDistrict.body[i][j];
+                curVotes[this.districtSeatsPerDistrict.header[index]] += this.votesPerDistrict.body[i][j];
                 totalVotes += this.votesPerDistrict.body[i][j];
-                districtSeats[this.districtSeatsPerDistrict.header[j]] += this.districtSeatsPerDistrict.body[i][
+                districtSeats[this.districtSeatsPerDistrict.header[index]] += this.districtSeatsPerDistrict.body[i][
                     j];
             }
         }
 
         for (let partyCode of this.partyCodes) {
             electionTable.rowId.push(partyCode);
-            const row: number[] = Array(electionTable.header.length).fill(0);
+            const row: number[] = Array(electionTable.header.length - 1).fill(0);
             row[0] = curVotes[partyCode];
             row[1] = (curVotes[partyCode] / totalVotes) * 100;
             row[2] = districtSeats[partyCode];

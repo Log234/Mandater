@@ -6,9 +6,9 @@ import { PresentationAction } from "../types/ActionTypes";
 
 function mapStateToProps(state: ApplicationState) {
     return {
-        results: state.computationState.partyResults,
-        decimals: state.presentationState.decimals
-    } as PresentationSettingsProps;
+        decimals: state.presentationState.decimals,
+        results: state.computationState.partyResults
+    };
 }
 
 const mapDispatchToProps = (dispatch: any) =>

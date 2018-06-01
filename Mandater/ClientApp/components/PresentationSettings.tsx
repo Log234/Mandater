@@ -1,12 +1,12 @@
 ﻿import * as React from "react";
-import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 import { SmartNumericInput } from "./SmartNumericInput";
+import { ComputationResults } from "../logic/ComputationResult";
 
 export interface PresentationSettingsProps {
     displayedDecimals?: number,
     decimals: string,
     changeDecimals: (decimals: string) => void,
-    results: PartyResultDictionary;
+    results: ComputationResults;
 }
 export class PresentationSettings extends React.Component<PresentationSettingsProps> {
     static defaultProps = {
@@ -17,11 +17,11 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
     }
     createPartyList() {
         const options = [] as React.ReactNode[];
-        for (let key in this.props.results) {
-            if (this.props.results.hasOwnProperty(key)) {
-                const result = this.props.results[key];
-                options.push(<option key={result.partyCode}>{result.partyName}</option>);
-            }
+        const partyNames = this.props.results.getPartyNames();
+        const partyCodes = this.props.results.getPartyCodes();
+
+        for (let i = 0; i < partyCodes.length; i++) {
+            options.push(<option key={partyCodes[i]}>{partyNames[i]}</option>);
         }
         return options;
     }

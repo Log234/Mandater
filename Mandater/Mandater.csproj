@@ -75,11 +75,7 @@
     <None Remove="ClientApp\interfaces\ElectionState.ts" />
     <None Remove="ClientApp\interfaces\ElectionType.ts" />
     <None Remove="ClientApp\interfaces\ParliamentaryElectionActions.ts" />
-    <None Remove="ClientApp\interfaces\PartyResult.ts" />
-    <None Remove="ClientApp\interfaces\PartyResultDictionary.ts" />
-    <None Remove="ClientApp\interfaces\ProcessedResult.ts" />
     <None Remove="ClientApp\interfaces\Result.ts" />
-    <None Remove="ClientApp\interfaces\TableData.ts" />
     <None Remove="ClientApp\logic\AlgorithmUtils.ts" />
     <None Remove="ClientApp\store\ElectionReducer.ts" />
     <None Remove="ClientApp\types\Algorithms.ts" />
@@ -99,7 +95,6 @@
     <TypeScriptCompile Include="ClientApp\containers\index.ts" />
     <TypeScriptCompile Include="ClientApp\containers\SettingMenuContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\interfaces\ArrayFilters.ts" />
-    <TypeScriptCompile Include="ClientApp\interfaces\ComputationResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\ComputationSets.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\DecomposedTable.ts" />
     <TypeScriptCompile Include="ClientApp\logic\ApiRequests.ts" />
@@ -114,14 +109,10 @@
     <TypeScriptCompile Include="ClientApp\interfaces\County.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Election.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\ElectionType.ts" />
-    <TypeScriptCompile Include="ClientApp\interfaces\PartyResultDictionary.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\SettingsPayload.ts" />
     <TypeScriptCompile Include="ClientApp\states\ComputationState.ts" />
     <TypeScriptCompile Include="ClientApp\actions\ComputationActions.ts" />
-    <TypeScriptCompile Include="ClientApp\interfaces\PartyResult.ts" />
-    <TypeScriptCompile Include="ClientApp\interfaces\ProcessedResult.ts" />
     <TypeScriptCompile Include="ClientApp\interfaces\Result.ts" />
-    <TypeScriptCompile Include="ClientApp\interfaces\TableData.ts" />
     <TypeScriptCompile Include="ClientApp\logic\AlgorithmUtils.ts" />
     <TypeScriptCompile Include="ClientApp\logic\LagueDhont.ts" />
     <TypeScriptCompile Include="ClientApp\reducers\ComputationReducer.ts" />

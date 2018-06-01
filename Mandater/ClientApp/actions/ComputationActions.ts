@@ -1,19 +1,19 @@
 ﻿import { ElectionType } from "../interfaces/ElectionType";
-import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 import { ComputationAction } from "../types/ActionTypes";
 import { Election } from "../interfaces/Election";
 import { ComputationPayload } from "../interfaces/ComputationPayload";
 import { computeAlgorithm } from "../logic/Algorithm";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
+import { ComputationResults } from "../logic/ComputationResult";
 
 export interface InitializeComputationAction extends ComputationPayload {
     type: ComputationAction.InitializeComputation,
-    partyResults: PartyResultDictionary;
+    partyResults: ComputationResults;
 }
 
 export interface UpdateResultsAction extends ComputationPayload {
     type: ComputationAction.UpdateResults,
-    partyResults: PartyResultDictionary;
+    partyResults: ComputationResults;
 }
 
 export function initializeComputation(electionType: ElectionType) {
