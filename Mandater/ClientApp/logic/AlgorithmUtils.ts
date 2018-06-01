@@ -3,9 +3,9 @@ import { Result } from "../interfaces/Result";
 import { DecomposedTable } from "../interfaces/DecomposedTable";
 
 export interface LagueDhontDistributionResult {
-    partyIndex: { [id: string]: number },
-    quotientsPerSeat: DecomposedTable<number>,
-    winnerPerSeat: DecomposedTable<number>,
+    partyIndex: { [id: string]: number };
+    quotientsPerSeat: DecomposedTable<number>;
+    winnerPerSeat: DecomposedTable<number>;
     seatsWonByParty: DecomposedTable<number>;
 }
 
@@ -37,17 +37,17 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
         header: ["Mandat"],
         rowId: [],
         body: []
-    }
+    };
     const winnerPerSeat: DecomposedTable<number> = {
         header: ["Mandat"],
         rowId: [],
         body: []
-    }
+    };
     const seatsWonByParty: DecomposedTable<number> = {
         header: [""],
         rowId: ["Antall"],
         body: []
-    }
+    };
 
     let index = 0;
     for (const party of results) {
@@ -92,7 +92,7 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
             quotientsPerSeat,
             winnerPerSeat,
             seatsWonByParty
-        }
+        };
 
     return completedResult;
 }

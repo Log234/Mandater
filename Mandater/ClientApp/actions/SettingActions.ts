@@ -3,29 +3,29 @@ import { ElectionType } from "../interfaces/ElectionType";
 import { SettingsPayload } from "../interfaces/SettingsPayload";
 
 export interface InitializeSettingsAction {
-    type: SettingAction.InitializeSettings,
-    electionYears: string[],
-    year: string,
-    algorithm: number,
-    firstDivisor: string,
-    electionThreshold: string,
-    districtSeats: string,
-    levelingSeats: string,
+    type: SettingAction.InitializeSettings;
+    electionYears: string[];
+    year: string;
+    algorithm: number;
+    firstDivisor: string;
+    electionThreshold: string;
+    districtSeats: string;
+    levelingSeats: string;
     autoCompute: boolean;
 }
 
 export interface UpdateSettingsAction {
-    type: SettingAction.UpdateSettings,
-    year: string,
-    algorithm: number,
-    firstDivisor: string,
-    electionThreshold: string,
-    districtSeats: string,
-    levelingSeats: string,
+    type: SettingAction.UpdateSettings;
+    year: string;
+    algorithm: number;
+    firstDivisor: string;
+    electionThreshold: string;
+    districtSeats: string;
+    levelingSeats: string;
 }
 
 export interface ToggleAutoComputeAction {
-    type: SettingAction.ToggleAutoCompute,
+    type: SettingAction.ToggleAutoCompute;
     autoCompute: boolean;
 }
 

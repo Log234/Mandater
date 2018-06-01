@@ -8,12 +8,12 @@ import { ElectionType } from "../interfaces/ElectionType";
 import { SmartNumericInput } from "./SmartNumericInput";
 
 export interface SettingMenuProps {
-    electionType: ElectionType,
-    settingsPayload: SettingsPayload,
-    computationPayload: ComputationPayload,
-    updateCalculation: (computationPayload: ComputationPayload, autoCompute: boolean, forceCompute: boolean) => any,
-    updateSettings: (settingsPayload: SettingsPayload) => any,
-    toggleAutoCompute: (autoCompute: boolean) => any,
+    electionType: ElectionType;
+    settingsPayload: SettingsPayload;
+    computationPayload: ComputationPayload;
+    updateCalculation: (computationPayload: ComputationPayload, autoCompute: boolean, forceCompute: boolean) => any;
+    updateSettings: (settingsPayload: SettingsPayload) => any;
+    toggleAutoCompute: (autoCompute: boolean) => any;
     resetToHistoricalSettings: (settingsPayload: SettingsPayload, election: Election) => any;
 }
 
@@ -210,4 +210,4 @@ export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> 
 );
 }
 }
-;;
+;

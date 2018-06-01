@@ -2,7 +2,7 @@
 import { ElectionType } from "../interfaces/ElectionType";
 
 export interface InitializeRequestedDataAction {
-    type: RequestedDataAction.InitializeRequestedData,
+    type: RequestedDataAction.InitializeRequestedData;
     electionType: ElectionType;
 }
 

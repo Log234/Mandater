@@ -1,10 +1,10 @@
 ﻿import * as React from "react";
 
 export interface ButtonProps {
-    title: string,
-    onPress?: () => any,
-    accessibilityLabel?: string,
-    className?: string,
+    title: string;
+    onPress?: () => any;
+    accessibilityLabel?: string;
+    className?: string;
     type?: string;
 }
 

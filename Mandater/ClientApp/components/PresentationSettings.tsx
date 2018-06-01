@@ -3,9 +3,9 @@ import { SmartNumericInput } from "./SmartNumericInput";
 import { ComputationResults } from "../logic/ComputationResult";
 
 export interface PresentationSettingsProps {
-    displayedDecimals?: number,
-    decimals: string,
-    changeDecimals: (decimals: string, decimalsNumber: number) => void,
+    displayedDecimals?: number;
+    decimals: string;
+    changeDecimals: (decimals: string, decimalsNumber: number) => void;
     results: ComputationResults;
 }
 export class PresentationSettings extends React.Component<PresentationSettingsProps> {

@@ -7,12 +7,12 @@ import { getAlgorithmType } from "../logic/AlgorithmUtils";
 import { ComputationResults } from "../logic/ComputationResult";
 
 export interface InitializeComputationAction extends ComputationPayload {
-    type: ComputationAction.InitializeComputation,
+    type: ComputationAction.InitializeComputation;
     partyResults: ComputationResults;
 }
 
 export interface UpdateResultsAction extends ComputationPayload {
-    type: ComputationAction.UpdateResults,
+    type: ComputationAction.UpdateResults;
     partyResults: ComputationResults;
 }
 

@@ -5,24 +5,24 @@ import { PresentationType } from "../types/PresentationType";
  * 
  */
 export interface ChangePresentationAction {
-    type: PresentationAction.ChangePresentation,
+    type: PresentationAction.ChangePresentation;
     presentationSelected: PresentationType;
 }
 export interface InitializePresentationAction {
-    type: PresentationAction.InitializePresentation,
-    initialPresentation: PresentationType,
-    decimals: string,
+    type: PresentationAction.InitializePresentation;
+    initialPresentation: PresentationType;
+    decimals: string;
     decimalsNumber: number;
 }
 export interface ChangeDecimalsAction {
-    type: PresentationAction.ChangeDecimals,
-    decimals: string,
+    type: PresentationAction.ChangeDecimals;
+    decimals: string;
     decimalsNumber: number;
 }
 
 export type PresentationAction = ChangePresentationAction 
                                  | InitializePresentationAction 
-                                 | ChangeDecimalsAction
+                                 | ChangeDecimalsAction;
 
 export function initializePresentation() {
     const action = {

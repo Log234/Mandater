@@ -5,7 +5,7 @@ import PresentationContainer from "../containers/PresentationContainer";
 import { PresentationMenu } from "../components/PresentationMenu";
 
 interface LayoutProps {
-    initializeState: () => any,
+    initializeState: () => any;
     initializePresentationState: () => any;
 }
 

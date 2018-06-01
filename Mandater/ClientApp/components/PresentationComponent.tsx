@@ -6,8 +6,8 @@ import { filterZeroColumns, roundDecimals, filterRowByValue } from "../logic/Tab
 import { DecomposedTable } from "../interfaces/DecomposedTable";
 
 export interface PresentationProps {
-    results: ComputationResults,
-    currentPresentation: PresentationType,
+    results: ComputationResults;
+    currentPresentation: PresentationType;
     decimals: number;
 }
 
