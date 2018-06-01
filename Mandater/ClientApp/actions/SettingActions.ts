@@ -38,7 +38,7 @@ export function initializeSettings(electionType: ElectionType) {
 
     const initializeSettingsAction: InitializeSettingsAction = {
         type: SettingAction.InitializeSettings,
-        electionYears: electionYears,
+        electionYears,
         year: election.year.toString(),
         algorithm: election.algorithm,
         firstDivisor: election.firstDivisor.toString(),
@@ -66,7 +66,7 @@ export function updateSettings(settingsPayload: SettingsPayload) {
 export function toggleAutoCompute(autoCompute: boolean) {
     const toggleAutoComputeAction: ToggleAutoComputeAction = {
         type: SettingAction.ToggleAutoCompute,
-        autoCompute: autoCompute
+        autoCompute
     };
     return toggleAutoComputeAction;
 }
