@@ -9,7 +9,7 @@ export interface InitializeRequestedDataAction {
 export function initializeRequestedData(electionType: ElectionType): InitializeRequestedDataAction {
     const action: InitializeRequestedDataAction = {
         type: RequestedDataAction.InitializeRequestedData,
-        electionType: electionType
+        electionType
     };
     return action;
 }
