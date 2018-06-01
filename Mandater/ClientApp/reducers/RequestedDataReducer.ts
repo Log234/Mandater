@@ -21,4 +21,4 @@ export default function (state: RequestedDataState, incomingAction: Action) {
             console.log(`Action of type ${incomingAction.type} reduced to default`);
             return state || unloadedState;
     }
-};
+}

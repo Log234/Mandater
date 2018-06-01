@@ -84,4 +84,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)((SettingMenuComponent) as any)
+)((SettingMenuComponent) as any);

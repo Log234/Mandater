@@ -33,4 +33,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     }
 });
 
-export default connect(null, mapDispatchToProps)((LayoutComponent) as any)
+export default connect(null, mapDispatchToProps)((LayoutComponent) as any);

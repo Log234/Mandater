@@ -210,4 +210,3 @@ export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> 
 );
 }
 }
-;

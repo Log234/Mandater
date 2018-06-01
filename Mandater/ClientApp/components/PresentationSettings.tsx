@@ -25,8 +25,7 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
         }
         return options;
     }
-    
-    
+
     render() {
         return <div className="presentation-settings">
             <h2>Presentasjonsinnstillinger</h2>
@@ -35,7 +34,7 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
                     <input className="form-check-input" type="checkbox" name="no-seats-setting" />
                     <label htmlFor="no-seats-setting">Vis partier uten mandater</label>
                 </div>
-                <SmartNumericInput 
+                <SmartNumericInput
                     name="decimalPlaces"
                     defaultValue={2}
                     min={0}
@@ -45,10 +44,10 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
                     title="Antall desimaler"
                     value={this.props.decimals}
                     onChange={this.props.changeDecimals}
-                    />
+                />
                 <div className="form-group row">
                     <label htmlFor="chosen-partyCodes">Valgte partier</label>
-                    <select style={{width:"100%"}} multiple>
+                    <select style={{ width: "100%" }} multiple>
                         {this.createPartyList()}
                     </select>
                     <button type="button" className="btn btn-block">Fjern partier</button>

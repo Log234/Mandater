@@ -11,4 +11,4 @@ const mapDispatchToProps = (dispatch: any, ownProps: PresentationSelectionButton
     }
 });
 
-export default connect(null, mapDispatchToProps)((PresentationSelectionButton) as any)   
+export default connect(null, mapDispatchToProps)((PresentationSelectionButton) as any);

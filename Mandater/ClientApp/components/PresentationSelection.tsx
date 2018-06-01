@@ -3,7 +3,7 @@ import { default as PresentationSelectionButton } from "../containers/Presentati
 import { PresentationType } from "../types/PresentationType";
 
 export interface PresentationSelectionProps {
-    currentSelection: PresentationType
+    currentSelection: PresentationType;
 }
 
 export class PresentationSelection extends React.Component {

@@ -1,9 +1,9 @@
-﻿import {ButtonProps, Button} from "../components/Button"
+﻿import { ButtonProps, Button } from "../components/Button";
 import * as React from "react";
 import { PresentationType } from "../types/PresentationType";
 
 export interface PresentationSelectionButtonProps extends ButtonProps {
-    presentationSelected : PresentationType
+    presentationSelected: PresentationType;
 }
 
 export class PresentationSelectionButton extends Button<PresentationSelectionButtonProps> {
@@ -12,10 +12,10 @@ export class PresentationSelectionButton extends Button<PresentationSelectionBut
     }
     render() {
         return <button
-                title={this.props.accessibilityLabel}
-                onClick={this.props.onPress}
-                className={this.props.className}>
-                {this.props.title}
-               </button>;
+            title={this.props.accessibilityLabel}
+            onClick={this.props.onPress}
+            className={this.props.className}>
+            {this.props.title}
+        </button>;
     }
 }

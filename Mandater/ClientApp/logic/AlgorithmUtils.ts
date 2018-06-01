@@ -14,14 +14,14 @@ const illegalPartyCodes = new Set(["BLANKE"]);
 /**
  * Distributes a number of seats on a set of parties, based on their number of votes,
  * how many seats they already received (if applicable) and a specific algorithm.
- * 
+ *
  * @param algorithm The type of algorithm in use
  * @param firstDivisor The first divisor to use
  * @param numSeats Number of seats to distribute
  * @param results A list of how many votes each party received
  * @param seats [optional] If a number of seats have been distributed, this parameter can be specified to continue from the existing distribution
  */
-export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, numSeats: number, results: Result[], seats?: {[id: string]: number}): LagueDhontDistributionResult {
+export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, numSeats: number, results: Result[], seats?: { [id: string]: number }): LagueDhontDistributionResult {
     let seatsWon: { [id: string]: number } = {};
 
     if (seats === undefined) {
@@ -31,7 +31,7 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
     } else {
         seatsWon = seats;
     }
-    
+
     const partyIndex: { [id: string]: number } = {};
     const quotientsPerSeat: DecomposedTable<number> = {
         header: ["Mandat"],
@@ -60,7 +60,7 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
 
     seatsWonByParty.body.push(Array(results.length).fill(0));
 
-    for (let i: number = 0; i < numSeats; i++) {
+    for (let i = 0; i < numSeats; i++) {
         const seatNumber = (i + 1).toString();
         quotientsPerSeat.rowId.push(seatNumber);
         winnerPerSeat.rowId.push(seatNumber);
@@ -86,13 +86,12 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
         winnerPerSeat.body.push(winner);
     }
 
-    const completedResult: LagueDhontDistributionResult =
-        {
-            partyIndex,
-            quotientsPerSeat,
-            winnerPerSeat,
-            seatsWonByParty
-        };
+    const completedResult: LagueDhontDistributionResult = {
+        partyIndex,
+        quotientsPerSeat,
+        winnerPerSeat,
+        seatsWonByParty
+    };
 
     return completedResult;
 }
@@ -100,7 +99,7 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
 /**
  * Returns a denominator based on an algorithm, the number of seats the party has
  * and a first divisor
- * 
+ *
  * @param algorithm The algorithm to get the denominator for
  * @param numberOfSeatsAssigned The number of seats assigned to the party in question
  * @param firstDivisor The first divisor to use if the party has 0 seats
@@ -123,7 +122,7 @@ export function getDenominator(algorithm: AlgorithmType, numberOfSeatsAssigned: 
 
 /**
  * Converts numerical IDs into their matching algorithm types
- * 
+ *
  * @param type The numerical ID of the algorithm
  */
 export function getAlgorithmType(type: number) {

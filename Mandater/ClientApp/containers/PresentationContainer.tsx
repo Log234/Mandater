@@ -14,4 +14,4 @@ const mapStateToProps = (state: ApplicationState) => {
 export default connect(
     mapStateToProps,
     {}
-)((PresentationComponent) as any)
+)((PresentationComponent) as any);
