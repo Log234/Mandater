@@ -10,16 +10,16 @@ export class TableComponent extends React.Component<TableProps, {}> {
         const rows: React.ReactNode[] = [];
 
         // Create header
-        for (let data of this.props.table[0]) {
+        for (const data of this.props.table[0]) {
             header.push(<th key={data}>{data}</th>);
         }
 
         // Create rows
-        for (let tableRow of this.props.table.slice(1)) {
+        for (const tableRow of this.props.table.slice(1)) {
             const row: React.ReactNode[] = [];
 
             let index: number = 0;
-            for (let column of tableRow) {
+            for (const column of tableRow) {
                 row.push(<td key={index += 1}>{column}</td>);
             }
 
