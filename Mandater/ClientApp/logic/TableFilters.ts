@@ -8,11 +8,12 @@ export function roundDecimals(decimals: number, table:DecomposedTable<number>): 
         rowId: table.rowId,
         body: []
     }
-
     for (const row of table.body) {
         const roundedRow: string[] = [];
         for (const column of row) {
-            if (Number.isInteger(column)) {
+            if (column === undefined) {
+                roundedRow.push("undefined");
+            } else if (Number.isInteger(column)) {
                 roundedRow.push(column.toString())
             } else {
                 roundedRow.push(column.toFixed(decimals))

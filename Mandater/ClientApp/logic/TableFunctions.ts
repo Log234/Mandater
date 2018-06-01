@@ -16,18 +16,32 @@ export function composeTable(decomposedTable: DecomposedTable<string>): string[]
 }
 
 export function filterTable<T>(decomposedTable: DecomposedTable<T>, filter: TableFilter): DecomposedTable<T> {
-    const alteredTable = decomposedTable;
+    const alteredTable: DecomposedTable<T> = {
+        header: [],
+        rowId: [],
+        body: []
+    };
 
-    for (let row of filter.rows) {
-        alteredTable.body.splice(row);
-        alteredTable.rowId.splice(row);
-    }
-
-    for (let i = 0; i < alteredTable.body.length; i++) {
-        for (let column of filter.columns) {
-            alteredTable.body[i].splice(column);
-            alteredTable.header.splice(column + 1);
+    // Iterate through the header of decomposedTable and adds the non-filtered columns to alteredTable
+    for (let column = 0; column < decomposedTable.header.length; column++) {
+        if (filter.columns.indexOf(column) === -1) {
+            alteredTable.header.push(decomposedTable.header[column]);
         }
+    }
+    
+    // Iterates through decomposed table's rowIds and body
+    // If the index is not in the filter, add the values in the altered table
+    for (let row = 0; row < decomposedTable.rowId.length; row++) {
+        if (filter.rows.indexOf(row) === -1) {
+            alteredTable.rowId.push(decomposedTable.rowId[row]);
+            alteredTable.body[row] = [];
+            for (let column = 0; column < decomposedTable.body[0].length; column++) {
+                if (filter.columns.indexOf(column) === -1) {
+                    alteredTable.body[row].push(decomposedTable.body[row][column]);
+                }
+            }
+        }
+        
     }
 
     return alteredTable;

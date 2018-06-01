@@ -15,22 +15,31 @@ export class ComputationResults {
         this.computationSets = newSets;
     }
 
+    // Returns a list of all partyCodes of this dataset
+    // Note: The order of the partyCodes and partyNames match, so the index can be used to find matching names and codes
     getPartyCodes(): string[] {
-        return this.computationSets.partyCodes;
+        return [...this.computationSets.partyCodes];
     }
 
+    // Returns a list of all partyNames of this dataset
+    // Note: The order of the partyCodes and partyNames match, so the index can be used to find matching names and codes
     getPartyNames(): string[] {
-        return this.computationSets.partyNames;
+        return [...this.computationSets.partyNames];
     }
 
+    // Returns a list of all districts of this dataset
     getDistricts(): string[] {
-        return this.computationSets.districts;
+        return [...this.computationSets.districts];
     }
 
+    // Returns a list of all available presentation types for this dataset
     getPresentationTypes(): PresentationType[] {
-        return this.computationSets.getPresentationTypes();
+        return [...this.computationSets.getPresentationTypes()];
     }
 
+    // Returns a table matching the type requested in tableType
+    // For tables related to a particular district, the district name must be specified
+    // The filters are optional
     getPresentationTable(tableType: PresentationType,
         district?: string,
         ntnFilters?: NumberToNumberFilter[],
