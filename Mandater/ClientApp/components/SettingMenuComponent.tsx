@@ -37,7 +37,7 @@ export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> 
                                         if (election !== undefined) {
                                             this.props.updateCalculation({
                                                 ...this.props.computationPayload,
-                                                election: election
+                                                election
                                             }, this.props.settingsPayload.autoCompute, false);
                                             this.props.updateSettings({
                                                 ...this.props.settingsPayload,
@@ -76,7 +76,7 @@ export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> 
                                         }, this.props.settingsPayload.autoCompute, false);
                                         this.props.updateSettings({
                                             ...this.props.settingsPayload,
-                                            algorithm: algorithm
+                                            algorithm
                                         });
                                     }
                                 }>
@@ -178,7 +178,7 @@ export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> 
                                             if (election !== undefined && election !== null) {
                                                 this.props.updateCalculation(
                                                     {
-                                                        election: election,
+                                                        election,
                                                         algorithm: getAlgorithmType(this.props.settingsPayload.algorithm),
                                                         firstDivisor: parseFloat(this.props.settingsPayload.firstDivisor),
                                                         electionThreshold: parseFloat(this.props.settingsPayload.electionThreshold),
