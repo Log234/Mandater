@@ -19,7 +19,7 @@ export interface UpdateResultsAction extends ComputationPayload {
 export function initializeComputation(electionType: ElectionType) {
     const election: Election = electionType.elections[0]; // Most recent election
     const payload: ComputationPayload = {
-        election: election,
+        election,
         algorithm: getAlgorithmType(election.algorithm),
         firstDivisor: election.firstDivisor,
         electionThreshold: election.threshold,
