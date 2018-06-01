@@ -33,7 +33,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
     updateCalculation: (computationPayload: ComputationPayload, autoCompute: boolean, forceCompute: boolean) => {
-        console.log(`Force: ${forceCompute}`);
         if (autoCompute || forceCompute) {
             const payload: ComputationPayload = {
                 election: computationPayload.election,
