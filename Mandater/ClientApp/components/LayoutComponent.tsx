@@ -4,12 +4,12 @@ import SettingMenuContainer from "../containers/SettingMenuContainer";
 import PresentationContainer from "../containers/PresentationContainer";
 import { PresentationMenu } from "../components/PresentationMenu";
 
-interface IProps {
+interface LayoutProps {
     initializeState: () => any,
     initializePresentationState: () => any;
 }
 
-export class LayoutComponent extends React.Component<IProps, {}> {
+export class LayoutComponent extends React.Component<LayoutProps, {}> {
     async componentWillMount() {
         await this.props.initializeState();
     }
