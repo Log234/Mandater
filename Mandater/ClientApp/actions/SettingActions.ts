@@ -32,7 +32,7 @@ export interface ToggleAutoComputeAction {
 export function initializeSettings(electionType: ElectionType) {
     const election = electionType.elections[0]; // Most recent election
     const electionYears: string[] = [];
-    for (let currentElection of electionType.elections) {
+    for (const currentElection of electionType.elections) {
         electionYears.push(currentElection.year.toString());
     }
 
