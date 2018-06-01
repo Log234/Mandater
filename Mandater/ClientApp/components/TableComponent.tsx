@@ -18,7 +18,7 @@ export class TableComponent extends React.Component<TableProps, {}> {
         for (const tableRow of this.props.table.slice(1)) {
             const row: React.ReactNode[] = [];
 
-            let index: number = 0;
+            let index = 0;
             for (const column of tableRow) {
                 row.push(<td key={index += 1}>{column}</td>);
             }
