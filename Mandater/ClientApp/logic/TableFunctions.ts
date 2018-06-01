@@ -34,8 +34,9 @@ export function filterTable<T>(decomposedTable: DecomposedTable<T>, filter: Tabl
     };
 
     // Iterate through the header of decomposedTable and adds the filtered columns to alteredTable
-    for (let column = 0; column < decomposedTable.header.length; column++) {
-        if (filter.columns.indexOf(column) === -1) {
+    alteredTable.header.push(decomposedTable.header[0]);
+    for (let column = 1; column < decomposedTable.header.length; column++) {
+        if (filter.columns.indexOf(column - 1) === -1) {
             alteredTable.header.push(decomposedTable.header[column]);
         }
     }
