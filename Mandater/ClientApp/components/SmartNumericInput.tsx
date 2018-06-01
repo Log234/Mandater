@@ -1,15 +1,15 @@
 ﻿import * as React from "react";
 
 export interface SmartNumericInputProps {
-    name: string,
-    title: string,
-    onChange: (stringValue: string, numericValue: number) => any,
-    value: string,
-    defaultValue: number,
-    min: number,
-    max: number,
-    integer?: boolean,
-    slider?: boolean,
+    name: string;
+    title: string;
+    onChange: (stringValue: string, numericValue: number) => any;
+    value: string;
+    defaultValue: number;
+    min: number;
+    max: number;
+    integer?: boolean;
+    slider?: boolean;
     style?: React.CSSProperties;
 }
 
@@ -47,15 +47,15 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                             type="range"
                             style={{ width: "66%" }}
                             onChange=
-                            { (event: React.ChangeEvent<HTMLInputElement>) => {
+                            {(event: React.ChangeEvent<HTMLInputElement>) => {
                                 const value =
                                     this.props.integer ? parseInt(event.target.value) : parseFloat(event.target.value);
                                 this.props.onChange(event.target.value, value);
-                            } }
+                            }}
                             value={value.numericValue}
                             min={this.props.min}
                             step={this.props.integer ? 1 : 0.1}
-                            max={this.props.max}/> }
+                            max={this.props.max} />}
                 </div>
             </div>);
     }
