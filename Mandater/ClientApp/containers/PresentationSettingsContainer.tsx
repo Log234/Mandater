@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch: any) =>
     ({
         changeDecimals: (decimals: string, decimalsNumber: number) => {
             dispatch({
-                type: Presenta tionAction.ChangeDecimals,
+                type: PresentationAction.ChangeDecimals,
                 decimals,
                 decimalsNumber
             } as ChangeDecimalsAction);
