@@ -7,7 +7,7 @@ import { Election } from "../interfaces/Election";
 import { ElectionType } from "../interfaces/ElectionType";
 import { SmartNumericInput } from "./SmartNumericInput";
 
-export interface ISettingsProps {
+export interface SettingMenuProps {
     electionType: ElectionType,
     settingsPayload: SettingsPayload,
     computationPayload: ComputationPayload,
@@ -18,7 +18,7 @@ export interface ISettingsProps {
 }
 
 
-export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
+export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> {
     render() {
         return (
             <div className="settings-menu">
