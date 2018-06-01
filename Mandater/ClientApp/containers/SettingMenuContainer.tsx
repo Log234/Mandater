@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     resetToHistoricalSettings: (settingsPayload: SettingsPayload, election: Election) => {
         if (settingsPayload.autoCompute) {
             const payload: ComputationPayload = {
-                election: election,
+                election,
                 algorithm: getAlgorithmType(election.algorithm),
                 firstDivisor: election.firstDivisor,
                 electionThreshold: election.threshold,
