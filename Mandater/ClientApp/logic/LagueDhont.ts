@@ -67,7 +67,7 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
     }
 
     // Filter out parties with less than the threshold 
-    let levelingPartyCodes = result.partyCodes.filter(p => votesPerParty[p] >= payload.electionThreshold);
+    let levelingPartyCodes = result.partyCodes.filter(p => (votesPerParty[p] / totalVotes) * 100 >= payload.electionThreshold);
     let levelingParties: Result[] = [];
     for (let partyCode of levelingPartyCodes) {
         let party: Result = {
