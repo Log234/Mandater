@@ -37,6 +37,12 @@ export class LagueDhontSets implements ComputationSets {
         ];
     }
 
+    /**
+     * Returns a table of the type specified in string[][] format.
+     * 
+     * @param tabletype The type of table to request, must be in the list returned by getPresentationTypes()
+     * @param district [optional] If the type of table requested is related to a specific district, it should be specified here.
+     */
     getTable(tableType: PresentationType, district?: string): DecomposedTable<number> {
         switch (tableType) {
             case PresentationType.DistrictTable:

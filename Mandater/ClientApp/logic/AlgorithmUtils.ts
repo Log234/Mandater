@@ -11,6 +11,16 @@ export interface LagueDhontDistributionResult {
 
 const illegalPartyCodes = new Set(["BLANKE"]);
 
+/**
+ * Distributes a number of seats on a set of parties, based on their number of votes,
+ * how many seats they already received (if applicable) and a specific algorithm.
+ * 
+ * @param algorithm The type of algorithm in use
+ * @param firstDivisor The first divisor to use
+ * @param numSeats Number of seats to distribute
+ * @param results A list of how many votes each party received
+ * @param seats [optional] If a number of seats have been distributed, this parameter can be specified to continue from the existing distribution
+ */
 export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, numSeats: number, results: Result[], seats?: {[id: string]: number}): LagueDhontDistributionResult {
     let seatsWon: { [id: string]: number } = {};
 
@@ -87,6 +97,14 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
     return completedResult;
 }
 
+/**
+ * Returns a denominator based on an algorithm, the number of seats the party has
+ * and a first divisor
+ * 
+ * @param algorithm The algorithm to get the denominator for
+ * @param numberOfSeatsAssigned The number of seats assigned to the party in question
+ * @param firstDivisor The first divisor to use if the party has 0 seats
+ */
 export function getDenominator(algorithm: AlgorithmType, numberOfSeatsAssigned: number, firstDivisor: number) {
     switch (algorithm) {
         case AlgorithmType.SainteLague:
@@ -103,6 +121,11 @@ export function getDenominator(algorithm: AlgorithmType, numberOfSeatsAssigned: 
     }
 }
 
+/**
+ * Converts numerical IDs into their matching algorithm types
+ * 
+ * @param type The numerical ID of the algorithm
+ */
 export function getAlgorithmType(type: number) {
     switch (type) {
         case 1:

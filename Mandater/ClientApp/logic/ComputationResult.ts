@@ -11,35 +11,45 @@ export class ComputationResults {
         this.computationSets = computationSets;
     }
 
-    updateSets(newSets: ComputationSets): void {
-        this.computationSets = newSets;
-    }
-
-    // Returns a list of all partyCodes of this dataset
-    // Note: The order of the partyCodes and partyNames match, so the index can be used to find matching names and codes
+    /**
+     * Returns a list of all partyCodes of this dataset
+     * Note: The order of the partyCodes and partyNames match, so the index can be used to find matching names and codes
+     */
     getPartyCodes(): string[] {
         return [...this.computationSets.partyCodes];
     }
 
-    // Returns a list of all partyNames of this dataset
-    // Note: The order of the partyCodes and partyNames match, so the index can be used to find matching names and codes
+    /**
+     * Returns a list of all partyNames of this dataset
+     * Note: The order of the partyCodes and partyNames match, so the index can be used to find matching names and codes
+     */
     getPartyNames(): string[] {
         return [...this.computationSets.partyNames];
     }
 
-    // Returns a list of all districts of this dataset
+    /**
+     * Returns a list of all districts of this dataset
+     */
     getDistricts(): string[] {
         return [...this.computationSets.districts];
     }
 
-    // Returns a list of all available presentation types for this dataset
+    /**
+     * Returns a list of all available presentation types for this dataset
+     */
     getPresentationTypes(): PresentationType[] {
         return [...this.computationSets.getPresentationTypes()];
     }
 
-    // Returns a table matching the type requested in tableType
-    // For tables related to a particular district, the district name must be specified
-    // The filters are optional
+    /**
+     * Returns a table of the type specified in string[][] format.
+     * 
+     * @param tabletype The type of table to request, must be in the list returned by getPresentationTypes()
+     * @param district [optional] If the type of table requested is related to a specific district, it should be specified here.
+     * @param ntnFilters [optional] Allows you to apply filters to manipulate the data based on the numerical values
+     * @param ntsFilter [optional] Allows you to apply filters that converts the numerical values to string values, e.g. rounding of float values
+     * @param stsFilters [optional] Allows you to apply filters to manipulate the data based on the string values
+     */
     getPresentationTable(tableType: PresentationType,
         district?: string,
         ntnFilters?: NumberToNumberFilter[],

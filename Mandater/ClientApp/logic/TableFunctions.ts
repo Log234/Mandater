@@ -1,6 +1,11 @@
 ﻿import { TableFilter } from "../interfaces/ArrayFilters";
 import { DecomposedTable } from "../interfaces/DecomposedTable";
 
+/**
+ * Assembles a decomposed table into a full table with headers and row ids included
+ * 
+ * @param decomposedTable Decomposed table to assemble
+ */
 export function composeTable(decomposedTable: DecomposedTable<string>): string[][] {
     if (decomposedTable.rowId.length !== decomposedTable.body.length) {
         return [[]];
@@ -15,6 +20,12 @@ export function composeTable(decomposedTable: DecomposedTable<string>): string[]
     return fullTable;
 }
 
+/**
+ * Iterates through the table and removes any rows or columns that are specified in the filter.
+ * 
+ * @param decomposedTable Table to be filtered
+ * @param filter Filter to apply
+ */
 export function filterTable<T>(decomposedTable: DecomposedTable<T>, filter: TableFilter): DecomposedTable<T> {
     const alteredTable: DecomposedTable<T> = {
         header: [],
