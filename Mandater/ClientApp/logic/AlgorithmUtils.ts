@@ -25,7 +25,7 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
     let seatsWon: { [id: string]: number } = {};
 
     if (seats === undefined) {
-        for (let party of results) {
+        for (const party of results) {
             seatsWon[party.partyCode] = 0;
         }
     } else {
@@ -50,7 +50,7 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
     }
 
     let index = 0;
-    for (let party of results) {
+    for (const party of results) {
         partyIndex[party.partyCode] = index;
         quotientsPerSeat.header.push(party.partyCode);
         winnerPerSeat.header.push(party.partyCode);
@@ -71,7 +71,7 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
         let currentWinner = "";
         let currentMaxQuotient = -1;
 
-        for (let result of results) {
+        for (const result of results) {
             const currentQuotient = (result.votes / getDenominator(algorithm, seatsWon[result.partyCode], firstDivisor));
             quotients[partyIndex[result.partyCode]] = currentQuotient;
 
