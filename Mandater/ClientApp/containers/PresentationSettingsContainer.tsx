@@ -16,16 +16,16 @@ const mapDispatchToProps = (dispatch: any) =>
     ({
         changeDecimals: (decimals: string, decimalsNumber: number) => {
             dispatch({
-                type: PresentationAction.ChangeDecimals,
+                type: Presenta tionAction.ChangeDecimals,
                 decimals,
-                decimalsNumber,
+                decimalsNumber
             } as ChangeDecimalsAction);
         },
         toggleShowPartiesWithoutSeats: (event: React.ChangeEvent<HTMLInputElement>) => {
             dispatch({
                 type: PresentationAction.ShowPartiesNoSeats,
                 showPartiesWithoutSeats: event.target.checked
-            })
+            });
         }
     });
 
