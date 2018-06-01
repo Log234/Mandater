@@ -2,7 +2,7 @@
 import { ElectionType } from "../interfaces/ElectionType";
 import { SettingsPayload } from "../interfaces/SettingsPayload";
 
-export type InitializeSettingsAction = {
+export interface InitializeSettingsAction {
     type: SettingAction.InitializeSettings,
     electionYears: string[],
     year: string,
