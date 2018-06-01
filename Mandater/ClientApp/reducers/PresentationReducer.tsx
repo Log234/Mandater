@@ -13,7 +13,8 @@ export default function (state: ApplicationState, incomingAction: Action) {
                 ...state,
                 currentPresentation: action.initialPresentation,
                 decimals: action.decimals,
-                decimalsNumber: action.decimalsNumber
+                decimalsNumber: action.decimalsNumber,
+                showPartiesWithoutSeats: action.showPartiesWithoutSeats
             } as ApplicationState;
         case PresentationAction.ChangePresentation:
             console.log(`Action of type ${action.type} reduced`);
@@ -27,6 +28,12 @@ export default function (state: ApplicationState, incomingAction: Action) {
                 ...state,
                 decimals: action.decimals,
                 decimalsNumber: action.decimalsNumber
+            } as ApplicationState;
+        case PresentationAction.ShowPartiesNoSeats:
+            console.log(`Action of type ${action.type} reduced`);
+            return {
+                ...state,
+                showPartiesWithoutSeats: action.showPartiesWithoutSeats
             } as ApplicationState;
         default:
             console.log(`Action of type ${incomingAction.type} reduced to default`);

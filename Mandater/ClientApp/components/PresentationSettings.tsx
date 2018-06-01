@@ -5,7 +5,9 @@ import { ComputationResults } from "../logic/ComputationResult";
 export interface PresentationSettingsProps {
     displayedDecimals?: number;
     decimals: string;
+    showPartiesWithoutSeats: boolean;
     changeDecimals: (decimals: string, decimalsNumber: number) => void;
+    toggleShowPartiesWithoutSeats: (event: React.ChangeEvent<HTMLInputElement>) => void;
     results: ComputationResults;
 }
 export class PresentationSettings extends React.Component<PresentationSettingsProps> {
@@ -31,7 +33,7 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
             <h2>Presentasjonsinnstillinger</h2>
             <form>
                 <div className="form-group row">
-                    <input className="form-check-input" type="checkbox" name="no-seats-setting" />
+                    <input className="form-check-input" type="checkbox" name="no-seats-setting" checked={this.props.showPartiesWithoutSeats} onChange={this.props.toggleShowPartiesWithoutSeats} />
                     <label htmlFor="no-seats-setting">Vis partier uten mandater</label>
                 </div>
                 <SmartNumericInput

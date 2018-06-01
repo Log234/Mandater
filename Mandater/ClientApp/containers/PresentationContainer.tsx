@@ -7,7 +7,8 @@ const mapStateToProps = (state: ApplicationState) => {
     return {
         results: state.computationState.partyResults,
         currentPresentation: state.presentationState.currentPresentation,
-        decimals: state.presentationState.decimalsNumber
+        decimals: state.presentationState.decimalsNumber,
+        showPartiesWithoutSeats: state.presentationState.showPartiesWithoutSeats
     } as PresentationProps;
 };
 
