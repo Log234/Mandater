@@ -13,10 +13,11 @@ function mapStateToProps(state: ApplicationState) {
 
 const mapDispatchToProps = (dispatch: any) =>
     ({
-        changeDecimals: (decimals: string) => {
+        changeDecimals: (decimals: string, decimalsNumber: number) => {
             dispatch({
                 type: PresentationAction.ChangeDecimals,
-                decimals
+                decimals,
+                decimalsNumber
             } as ChangeDecimalsAction);
         }
     });

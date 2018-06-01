@@ -6,7 +6,8 @@ const mapStateToProps = (state: ApplicationState) => {
     console.log("PresentationContainer mapped state to props");
     return {
         results: state.computationState.partyResults,
-        currentPresentation: state.presentationState.currentPresentation
+        currentPresentation: state.presentationState.currentPresentation,
+        decimals: state.presentationState.decimalsNumber
     } as PresentationProps;
 };
 

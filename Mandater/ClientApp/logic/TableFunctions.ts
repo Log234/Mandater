@@ -26,7 +26,7 @@ export function filterTable<T>(decomposedTable: DecomposedTable<T>, filter: Tabl
     for (let i = 0; i < alteredTable.body.length; i++) {
         for (let column of filter.columns) {
             alteredTable.body[i].splice(column);
-            alteredTable.header.splice(column);
+            alteredTable.header.splice(column + 1);
         }
     }
 

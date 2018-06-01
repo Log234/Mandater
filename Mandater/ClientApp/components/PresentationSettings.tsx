@@ -5,7 +5,7 @@ import { ComputationResults } from "../logic/ComputationResult";
 export interface PresentationSettingsProps {
     displayedDecimals?: number,
     decimals: string,
-    changeDecimals: (decimals: string) => void,
+    changeDecimals: (decimals: string, decimalsNumber: number) => void,
     results: ComputationResults;
 }
 export class PresentationSettings extends React.Component<PresentationSettingsProps> {
@@ -38,7 +38,7 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
                 <SmartNumericInput 
                     name="decimalPlaces"
                     defaultValue={2}
-                    min={2}
+                    min={0}
                     max={16}
                     integer={true}
                     slider={true}

@@ -11,7 +11,9 @@ export default function (state: ApplicationState, incomingAction: Action) {
             console.log(`Action of type ${action.type} reduced`);
             return {
                 ...state,
-                currentPresentation: action.initialPresentation
+                currentPresentation: action.initialPresentation,
+                decimals: action.decimals,
+                decimalsNumber: action.decimalsNumber
             } as ApplicationState;
         case PresentationAction.ChangePresentation:
             console.log(`Action of type ${action.type} reduced`);
@@ -23,7 +25,8 @@ export default function (state: ApplicationState, incomingAction: Action) {
             console.log(`Action of type ${action.type} reduced`);
             return {
                 ...state,
-                decimals: action.decimals
+                decimals: action.decimals,
+                decimalsNumber: action.decimalsNumber
             } as ApplicationState;
         default:
             console.log(`Action of type ${incomingAction.type} reduced to default`);

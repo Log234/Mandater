@@ -2,10 +2,12 @@
 
 export interface PresentationState {
     currentPresentation: PresentationType,
-    decimals: string;
+    decimals: string,
+    decimalsNumber: number;
 }
 
 export const unloadedState: PresentationState = {
     currentPresentation: PresentationType.ElectionTable,
-    decimals: "2"
+    decimals: "2",
+    decimalsNumber: 2
 };

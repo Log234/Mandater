@@ -10,11 +10,14 @@ export interface ChangePresentationAction {
 }
 export interface InitializePresentationAction {
     type: PresentationAction.InitializePresentation,
-    initialPresentation: PresentationType;
+    initialPresentation: PresentationType,
+    decimals: string,
+    decimalsNumber: number;
 }
 export interface ChangeDecimalsAction {
     type: PresentationAction.ChangeDecimals,
-    decimals: string;
+    decimals: string,
+    decimalsNumber: number;
 }
 
 export type PresentationAction = ChangePresentationAction 
@@ -24,7 +27,9 @@ export type PresentationAction = ChangePresentationAction
 export function initializePresentation() {
     const action = {
         type: PresentationAction.InitializePresentation,
-        initialPresentation: PresentationType.ElectionTable
+        initialPresentation: PresentationType.ElectionTable,
+        decimals: "2",
+        decimalsNumber: 2
     } as InitializePresentationAction;
     console.log(`Action of type ${action.type} created`);
     return action;
