@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 
-type TableProps = {
+interface TableProps {
     table: string[][];
 }
 
