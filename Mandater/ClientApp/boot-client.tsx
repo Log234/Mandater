@@ -1,5 +1,6 @@
 import "./css/site.css";
 import "bootstrap";
+import "react-table/react-table.css";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
