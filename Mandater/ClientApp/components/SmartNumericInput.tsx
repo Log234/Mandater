@@ -25,7 +25,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                         className="form-control"
                         classID={this.props.name}
                         type="number"
-                        style={this.props.slider ? { width: "33%" } : {}}
+                        style={this.props.slider ? { width: "50%" } : {}}
                         name={this.props.name}
                         onChange=
                         {
@@ -45,7 +45,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                             className="form-control"
                             classID={this.props.name + "Slider"}
                             type="range"
-                            style={{ width: "66%" }}
+                            style={{ width: "100%" }}
                             onChange=
                             {(event: React.ChangeEvent<HTMLInputElement>) => {
                                 const value =
