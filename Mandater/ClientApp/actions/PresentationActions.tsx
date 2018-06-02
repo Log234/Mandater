@@ -1,35 +1,44 @@
 ﻿import { PresentationAction } from "../types/ActionTypes";
 import { PresentationType } from "../types/PresentationType";
-// ACTION CREATORS
-/**
- * 
- */
+
 export interface ChangePresentationAction {
-    type: PresentationAction.ChangePresentation,
+    type: PresentationAction.ChangePresentation;
     presentationSelected: PresentationType;
 }
 export interface InitializePresentationAction {
-    type: PresentationAction.InitializePresentation,
+    type: PresentationAction.InitializePresentation;
     initialPresentation: PresentationType;
+    decimals: string;
+    decimalsNumber: number;
+    showPartiesWithoutSeats: boolean;
 }
 export interface ChangeDecimalsAction {
-    type: PresentationAction.ChangeDecimals,
+    type: PresentationAction.ChangeDecimals;
     decimals: string;
+    decimalsNumber: number;
+}
+export interface ChangeShowPartiesNoSeat {
+    type: PresentationAction.ShowPartiesNoSeats;
+    showPartiesWithoutSeats: boolean;
 }
 
-export type PresentationAction = ChangePresentationAction 
-                                 | InitializePresentationAction 
-                                 | ChangeDecimalsAction
+export type PresentationAction = ChangePresentationAction
+    | InitializePresentationAction
+    | ChangeDecimalsAction
+    | ChangeShowPartiesNoSeat;
 
 export function initializePresentation() {
     const action = {
         type: PresentationAction.InitializePresentation,
-        initialPresentation: PresentationType.ElectionTable
+        initialPresentation: PresentationType.ElectionTable,
+        decimals: "2",
+        decimalsNumber: 2,
+        showPartiesWithoutSeats: false
     } as InitializePresentationAction;
     console.log(`Action of type ${action.type} created`);
     return action;
 }
-export function changePresentation(presentationSelected : PresentationType) {
+export function changePresentation(presentationSelected: PresentationType) {
     const action = {
         type: PresentationAction.ChangePresentation,
         presentationSelected

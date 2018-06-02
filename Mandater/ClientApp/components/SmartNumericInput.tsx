@@ -1,15 +1,15 @@
 ﻿import * as React from "react";
 
 export interface SmartNumericInputProps {
-    name: string,
-    title: string,
-    onChange: (stringValue: string, numericValue: number) => any,
-    value: string,
-    defaultValue: number,
-    min: number,
-    max: number,
-    integer?: boolean,
-    slider?: boolean,
+    name: string;
+    title: string;
+    onChange: (stringValue: string, numericValue: number) => any;
+    value: string;
+    defaultValue: number;
+    min: number;
+    max: number;
+    integer?: boolean;
+    slider?: boolean;
     style?: React.CSSProperties;
 }
 
@@ -25,7 +25,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                         className="form-control"
                         classID={this.props.name}
                         type="number"
-                        style={this.props.slider ? { width: "33%" } : {}}
+                        style={this.props.slider ? { width: "50%" } : {}}
                         name={this.props.name}
                         onChange=
                         {
@@ -45,17 +45,17 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                             className="form-control"
                             classID={this.props.name + "Slider"}
                             type="range"
-                            style={{ width: "66%" }}
+                            style={{ width: "100%" }}
                             onChange=
-                            { (event: React.ChangeEvent<HTMLInputElement>) => {
+                            {(event: React.ChangeEvent<HTMLInputElement>) => {
                                 const value =
                                     this.props.integer ? parseInt(event.target.value) : parseFloat(event.target.value);
                                 this.props.onChange(event.target.value, value);
-                            } }
+                            }}
                             value={value.numericValue}
                             min={this.props.min}
                             step={this.props.integer ? 1 : 0.1}
-                            max={this.props.max}/> }
+                            max={this.props.max} />}
                 </div>
             </div>);
     }

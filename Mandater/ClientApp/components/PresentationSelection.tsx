@@ -1,11 +1,9 @@
 ﻿import * as React from "react";
 import { default as PresentationSelectionButton } from "../containers/PresentationSelectionButtonContainer";
 import { PresentationType } from "../types/PresentationType";
-import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 
 export interface PresentationSelectionProps {
-    currentSelection: PresentationType,
-    results : PartyResultDictionary;
+    currentSelection: PresentationType;
 }
 
 export class PresentationSelection extends React.Component {

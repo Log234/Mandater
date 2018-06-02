@@ -6,18 +6,26 @@ import { PresentationAction } from "../types/ActionTypes";
 
 function mapStateToProps(state: ApplicationState) {
     return {
+        decimals: state.presentationState.decimals,
         results: state.computationState.partyResults,
-        decimals: state.presentationState.decimals
-    } as PresentationSettingsProps;
+        showPartiesWithoutSeats: state.presentationState.showPartiesWithoutSeats
+    };
 }
 
 const mapDispatchToProps = (dispatch: any) =>
     ({
-        changeDecimals: (decimals: string) => {
+        changeDecimals: (decimals: string, decimalsNumber: number) => {
             dispatch({
                 type: PresentationAction.ChangeDecimals,
-                decimals
+                decimals,
+                decimalsNumber
             } as ChangeDecimalsAction);
+        },
+        toggleShowPartiesWithoutSeats: (event: React.ChangeEvent<HTMLInputElement>) => {
+            dispatch({
+                type: PresentationAction.ShowPartiesNoSeats,
+                showPartiesWithoutSeats: event.target.checked
+            });
         }
     });
 

@@ -1,25 +1,25 @@
 ﻿import { ElectionType } from "../interfaces/ElectionType";
-import { PartyResultDictionary } from "../interfaces/PartyResultDictionary";
 import { ComputationAction } from "../types/ActionTypes";
 import { Election } from "../interfaces/Election";
 import { ComputationPayload } from "../interfaces/ComputationPayload";
 import { computeAlgorithm } from "../logic/Algorithm";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
+import { ComputationResults } from "../logic/ComputationResult";
 
 export interface InitializeComputationAction extends ComputationPayload {
-    type: ComputationAction.InitializeComputation,
-    partyResults: PartyResultDictionary;
+    type: ComputationAction.InitializeComputation;
+    partyResults: ComputationResults;
 }
 
 export interface UpdateResultsAction extends ComputationPayload {
-    type: ComputationAction.UpdateResults,
-    partyResults: PartyResultDictionary;
+    type: ComputationAction.UpdateResults;
+    partyResults: ComputationResults;
 }
 
 export function initializeComputation(electionType: ElectionType) {
     const election: Election = electionType.elections[0]; // Most recent election
     const payload: ComputationPayload = {
-        election: election,
+        election,
         algorithm: getAlgorithmType(election.algorithm),
         firstDivisor: election.firstDivisor,
         electionThreshold: election.threshold,

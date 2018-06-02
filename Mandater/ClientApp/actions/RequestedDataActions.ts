@@ -2,14 +2,14 @@
 import { ElectionType } from "../interfaces/ElectionType";
 
 export interface InitializeRequestedDataAction {
-    type: RequestedDataAction.InitializeRequestedData,
+    type: RequestedDataAction.InitializeRequestedData;
     electionType: ElectionType;
 }
 
 export function initializeRequestedData(electionType: ElectionType): InitializeRequestedDataAction {
     const action: InitializeRequestedDataAction = {
         type: RequestedDataAction.InitializeRequestedData,
-        electionType: electionType
+        electionType
     };
     return action;
 }

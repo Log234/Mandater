@@ -7,18 +7,18 @@ import { Election } from "../interfaces/Election";
 import { ElectionType } from "../interfaces/ElectionType";
 import { SmartNumericInput } from "./SmartNumericInput";
 
-export interface ISettingsProps {
-    electionType: ElectionType,
-    settingsPayload: SettingsPayload,
-    computationPayload: ComputationPayload,
-    updateCalculation: (computationPayload: ComputationPayload, autoCompute: boolean, forceCompute: boolean) => any,
-    updateSettings: (settingsPayload: SettingsPayload) => any,
-    toggleAutoCompute: (autoCompute: boolean) => any,
+export interface SettingMenuProps {
+    electionType: ElectionType;
+    settingsPayload: SettingsPayload;
+    computationPayload: ComputationPayload;
+    updateCalculation: (computationPayload: ComputationPayload, autoCompute: boolean, forceCompute: boolean) => any;
+    updateSettings: (settingsPayload: SettingsPayload) => any;
+    toggleAutoCompute: (autoCompute: boolean) => any;
     resetToHistoricalSettings: (settingsPayload: SettingsPayload, election: Election) => any;
 }
 
 
-export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
+export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> {
     render() {
         return (
             <div className="settings-menu">
@@ -37,7 +37,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                         if (election !== undefined) {
                                             this.props.updateCalculation({
                                                 ...this.props.computationPayload,
-                                                election: election
+                                                election
                                             }, this.props.settingsPayload.autoCompute, false);
                                             this.props.updateSettings({
                                                 ...this.props.settingsPayload,
@@ -76,7 +76,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                         }, this.props.settingsPayload.autoCompute, false);
                                         this.props.updateSettings({
                                             ...this.props.settingsPayload,
-                                            algorithm: algorithm
+                                            algorithm
                                         });
                                     }
                                 }>
@@ -105,7 +105,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                         max={5}
                         defaultValue={this.props.computationPayload.election.firstDivisor}
                         integer={false}
-                        slider={false}/>
+                        slider={true}/>
                     <SmartNumericInput
                         name="electionThreshold"
                         title="Sperregrense"
@@ -178,7 +178,7 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
                                             if (election !== undefined && election !== null) {
                                                 this.props.updateCalculation(
                                                     {
-                                                        election: election,
+                                                        election,
                                                         algorithm: getAlgorithmType(this.props.settingsPayload.algorithm),
                                                         firstDivisor: parseFloat(this.props.settingsPayload.firstDivisor),
                                                         electionThreshold: parseFloat(this.props.settingsPayload.electionThreshold),
@@ -210,4 +210,3 @@ export class SettingMenuComponent extends React.Component<ISettingsProps, {}> {
 );
 }
 }
-;;

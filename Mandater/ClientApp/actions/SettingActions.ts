@@ -2,43 +2,43 @@
 import { ElectionType } from "../interfaces/ElectionType";
 import { SettingsPayload } from "../interfaces/SettingsPayload";
 
-export type InitializeSettingsAction = {
-    type: SettingAction.InitializeSettings,
-    electionYears: string[],
-    year: string,
-    algorithm: number,
-    firstDivisor: string,
-    electionThreshold: string,
-    districtSeats: string,
-    levelingSeats: string,
+export interface InitializeSettingsAction {
+    type: SettingAction.InitializeSettings;
+    electionYears: string[];
+    year: string;
+    algorithm: number;
+    firstDivisor: string;
+    electionThreshold: string;
+    districtSeats: string;
+    levelingSeats: string;
     autoCompute: boolean;
 }
 
 export interface UpdateSettingsAction {
-    type: SettingAction.UpdateSettings,
-    year: string,
-    algorithm: number,
-    firstDivisor: string,
-    electionThreshold: string,
-    districtSeats: string,
-    levelingSeats: string,
+    type: SettingAction.UpdateSettings;
+    year: string;
+    algorithm: number;
+    firstDivisor: string;
+    electionThreshold: string;
+    districtSeats: string;
+    levelingSeats: string;
 }
 
 export interface ToggleAutoComputeAction {
-    type: SettingAction.ToggleAutoCompute,
+    type: SettingAction.ToggleAutoCompute;
     autoCompute: boolean;
 }
 
 export function initializeSettings(electionType: ElectionType) {
     const election = electionType.elections[0]; // Most recent election
     const electionYears: string[] = [];
-    for (let currentElection of electionType.elections) {
+    for (const currentElection of electionType.elections) {
         electionYears.push(currentElection.year.toString());
     }
 
     const initializeSettingsAction: InitializeSettingsAction = {
         type: SettingAction.InitializeSettings,
-        electionYears: electionYears,
+        electionYears,
         year: election.year.toString(),
         algorithm: election.algorithm,
         firstDivisor: election.firstDivisor.toString(),
@@ -66,7 +66,7 @@ export function updateSettings(settingsPayload: SettingsPayload) {
 export function toggleAutoCompute(autoCompute: boolean) {
     const toggleAutoComputeAction: ToggleAutoComputeAction = {
         type: SettingAction.ToggleAutoCompute,
-        autoCompute: autoCompute
+        autoCompute
     };
     return toggleAutoComputeAction;
 }

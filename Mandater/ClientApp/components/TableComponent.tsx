@@ -1,27 +1,29 @@
 ﻿import * as React from "react";
-import { TableData } from "../interfaces/TableData";
 
-type TableProps = {
-    tableData: TableData;
+interface TableProps {
+    table: string[][];
 }
 
 export class TableComponent extends React.Component<TableProps, {}> {
     render() {
         const header: React.ReactNode[] = [];
         const rows: React.ReactNode[] = [];
-        const headerData = this.props.tableData.tableHeaders;
-        const rowData = this.props.tableData.tableRows;
-        for (let data of headerData) {
+
+        // Create header
+        for (const data of this.props.table[0]) {
             header.push(<th key={data}>{data}</th>);
         }
-        for (let data of rowData) {
+
+        // Create rows
+        for (const tableRow of this.props.table.slice(1)) {
             const row: React.ReactNode[] = [];
-            let index: number = 0;
-            for (let column of data.rowData) {
+
+            let index = 0;
+            for (const column of tableRow) {
                 row.push(<td key={index += 1}>{column}</td>);
             }
 
-            rows.push(<tr key={data.key}>{row}</tr>);
+            rows.push(<tr key={tableRow[0]}>{row}</tr>);
         }
 
         return (

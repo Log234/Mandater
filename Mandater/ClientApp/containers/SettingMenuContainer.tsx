@@ -33,7 +33,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
     updateCalculation: (computationPayload: ComputationPayload, autoCompute: boolean, forceCompute: boolean) => {
-        console.log(`Force: ${forceCompute}`);
         if (autoCompute || forceCompute) {
             const payload: ComputationPayload = {
                 election: computationPayload.election,
@@ -58,7 +57,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     resetToHistoricalSettings: (settingsPayload: SettingsPayload, election: Election) => {
         if (settingsPayload.autoCompute) {
             const payload: ComputationPayload = {
-                election: election,
+                election,
                 algorithm: getAlgorithmType(election.algorithm),
                 firstDivisor: election.firstDivisor,
                 electionThreshold: election.threshold,
@@ -85,4 +84,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)((SettingMenuComponent) as any)
+)((SettingMenuComponent) as any);

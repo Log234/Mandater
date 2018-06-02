@@ -6,11 +6,13 @@ const mapStateToProps = (state: ApplicationState) => {
     console.log("PresentationContainer mapped state to props");
     return {
         results: state.computationState.partyResults,
-        currentPresentation: state.presentationState.currentPresentation
+        currentPresentation: state.presentationState.currentPresentation,
+        decimals: state.presentationState.decimalsNumber,
+        showPartiesWithoutSeats: state.presentationState.showPartiesWithoutSeats
     } as PresentationProps;
 };
 
 export default connect(
     mapStateToProps,
     {}
-)((PresentationComponent) as any)
+)((PresentationComponent) as any);
