@@ -19,8 +19,7 @@
     "@types/react": {
       "version": "15.0.35",
       "resolved": "https://registry.npmjs.org/@types/react/-/react-15.0.35.tgz",
-      "integrity": "sha1-RnKSPNUC0D4UgNA4FuvFpxn7hto=",
-      "dev": true
+      "integrity": "sha1-RnKSPNUC0D4UgNA4FuvFpxn7hto="
     },
     "@types/react-dom": {
       "version": "15.5.1",
@@ -80,6 +79,14 @@
         "@types/history": "*",
         "@types/react": "*",
         "redux": "^3.6.0"
+      }
+    },
+    "@types/react-table": {
+      "version": "6.7.11",
+      "resolved": "https://registry.npmjs.org/@types/react-table/-/react-table-6.7.11.tgz",
+      "integrity": "sha512-zAuI4+7cQMRfV70h63yqsVNBI3mbXh8VgKc8NMnzqF0qxw5dUJaYAE7/bVXk0JQaWIbpaTbUSUu5Cho1r0XByA==",
+      "requires": {
+        "@types/react": "*"
       }
     },
     "@types/source-map": {
@@ -1108,6 +1115,11 @@
           }
         }
       }
+    },
+    "classnames": {
+      "version": "2.2.5",
+      "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.2.5.tgz",
+      "integrity": "sha1-+zgB1FNGdknvNgPH1hoCvRKb3m0="
     },
     "cliui": {
       "version": "2.1.0",
@@ -2451,7 +2463,7 @@
     "globals": {
       "version": "9.18.0",
       "resolved": "https://registry.npmjs.org/globals/-/globals-9.18.0.tgz",
-      "integrity": "sha1-qjiWs+abSH8X4x7SFD1pqOMMLYo=",
+      "integrity": "sha512-S0nG3CLEQiY/ILxqtztTWH/3iRRdyBLw6KMDxnKMchrtbj2OFmehVh0WUCfW3DUrIgx/qFrJPICrq4Z4sTR9UQ==",
       "dev": true
     },
     "graceful-fs": {
@@ -4465,6 +4477,14 @@
         "react-router": "^4.1.1"
       }
     },
+    "react-table": {
+      "version": "6.8.6",
+      "resolved": "https://registry.npmjs.org/react-table/-/react-table-6.8.6.tgz",
+      "integrity": "sha1-oK2LSDkxkFLVvvwBJgP7Fh5S7eM=",
+      "requires": {
+        "classnames": "^2.2.5"
+      }
+    },
     "read-pkg": {
       "version": "1.1.0",
       "resolved": "https://registry.npmjs.org/read-pkg/-/read-pkg-1.1.0.tgz",
@@ -4853,7 +4873,7 @@
     "snapdragon-util": {
       "version": "3.0.1",
       "resolved": "https://registry.npmjs.org/snapdragon-util/-/snapdragon-util-3.0.1.tgz",
-      "integrity": "sha1-+VZHlIbyrNeXAGk/b3uAXkWrVuI=",
+      "integrity": "sha512-mbKkMdQKsjX4BAL4bRYTj21edOf8cN7XHdYUJEe+Zn99hVEYcMvKPct1IqNe7+AZPirn8BCDOQBHQZknqmKlZQ==",
       "dev": true,
       "requires": {
         "kind-of": "^3.2.0"
