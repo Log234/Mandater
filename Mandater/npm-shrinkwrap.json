@@ -19,7 +19,8 @@
     "@types/react": {
       "version": "15.0.35",
       "resolved": "https://registry.npmjs.org/@types/react/-/react-15.0.35.tgz",
-      "integrity": "sha1-RnKSPNUC0D4UgNA4FuvFpxn7hto="
+      "integrity": "sha1-RnKSPNUC0D4UgNA4FuvFpxn7hto=",
+      "dev": true
     },
     "@types/react-dom": {
       "version": "15.5.1",
@@ -85,6 +86,7 @@
       "version": "6.7.11",
       "resolved": "https://registry.npmjs.org/@types/react-table/-/react-table-6.7.11.tgz",
       "integrity": "sha512-zAuI4+7cQMRfV70h63yqsVNBI3mbXh8VgKc8NMnzqF0qxw5dUJaYAE7/bVXk0JQaWIbpaTbUSUu5Cho1r0XByA==",
+      "dev": true,
       "requires": {
         "@types/react": "*"
       }
