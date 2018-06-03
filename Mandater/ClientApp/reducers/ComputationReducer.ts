@@ -4,7 +4,7 @@ import { InitializeComputationAction, UpdateResultsAction } from "../actions/Com
 import { ComputationAction as ElectionActionEnum } from "../types/ActionTypes";
 
 type KnownAction = InitializeComputationAction
-    | UpdateResultsAction
+    | UpdateResultsAction;
 
 // NB: BaseReducer Typescript (Reducer<State>) definition changes as of redux 4.0.0
 // https://github.com/rt2zz/redux-persist/pull/778
@@ -22,7 +22,8 @@ export default function (state: ComputationState, incomingAction: Action) {
                 electionThreshold: action.electionThreshold,
                 districtSeats: action.districtSeats,
                 levelingSeats: action.levelingSeats,
-                partyResults: action.partyResults
+                partyResults: action.partyResults,
+                newResults: action.newResults,
             };
         case ElectionActionEnum.UpdateResults:
             console.log(`Action of type ${action.type} reduced`);
@@ -35,9 +36,10 @@ export default function (state: ComputationState, incomingAction: Action) {
                 districtSeats: action.districtSeats,
                 levelingSeats: action.levelingSeats,
                 partyResults: action.partyResults,
+                newResults: action.newResults,
             };
         default:
             console.log(`Action of type ${incomingAction.type} reduced to default`);
             return state || unloadedState;
     }
-};
+}
