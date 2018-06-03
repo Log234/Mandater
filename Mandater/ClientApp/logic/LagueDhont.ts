@@ -31,7 +31,9 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
             name: county.name,
             votes: 0,
             percentVotes: 0,
-            partyCodes: [],
+            districtSeatResult: [],
+            districtSeats: 0,
+            partyResults: []
         };
         districtPartyResults[county.name] = {};
         for (const party of county.results) {
