@@ -39,7 +39,7 @@ export class LagueDhontSets implements ComputationSets {
 
     /**
      * Returns a table of the type specified in string[][] format.
-     * 
+     *
      * @param tabletype The type of table to request, must be in the list returned by getPresentationTypes()
      * @param district [optional] If the type of table requested is related to a specific district, it should be specified here.
      */
@@ -56,17 +56,16 @@ export class LagueDhontSets implements ComputationSets {
                     header: [],
                     rowId: [],
                     body: []
-                }
+                };
         }
     }
 
     createElectionTable() {
-        const electionTable: DecomposedTable<number> =
-            {
+        const electionTable: DecomposedTable<number> = {
                 header: ["Parti", "Stemmer", "%", "Distrikt", "Utjevning", "Sum"],
                 rowId: [],
                 body: []
-            }
+            };
         const curVotes: { [id: string]: number } = {};
         const districtSeats: { [id: string]: number } = {};
         let totalVotes = 0;
@@ -84,7 +83,7 @@ export class LagueDhontSets implements ComputationSets {
             }
         }
 
-        for (let partyCode of this.partyCodes) {
+        for (const partyCode of this.partyCodes) {
             electionTable.rowId.push(partyCode);
             const row: number[] = Array(electionTable.header.length - 1).fill(0);
             row[0] = curVotes[partyCode];

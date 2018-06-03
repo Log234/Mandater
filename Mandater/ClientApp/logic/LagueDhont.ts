@@ -11,9 +11,9 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
     let totalVotes = 0;
 
     // Assemble a list of all parties as well as the number of votes per district
-    for (let county of payload.election.counties) {
+    for (const county of payload.election.counties) {
         votesPerDistrict[county.name] = 0;
-        for (let party of county.results) {
+        for (const party of county.results) {
             votesPerDistrict[county.name] += party.votes;
             totalVotes += party.votes;
             if (result.partyCodes.indexOf(party.partyCode) === -1) {
@@ -33,7 +33,7 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
 
     // st. lague iterates over each county, and in turn, each party of the party, so first we have to create objects for partyCodes
     let index = 0;
-    for (let county of payload.election.counties) {
+    for (const county of payload.election.counties) {
         result.districts.push(county.name);
         result.districtTables[county.name] = distributeSeats(payload.algorithm, payload.firstDivisor, county.seats, county.results);
 
@@ -48,7 +48,7 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
         result.districtSeatsPerDistrict.body.push(Array(result.partyCodes.length).fill(0));
 
         const distTables = result.districtTables[county.name];
-        for (let party of county.results) {
+        for (const party of county.results) {
             const partyIndex = result.partyCodes.indexOf(party.partyCode);
 
             // Add values for each party in the table
@@ -66,11 +66,11 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
         index++;
     }
 
-    // Filter out parties with less than the threshold 
+    // Filter out parties with less than the threshold
     let levelingPartyCodes = result.partyCodes.filter(p => (votesPerParty[p] / totalVotes) * 100 >= payload.electionThreshold);
     let levelingParties: Result[] = [];
-    for (let partyCode of levelingPartyCodes) {
-        let party: Result = {
+    for (const partyCode of levelingPartyCodes) {
+        const party: Result = {
             countyId: -1,
             electionId: -1,
             partyId: -1,
@@ -80,7 +80,7 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
             partyName: "",
             votes: votesPerParty[partyCode],
             percentage: -1
-        }
+        };
         levelingParties.push(party);
     }
 
@@ -94,8 +94,8 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
             districtSeatsByParty[p]);
 
     levelingParties = [];
-    for (let partyCode of levelingPartyCodes) {
-        let party: Result = {
+    for (const partyCode of levelingPartyCodes) {
+        const party: Result = {
             countyId: -1,
             electionId: -1,
             partyId: -1,
@@ -105,7 +105,7 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
             partyName: "",
             votes: votesPerParty[partyCode],
             percentage: -1
-        }
+        };
         levelingParties.push(party);
     }
 
