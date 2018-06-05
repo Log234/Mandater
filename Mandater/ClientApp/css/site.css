@@ -139,7 +139,7 @@ body, html {
 .partyTable {
     overflow:hidden; /* Needed for highlighting to work */
     width: 100%;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 .partyTable table, th, td {
