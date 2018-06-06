@@ -16,6 +16,8 @@
   "exclude": [
       "bin",
       "node_modules",
+      "webpack.config.js",
+      "webpack.config.vendor.js",
       // To avoid [HMR] rebuilding to re-run forever
       "ClientApp/dist",
       "wwwroot"
