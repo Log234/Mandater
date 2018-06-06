@@ -11,7 +11,7 @@
         {
             "label": "TSLint Project",
             "type": "shell",
-            "command": "./node_modules/.bin/tslint -p . -c ./.vscode/tslint.json -t verbose",
+            "command": "./node_modules/.bin/tslint --fix -p . -c ./.vscode/tslint.json -t prose",
             "problemMatcher": {"base":"$tslint5", "fileLocation":"absolute"}
         }
     ]
