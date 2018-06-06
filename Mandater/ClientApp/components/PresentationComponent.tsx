@@ -117,7 +117,7 @@ export class PresentationComponent extends React.Component<
             case PresentationType.SeatsPerParty:
                 return (
                     <VictoryChart
-                        animate={{ duration: 250 }}
+                        animate={{ duration: 100 }}
                         domainPadding={{ x: 20 }}>
                         <VictoryBar
                             data={this.getData().sort((a, b) => {
