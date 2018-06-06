@@ -1,5 +1,7 @@
 {
     "tslint.configFile": "./.vscode/tslint.json",
     "prettier.tabWidth": 4,
-    "prettier.jsxBracketSameLine": true
+    "prettier.jsxBracketSameLine": true,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false
 }
