@@ -54,6 +54,7 @@ export function filterZeroColumns(table: DecomposedTable<number>): DecomposedTab
 
     for (let column = 0; column < table.body[0].length; column++) {
         let sum = 0;
+        // tslint:disable-next-line:prefer-for-of
         for (let row = 0; row < table.body.length; row++) {
             sum += table.body[row][column];
         }
