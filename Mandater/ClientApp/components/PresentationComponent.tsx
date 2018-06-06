@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import { VictoryChart, VictoryBar } from "victory";
-import ReactTable, { Column } from "react-table";
+import ReactTable, { Column, RowInfo } from "react-table";
 import { PresentationType } from "../types/PresentationType";
 import { TableComponent } from "./TableComponent";
 import { ComputationResults } from "../logic/ComputationResult";
@@ -54,15 +54,24 @@ export class PresentationComponent extends React.Component<
             case PresentationType.ElectionTable:
                 return (
                     <ReactTable
+                        className="-highlight -striped"
                         data={getPartyTableData(
                             newResults.partyResults,
                             showPartiesWithoutSeats,
                             decimals
                         )}
+                        defaultPageSize={10}
+                        showPaginationBottom={false}
+                        showPaginationTop={true}
+                        rowsText="rader"
+                        pageText="Side"
+                        ofText="av"
+                        nextText="Neste"
+                        previousText="Forrige"
                         columns={[
                             {
                                 Header: "Parti",
-                                accessor: "partyCode"
+                                accessor: "partyName"
                             },
                             {
                                 Header: "Stemmer",
@@ -94,17 +103,21 @@ export class PresentationComponent extends React.Component<
                     />
                 );
             case PresentationType.DistrictTable:
-                return <ReactTable
+                return (
+                    <ReactTable
                     data={this.props.newResults.districtResults}
-                    columns={[{
+                        columns={[
+                            {
                         Header: "Fylke",
                         accessor: "name"
-                    }]}
-                />;
+                            }
+                        ]}
+                    />
+                );
             case PresentationType.SeatsPerParty:
                 return (
                     <VictoryChart
-                        animate={{ duration: 500 }}
+                        animate={{ duration: 250 }}
                         domainPadding={{ x: 20 }}>
                         <VictoryBar
                             data={this.getData().sort((a, b) => {
