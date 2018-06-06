@@ -1,4 +1,4 @@
-﻿export interface VisualizationState {
-    type: string,
+export interface VisualizationState {
+    type: string;
     options: string[];
 }
