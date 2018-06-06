@@ -96,12 +96,10 @@ export class PresentationComponent extends React.Component<
             case PresentationType.DistrictTable:
                 return <ReactTable
                     data={this.props.newResults.districtResults}
-                    columns={[
-                        {
-                            Header: "Fylke",
-                            accessor: "name"
-                    }
-                ]}
+                    columns={[{
+                        Header: "Fylke",
+                        accessor: "name"
+                    }]}
                 />;
             case PresentationType.SeatsPerParty:
                 return (

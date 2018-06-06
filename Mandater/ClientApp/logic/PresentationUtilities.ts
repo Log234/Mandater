@@ -26,19 +26,3 @@ export function getPartyTableData(partyResults: PartyResult[], showPartiesWithou
 
     return roundedResults;
 }
-
-export function getDistrictTableCollumns(districtResult: DistrictResult) {
-    const columns: Column[] = [];
-
-    columns.push({
-        Header: "Fylke",
-        accessor: "name"
-    });
-
-    districtResult.partyResults.forEach((partyResult, index) => {
-        columns.push({
-            Header: partyResult.partyCode,
-            accessor: (row: DistrictResult) => row.partyResults[index].totalSeats
-        });
-    });
-}
