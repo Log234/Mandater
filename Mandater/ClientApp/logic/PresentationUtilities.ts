@@ -35,10 +35,10 @@ export function getDistrictTableCollumns(districtResult: DistrictResult) {
         accessor: "name"
     });
 
-    districtResult.partyResults.forEach(partyResult => {
-        //columns.push({
-        //    Header: partyResult.partyCode,
-
-        //})
+    districtResult.partyResults.forEach((partyResult, index) => {
+        columns.push({
+            Header: partyResult.partyCode,
+            accessor: (row: DistrictResult) => row.partyResults[index].totalSeats
+        });
     });
 }
