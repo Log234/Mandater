@@ -86,7 +86,7 @@ export function distributeLevelingSeats(
         partyCode => partyResults[partyCode].levelingSeats > 0
     );
 
-    const levelingSeats: LevelingSeat[] = [];
+    let levelingSeats: LevelingSeat[] = [];
 
     for (const countyName in districtResults) {
         if (districtPartyResults.hasOwnProperty(countyName)) {
@@ -119,32 +119,53 @@ export function distributeLevelingSeats(
     }
 
     levelingSeats.sort((v, t) => t.quotient - v.quotient);
-    const selectedLevelingSeats: LevelingSeat[] = [];
     const partyRestQuotients: Dictionary<PartyRestQuotients> = {};
 
-    const completedDistricts: Set<string> = new Set();
     const partySeats: Dictionary<number> = {};
     let seatIndex = 1;
+    while (seatIndex <= payload.levelingSeats) {
+        const completedDistricts: Set<string> = new Set();
+        const remainingLevelingSeats: LevelingSeat[] = [];
+
+        for (const seat of levelingSeats) {
+            let numberOfSeats = partySeats[seat.partyCode];
+            if (numberOfSeats === undefined) {
+                numberOfSeats = 0;
+                partySeats[seat.partyCode] = 0;
+            }
+
+            if (
+                !completedDistricts.has(seat.district) &&
+                numberOfSeats < partyResults[seat.partyCode].levelingSeats
+            ) {
+                seat.seatNumber = seatIndex++;
+
+                partySeats[seat.partyCode]++;
+                districtResults[seat.district].levelingSeats++;
+                districtPartyResults[seat.district][seat.partyCode]
+                    .levelingSeats++;
+                districtPartyResults[seat.district][seat.partyCode]
+                    .totalSeats++;
+
+                completedDistricts.add(seat.district);
+
+                if (partyRestQuotients[seat.partyCode] === undefined) {
+                    partyRestQuotients[seat.partyCode] = {
+                        partyCode: seat.partyCode,
+                        levelingSeats: [seat]
+                    };
+                } else {
+                    partyRestQuotients[seat.partyCode].levelingSeats.push(seat);
+                }
+            } else {
+                remainingLevelingSeats.push(seat);
+            }
+        }
+
+        levelingSeats = remainingLevelingSeats;
+    }
+
     for (const seat of levelingSeats) {
-        let numberOfSeats = partySeats[seat.partyCode];
-        if (numberOfSeats === undefined) {
-            numberOfSeats = 0;
-            partySeats[seat.partyCode] = 0;
-        }
-
-        if (
-            !completedDistricts.has(seat.district) &&
-            numberOfSeats < partyResults[seat.partyCode].levelingSeats
-        ) {
-            seat.seatNumber = seatIndex++;
-            partySeats[seat.partyCode]++;
-            districtResults[seat.district].levelingSeats++;
-            districtPartyResults[seat.district][seat.partyCode].levelingSeats++;
-            districtPartyResults[seat.district][seat.partyCode].totalSeats++;
-            completedDistricts.add(seat.district);
-            selectedLevelingSeats.push(seat);
-        }
-
         if (partyRestQuotients[seat.partyCode] === undefined) {
             partyRestQuotients[seat.partyCode] = {
                 partyCode: seat.partyCode,
