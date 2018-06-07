@@ -33,7 +33,8 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
             percentVotes: 0,
             districtSeatResult: [],
             districtSeats: 0,
-            partyResults: []
+            partyResults: [],
+            levelingSeats: 0
         };
         districtPartyResults[county.name] = {};
         for (const party of county.results) {
@@ -58,7 +59,8 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
                 percentVotes: 0,
                 districtSeats: 0,
                 levelingSeats: 0,
-                totalSeats: 0
+                totalSeats: 0,
+                proportionality: 0
             };
             if (partyResults[party.partyCode] === undefined) {
                 partyResults[party.partyCode] = {
@@ -68,7 +70,8 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontSets {
                     percentVotes: 0,
                     districtSeats: 0,
                     levelingSeats: 0,
-                    totalSeats: 0
+                    totalSeats: 0,
+                    proportionality: 0
                 };
             } else {
                 partyResults[party.partyCode].votes += party.votes;

@@ -20,7 +20,8 @@ export function getPartyTableData(partyResults: PartyResult[], showPartiesWithou
             percentVotes: roundNumber(partyResult.percentVotes, numberOfDecimals),
             districtSeats: partyResult.districtSeats,
             levelingSeats: partyResult.levelingSeats,
-            totalSeats: partyResult.totalSeats
+            totalSeats: partyResult.totalSeats,
+            proportionality: partyResult.proportionality
         });
     }
 

@@ -9,8 +9,10 @@ export interface PartyResult {
     percentVotes: number;
     /** The number of seats the party received, either nationally or within the district */
     districtSeats: number;
-    /** The number of leveling seats the party received nationally (always 0 if the PartyResult is within a district) */
+    /** The number of leveling seats the party received, either nationally or within the district */
     levelingSeats: number;
-    /** The total number of seats the party received natioanlly or within the district */
+    /** The total number of seats the party received, either nationally or within the district */
     totalSeats: number;
+    /** The difference between the partys number of votes and seats, either nationally or within the district */
+    proportionality: number;
 }
