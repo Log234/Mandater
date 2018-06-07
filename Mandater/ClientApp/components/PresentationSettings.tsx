@@ -17,7 +17,7 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
     onChange() {
         // TODO: Complete function
     }
-    createPartyList() {
+    /* createPartyList() {
         const options = [] as React.ReactNode[];
         const partyNames = this.props.results.getPartyNames();
         const partyCodes = this.props.results.getPartyCodes();
@@ -26,7 +26,7 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
             options.push(<option key={partyCodes[i]}>{partyNames[i]}</option>);
         }
         return options;
-    }
+    } */
 
     render() {
         return <div className="presentation-settings">
@@ -47,13 +47,13 @@ export class PresentationSettings extends React.Component<PresentationSettingsPr
                     value={this.props.decimals}
                     onChange={this.props.changeDecimals}
                 />
-                <div className="form-group row">
+                {/* <div className="form-group row">
                     <label htmlFor="chosen-partyCodes">Valgte partier</label>
                     <select style={{ width: "100%" }} multiple>
                         {this.createPartyList()}
                     </select>
                     <button type="button" className="btn btn-block">Fjern partier</button>
-                </div>
+                </div> */}
             </form>
         </div>;
 
