@@ -1,6 +1,8 @@
 import { PartyResult } from "./PartyResult";
 import { DistrictResult } from "./DistrictResult";
 import { SeatResult } from "./SeatResult";
+import { LevelingSeat } from "./LevelingSeat";
+import { PartyRestQuotients } from "./PartyRestQuotients";
 
 export interface LagueDhontResult {
     /** A list of party results, with information about national results */
@@ -8,5 +10,5 @@ export interface LagueDhontResult {
     /** A list of district results, with information about district-level results */
     districtResults: DistrictResult[];
     /** A list of information regarding the distribution of the leveling seats */
-    levelingSeatDistribution: SeatResult[];
+    levelingSeatDistribution: PartyRestQuotients[];
 }
