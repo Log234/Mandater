@@ -1,4 +1,7 @@
 ﻿import { ApplicationState } from "./store";
+import { unloadedState as computationState } from "./states/ComputationState";
+import { unloadedState as settingsState } from "./states/SettingsState";
+import { unloadedState as requestedDataState } from "./states/RequestedDataState";
 
 export const loadState = () => {
     try {
@@ -16,7 +19,8 @@ export const saveState = (state: ApplicationState) => {
     try {
         const serializedState = JSON.stringify(state);
         localStorage.setItem("state", serializedState);
+        console.log(`State saved`);
     } catch (err) {
         console.error(err);
     }
-}
+};
