@@ -1,13 +1,9 @@
 ﻿import { ComputationPayload } from "../interfaces/ComputationPayload";
-import { distributeSeats, getDenominator } from "./AlgorithmUtilsNew";
-import { LagueDhontSets } from "./LagueDhontSets";
-import { Result } from "../interfaces/Result";
+import { distributeSeats, calculateProportionality } from "./AlgorithmUtilsNew";
 import { Dictionary } from "../interfaces/Dictionary";
 import { PartyResult } from "../interfaces/PartyResult";
 import { DistrictResult } from "../interfaces/DistrictResult";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
-import { LevelingSeat } from "../interfaces/LevelingSeat";
-import { PartyRestQuotients } from "../interfaces/PartyRestQuotients";
 import { distributeLevelingSeats } from "./DistributeLevelingSeats";
 import { dictionaryToArray } from "./DictionaryUtilities";
 
@@ -23,6 +19,7 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontResult {
         districtResults[county.name] = {
             name: county.name,
             districtSeats: county.seats,
+            levelingSeats: 0,
             votes: 0,
             percentVotes: 0,
             districtSeatResult: [],
@@ -40,7 +37,8 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontResult {
                 percentVotes: 0,
                 districtSeats: 0,
                 levelingSeats: 0,
-                totalSeats: 0
+                totalSeats: 0,
+                proportionality: 0
             };
             if (partyResults[party.partyCode] === undefined) {
                 partyResults[party.partyCode] = {
@@ -50,7 +48,8 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontResult {
                     percentVotes: 0,
                     districtSeats: 0,
                     levelingSeats: 0,
-                    totalSeats: 0
+                    totalSeats: 0,
+                    proportionality: 0
                 };
             } else {
                 partyResults[party.partyCode].votes += party.votes;
@@ -103,6 +102,9 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontResult {
         districtPartyResults,
         districtResults
     );
+
+    const totalSeats = payload.districtSeats + payload.levelingSeats;
+    calculateProportionality(totalSeats, partyResults, districtPartyResults, districtResults);
 
     for (const countyName in districtPartyResults) {
         districtResults[countyName].partyResults = dictionaryToArray(districtPartyResults[countyName]);

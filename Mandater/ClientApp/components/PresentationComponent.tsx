@@ -41,7 +41,6 @@ export class PresentationComponent extends React.Component<
     }
 
     render() {
-        console.log(this.props.newResults.levelingSeatDistribution);
         const newResults = this.props.newResults;
         const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
         const decimals = this.props.decimals;

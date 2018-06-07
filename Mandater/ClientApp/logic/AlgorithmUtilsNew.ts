@@ -5,6 +5,7 @@ import { Dictionary } from "../interfaces/Dictionary";
 import { PartyResult } from "../interfaces/PartyResult";
 import { SeatResult } from "../interfaces/SeatResult";
 import { DistributionResult } from "../interfaces/DistributionResult";
+import { DistrictResult } from "../interfaces/DistrictResult";
 
 export interface LagueDhontDistributionResult {
     partyIndex: { [id: string]: number };
@@ -25,7 +26,13 @@ const illegalPartyCodes = new Set(["BLANKE"]);
  * @param results A list of how many votes each party received
  * @param partyResults [optional] If a number of partyResults have been distributed, this parameter can be specified to continue from the existing distribution
  */
-export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, numSeats: number, results: Result[], partyResults?: Dictionary<PartyResult>): DistributionResult {
+export function distributeSeats(
+    algorithm: AlgorithmType,
+    firstDivisor: number,
+    numSeats: number,
+    results: Result[],
+    partyResults?: Dictionary<PartyResult>
+): DistributionResult {
     const seatsWon: Dictionary<number> = {};
     const currentSeatsWon: Dictionary<number> = {};
     const seatResults: SeatResult[] = [];
@@ -56,13 +63,22 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
         let currentMaxQuotient = -1;
 
         for (const result of results) {
-            const currentQuotient = (result.votes / getDenominator(algorithm, seatsWon[result.partyCode], firstDivisor));
+            const currentQuotient =
+                result.votes /
+                getDenominator(
+                    algorithm,
+                    seatsWon[result.partyCode],
+                    firstDivisor
+                );
             seatResult.partyResults.push({
                 partyCode: result.partyCode,
                 quotient: currentQuotient
             });
 
-            if (currentQuotient > currentMaxQuotient && !illegalPartyCodes.has(result.partyCode)) {
+            if (
+                currentQuotient > currentMaxQuotient &&
+                !illegalPartyCodes.has(result.partyCode)
+            ) {
                 currentMaxQuotient = currentQuotient;
                 currentWinner = result.partyCode;
             }
@@ -87,19 +103,69 @@ export function distributeSeats(algorithm: AlgorithmType, firstDivisor: number, 
  * @param numberOfSeatsAssigned The number of partyResults assigned to the party in question
  * @param firstDivisor The first divisor to use if the party has 0 partyResults
  */
-export function getDenominator(algorithm: AlgorithmType, numberOfSeatsAssigned: number, firstDivisor: number) {
+export function getDenominator(
+    algorithm: AlgorithmType,
+    numberOfSeatsAssigned: number,
+    firstDivisor: number
+) {
     switch (algorithm) {
         case AlgorithmType.SainteLague:
             if (numberOfSeatsAssigned === 0) {
                 return firstDivisor;
             } else {
-                return (2 * numberOfSeatsAssigned + 1);
+                return 2 * numberOfSeatsAssigned + 1;
             }
         case AlgorithmType.DHondt:
             return numberOfSeatsAssigned + 1;
         default:
-            console.error(`ERROR! ${algorithm.toString()} does not have an associated denominator function!`);
+            console.error(
+                `ERROR! ${algorithm.toString()} does not have an associated denominator function!`
+            );
             return Number.MIN_SAFE_INTEGER;
+    }
+}
+
+/**
+ * Calculates the proportionality beteen the number of votes and the number of seats received.
+ * Can be summed up and divided by 2 to reveal the true Loosemore-Hanbys index of the results.
+ *
+ * @param totalSeats The total number of seats to be distributed nationally
+ * @param partyResults The current national party results
+ * @param districtPartyResults The current district-level party results
+ * @param districtResults The current district results
+ */
+export function calculateProportionality(
+    totalSeats: number,
+    partyResults: Dictionary<PartyResult>,
+    districtPartyResults: Dictionary<Dictionary<PartyResult>>,
+    districtResults: Dictionary<DistrictResult>
+) {
+    for (const partyCode in partyResults) {
+        if (partyResults.hasOwnProperty(partyCode)) {
+            const percentSeats =
+                (partyResults[partyCode].totalSeats / totalSeats) * 100;
+            partyResults[partyCode].proportionality =
+                partyResults[partyCode].percentVotes - percentSeats;
+        }
+    }
+
+    for (const county in districtPartyResults) {
+        if (districtPartyResults.hasOwnProperty(county)) {
+            const totalDistrictSeats =
+                districtResults[county].districtSeats +
+                districtResults[county].levelingSeats;
+            for (const partyCode in districtPartyResults[county]) {
+                if (districtPartyResults[county].hasOwnProperty(partyCode)) {
+                    const percentSeats =
+                        (districtPartyResults[county][partyCode].totalSeats /
+                            totalDistrictSeats) *
+                        100;
+                    districtPartyResults[county][partyCode].proportionality =
+                        districtPartyResults[county][partyCode].percentVotes -
+                        percentSeats;
+                }
+            }
+        }
     }
 }
 

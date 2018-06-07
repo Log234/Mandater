@@ -6,6 +6,8 @@ export interface DistrictResult {
     name: string;
     /** Number of district seats available */
     districtSeats: number;
+    /** Number of leveling seats received */
+    levelingSeats: number;
     /** Total number of votes cast in the district */
     votes: number;
     /** How many percent of all votes were cast in this district */

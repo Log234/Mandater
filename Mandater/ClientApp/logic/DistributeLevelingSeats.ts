@@ -138,6 +138,9 @@ export function distributeLevelingSeats(
         ) {
             seat.seatNumber = seatIndex++;
             partySeats[seat.partyCode]++;
+            districtResults[seat.district].levelingSeats++;
+            districtPartyResults[seat.district][seat.partyCode].levelingSeats++;
+            districtPartyResults[seat.district][seat.partyCode].totalSeats++;
             completedDistricts.add(seat.district);
             selectedLevelingSeats.push(seat);
         }
