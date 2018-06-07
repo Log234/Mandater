@@ -1,6 +1,6 @@
 import ComputationReducer from "../reducers/ComputationReducer";
 import { ComputationState } from "../states/ComputationState";
-import { SettingsState } from "../states/SettingState";
+import { SettingsState } from "../states/SettingsState";
 import { RequestedDataState } from "../states/RequestedDataState";
 import RequestedDataReducer from "../reducers/RequestedDataReducer";
 import SettingsReducer from "../reducers/SettingsReducer";
