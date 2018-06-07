@@ -141,7 +141,10 @@ export function calculateProportionality(
     districtResults: Dictionary<DistrictResult>
 ) {
     for (const partyCode in partyResults) {
-        if (partyResults.hasOwnProperty(partyCode)) {
+        if (
+            partyResults.hasOwnProperty(partyCode) &&
+            !illegalPartyCodes.has(partyCode)
+        ) {
             const percentSeats =
                 (partyResults[partyCode].totalSeats / totalSeats) * 100;
             partyResults[partyCode].proportionality =
@@ -155,7 +158,10 @@ export function calculateProportionality(
                 districtResults[county].districtSeats +
                 districtResults[county].levelingSeats;
             for (const partyCode in districtPartyResults[county]) {
-                if (districtPartyResults[county].hasOwnProperty(partyCode)) {
+                if (
+                    districtPartyResults[county].hasOwnProperty(partyCode) &&
+                    !illegalPartyCodes.has(partyCode)
+                ) {
                     const percentSeats =
                         (districtPartyResults[county][partyCode].totalSeats /
                             totalDistrictSeats) *
