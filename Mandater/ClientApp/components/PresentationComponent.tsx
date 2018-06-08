@@ -116,10 +116,10 @@ export class PresentationComponent extends React.Component<
                 );
             case PresentationType.SeatsPerParty:
                 return (
-                    <VictoryChart
-                        animate={{ duration: 100 }}
+                    <VictoryChart animate={false}
                         domainPadding={{ x: 20 }}>
                         <VictoryBar
+                            animate={{ duration: 666 }}
                             data={this.getData().sort((a, b) => {
                                 return b.totalSeats - a.totalSeats;
                             })}
