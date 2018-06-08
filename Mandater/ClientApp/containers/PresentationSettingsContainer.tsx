@@ -7,7 +7,6 @@ import { PresentationAction } from "../types/ActionTypes";
 function mapStateToProps(state: ApplicationState) {
     return {
         decimals: state.presentationState.decimals,
-        results: state.computationState.partyResults,
         newResults: state.computationState.newResults,
         showPartiesWithoutSeats: state.presentationState.showPartiesWithoutSeats
     };

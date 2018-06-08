@@ -22,7 +22,6 @@ export default function (state: ComputationState, incomingAction: Action) {
                 electionThreshold: action.electionThreshold,
                 districtSeats: action.districtSeats,
                 levelingSeats: action.levelingSeats,
-                partyResults: action.partyResults,
                 newResults: action.newResults,
             };
         case ElectionActionEnum.UpdateResults:
@@ -35,7 +34,6 @@ export default function (state: ComputationState, incomingAction: Action) {
                 electionThreshold: action.electionThreshold,
                 districtSeats: action.districtSeats,
                 levelingSeats: action.levelingSeats,
-                partyResults: action.partyResults,
                 newResults: action.newResults,
             };
         default:

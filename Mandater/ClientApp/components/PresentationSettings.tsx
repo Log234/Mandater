@@ -1,6 +1,5 @@
 ﻿import * as React from "react";
 import { SmartNumericInput } from "./SmartNumericInput";
-import { ComputationResults } from "../logic/ComputationResult";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 
 export interface PresentationSettingsProps {
@@ -11,7 +10,6 @@ export interface PresentationSettingsProps {
     toggleShowPartiesWithoutSeats: (
         event: React.ChangeEvent<HTMLInputElement>
     ) => void;
-    results: ComputationResults;
     newResults: LagueDhontResult;
 }
 export class PresentationSettings extends React.Component<

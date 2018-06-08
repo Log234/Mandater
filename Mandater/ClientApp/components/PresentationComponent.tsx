@@ -2,12 +2,10 @@
 import { VictoryChart, VictoryBar } from "victory";
 import ReactTable, {  } from "react-table";
 import { PresentationType } from "../types/PresentationType";
-import { ComputationResults } from "../logic/ComputationResult";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 import { getPartyTableData } from "../logic/PresentationUtilities";
 
 export interface PresentationProps {
-    results: ComputationResults;
     currentPresentation: PresentationType;
     decimals: number;
     showPartiesWithoutSeats: boolean;

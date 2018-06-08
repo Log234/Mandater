@@ -1,7 +1,7 @@
 import { ComputationPayload } from "../interfaces/ComputationPayload";
 import { Result } from "../interfaces/Result";
 import { Dictionary } from "../interfaces/Dictionary";
-import { distributeSeats, getDenominator } from "./AlgorithmUtilsNew";
+import { distributeSeats, getDenominator } from "./AlgorithmUtils";
 import { PartyResult } from "../interfaces/PartyResult";
 import { LevelingSeat } from "../interfaces/LevelingSeat";
 import { DistrictResult } from "../interfaces/DistrictResult";
