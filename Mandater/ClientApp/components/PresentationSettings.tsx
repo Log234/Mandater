@@ -1,6 +1,5 @@
 ﻿import * as React from "react";
 import { SmartNumericInput } from "./SmartNumericInput";
-import { ComputationResults } from "../logic/ComputationResult";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 
 export interface PresentationSettingsProps {
@@ -11,8 +10,7 @@ export interface PresentationSettingsProps {
     toggleShowPartiesWithoutSeats: (
         event: React.ChangeEvent<HTMLInputElement>
     ) => void;
-    results: ComputationResults;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 export class PresentationSettings extends React.Component<
     PresentationSettingsProps
@@ -23,7 +21,7 @@ export class PresentationSettings extends React.Component<
     }
     createPartyList(): React.ReactNode[] {
         const options = [] as React.ReactNode[];
-        this.props.newResults.partyResults.forEach(party => {
+        this.props.results.partyResults.forEach(party => {
             options.push(<option key={party.partyCode}>{party.partyName}</option>);
         });
         return options;

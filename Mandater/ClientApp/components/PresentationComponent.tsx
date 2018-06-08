@@ -2,16 +2,14 @@
 import { VictoryChart, VictoryBar } from "victory";
 import ReactTable, {  } from "react-table";
 import { PresentationType } from "../types/PresentationType";
-import { ComputationResults } from "../logic/ComputationResult";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 import { getPartyTableData } from "../logic/PresentationUtilities";
 
 export interface PresentationProps {
-    results: ComputationResults;
     currentPresentation: PresentationType;
     decimals: number;
     showPartiesWithoutSeats: boolean;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 
 export class PresentationComponent extends React.Component<
@@ -24,16 +22,16 @@ export class PresentationComponent extends React.Component<
      */
     getData() {
         if (this.props.showPartiesWithoutSeats) {
-            return this.props.newResults.partyResults;
+            return this.props.results.partyResults;
         } else {
-            return this.props.newResults.partyResults.filter(
+            return this.props.results.partyResults.filter(
                 party => party.totalSeats > 0
             );
         }
     }
 
     render() {
-        const newResults = this.props.newResults;
+        const results = this.props.results;
         const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
         const decimals = this.props.decimals;
 
@@ -46,7 +44,7 @@ export class PresentationComponent extends React.Component<
                     <ReactTable
                         className="-highlight -striped"
                         data={getPartyTableData(
-                            newResults.partyResults,
+                            results.partyResults,
                             showPartiesWithoutSeats,
                             decimals
                         )}
@@ -82,6 +80,10 @@ export class PresentationComponent extends React.Component<
                             {
                                 Header: "Sum",
                                 accessor: "totalSeats"
+                            },
+                            {
+                                Header: "Proporsjonalitet",
+                                accessor: "proportionality"
                             }
                         ]}
                         defaultSorted={[
@@ -95,7 +97,7 @@ export class PresentationComponent extends React.Component<
             case PresentationType.DistrictTable:
                 return (
                     <ReactTable
-                    data={this.props.newResults.districtResults}
+                    data={this.props.results.districtResults}
                         columns={[
                             {
                         Header: "Fylke",
@@ -109,7 +111,12 @@ export class PresentationComponent extends React.Component<
                     <VictoryChart animate={false}
                         domainPadding={{ x: 20 }}>
                         <VictoryBar
-                            animate={{ duration: 666 }}
+                            animate={{ duration: 200, onEntry: {
+                                duration: 800
+                            }, onLoad: {
+                                duration: 800
+                            },
+                        onExit: {duration: 800} }}
                             data={this.getData().sort((a, b) => {
                                 return b.totalSeats - a.totalSeats;
                             })}
@@ -118,17 +125,6 @@ export class PresentationComponent extends React.Component<
                             y="totalSeats"
                         />
                     </VictoryChart>
-                );
-            case PresentationType.FancyElectionTable:
-                return (
-                    <ReactTable
-                        data={this.getData()}
-                        columns={[
-                            { Header: "Partyname", accessor: "partyName" },
-                            { Header: "Seats", accessor: "totalSeats" }
-                        ]}
-                        defaultPageSize={Math.min(10, this.getData().length)}
-                    />
                 );
             default:
                 console.log(`Could not find presentation type ${tableType}`);

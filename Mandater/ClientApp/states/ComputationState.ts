@@ -1,7 +1,5 @@
 ﻿import { AlgorithmType } from "../types/AlgorithmType";
 import { Election } from "../interfaces/Election";
-import { ComputationResults } from "../logic/ComputationResult";
-import { PresentationType } from "../types/PresentationType";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 
 export interface ComputationState {
@@ -11,8 +9,7 @@ export interface ComputationState {
     electionThreshold: number;
     districtSeats: number;
     levelingSeats: number;
-    partyResults: ComputationResults;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 
 export const unloadedState: ComputationState = {
@@ -33,14 +30,7 @@ export const unloadedState: ComputationState = {
     electionThreshold: -1,
     districtSeats: -1,
     levelingSeats: -1,
-    partyResults: new ComputationResults({
-        partyCodes: [],
-        districts: [],
-        partyNames: [],
-        getPresentationTypes: () => [],
-        getTable: (tableType: PresentationType, district?: string) => { return { header: [], rowId: [], body: [] }; }
-    }),
-    newResults: {
+    results: {
         districtResults: [],
         partyResults: [],
         levelingSeatDistribution: []

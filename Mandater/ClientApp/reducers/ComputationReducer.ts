@@ -22,8 +22,7 @@ export default function (state: ComputationState, incomingAction: Action) {
                 electionThreshold: action.electionThreshold,
                 districtSeats: action.districtSeats,
                 levelingSeats: action.levelingSeats,
-                partyResults: action.partyResults,
-                newResults: action.newResults,
+                results: action.results,
             };
         case ElectionActionEnum.UpdateResults:
             console.log(`Action of type ${action.type} reduced`);
@@ -35,8 +34,7 @@ export default function (state: ComputationState, incomingAction: Action) {
                 electionThreshold: action.electionThreshold,
                 districtSeats: action.districtSeats,
                 levelingSeats: action.levelingSeats,
-                partyResults: action.partyResults,
-                newResults: action.newResults,
+                results: action.results,
             };
         default:
             console.log(`Action of type ${incomingAction.type} reduced to default`);

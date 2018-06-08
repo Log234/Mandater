@@ -144,7 +144,7 @@ export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> 
                             }
                         }
                         min={0}
-                        max={30}
+                        max={100}
                         defaultValue={this.props.computationPayload.election.levelingSeats}
                         integer={true}
                         slider={true}/>

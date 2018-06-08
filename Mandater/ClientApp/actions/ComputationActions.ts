@@ -2,22 +2,18 @@
 import { ComputationAction } from "../types/ActionTypes";
 import { Election } from "../interfaces/Election";
 import { ComputationPayload } from "../interfaces/ComputationPayload";
-import { computeAlgorithm } from "../logic/Algorithm";
 import { getAlgorithmType } from "../logic/AlgorithmUtils";
-import { ComputationResults } from "../logic/ComputationResult";
-import { lagueDhont } from "../logic/LagueDhontNew";
+import { lagueDhont } from "../logic/LagueDhont";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 
 export interface InitializeComputationAction extends ComputationPayload {
     type: ComputationAction.InitializeComputation;
-    partyResults: ComputationResults;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 
 export interface UpdateResultsAction extends ComputationPayload {
     type: ComputationAction.UpdateResults;
-    partyResults: ComputationResults;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 
 export function initializeComputation(electionType: ElectionType) {
@@ -30,30 +26,23 @@ export function initializeComputation(electionType: ElectionType) {
         districtSeats: election.seats,
         levelingSeats: election.levelingSeats
     };
-    // Old
-    const results = computeAlgorithm(payload);
-    // New
-    const newResults = lagueDhont(payload);
+
+    const results = lagueDhont(payload);
     const initializeAction: InitializeComputationAction = {
         type: ComputationAction.InitializeComputation,
         ...payload,
-        partyResults: results,
-        newResults
+        results
     };
     return initializeAction;
 }
 
 export function updateElectionData(payload: ComputationPayload) {
-    // Old
-    const results = computeAlgorithm(payload);
-    // New
-    const newResults = lagueDhont(payload);
+    const results = lagueDhont(payload);
 
     const updateCalculationAction: UpdateResultsAction = {
         ...payload,
         type: ComputationAction.UpdateResults,
-        partyResults: results,
-        newResults
+        results
     };
     return updateCalculationAction;
 }
