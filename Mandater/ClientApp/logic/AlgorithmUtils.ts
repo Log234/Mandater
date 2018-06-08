@@ -167,6 +167,18 @@ export function calculateProportionality(
     }
 }
 
+export function calculateAdjustedQuotient(algorithm: AlgorithmType, partyResult: PartyResult, districtResult: DistrictResult): number {
+    const averageSeatsPerVote = districtResult.votes / districtResult.districtSeats;
+    const denominator = getDenominator(
+        algorithm,
+        partyResult.totalSeats,
+        1 // When computing the leveling seats, use the unmodified Sainte Lagües
+    );
+    const quotient = partyResult.votes / denominator;
+
+    return quotient / averageSeatsPerVote;
+}
+
 /**
  * Converts numerical IDs into their matching algorithm types
  *

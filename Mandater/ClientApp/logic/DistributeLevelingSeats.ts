@@ -1,7 +1,11 @@
 import { ComputationPayload } from "../interfaces/ComputationPayload";
 import { Result } from "../interfaces/Result";
 import { Dictionary } from "../interfaces/Dictionary";
-import { distributeSeats, getDenominator } from "./AlgorithmUtils";
+import {
+    distributeSeats,
+    getDenominator,
+    calculateAdjustedQuotient
+} from "./AlgorithmUtils";
 import { PartyResult } from "../interfaces/PartyResult";
 import { LevelingSeat } from "../interfaces/LevelingSeat";
 import { DistrictResult } from "../interfaces/DistrictResult";
@@ -90,22 +94,14 @@ export function distributeLevelingSeats(
 
     for (const countyName in districtResults) {
         if (districtPartyResults.hasOwnProperty(countyName)) {
-            const curPartyResults = districtPartyResults[countyName];
-            const averageSeatsPerVote =
-                districtResults[countyName].votes /
-                districtResults[countyName].districtSeats;
-
             for (const partyCode of levelingPartyCodes) {
-                const result = curPartyResults[partyCode];
-                if (result !== undefined) {
-                    const denominator = getDenominator(
+                const partyResult = districtPartyResults[countyName][partyCode];
+                if (partyResult !== undefined) {
+                    const adjustedQuotient = calculateAdjustedQuotient(
                         payload.algorithm,
-                        result.districtSeats,
-                        1 // When computing the leveling seats, use the unmodified Sainte Lagües
+                        partyResult,
+                        districtResults[countyName]
                     );
-                    const quotient = result.votes / denominator;
-
-                    const adjustedQuotient = quotient / averageSeatsPerVote;
                     const seat: LevelingSeat = {
                         district: countyName,
                         partyCode,
@@ -134,31 +130,40 @@ export function distributeLevelingSeats(
                 partySeats[seat.partyCode] = 0;
             }
 
-            if (
-                !completedDistricts.has(seat.district) &&
-                numberOfSeats < partyResults[seat.partyCode].levelingSeats
-            ) {
-                seat.seatNumber = seatIndex++;
+            if (numberOfSeats < partyResults[seat.partyCode].levelingSeats) {
+                if (!completedDistricts.has(seat.district)) {
+                    seat.seatNumber = seatIndex++;
 
-                partySeats[seat.partyCode]++;
-                districtResults[seat.district].levelingSeats++;
-                districtPartyResults[seat.district][seat.partyCode]
-                    .levelingSeats++;
-                districtPartyResults[seat.district][seat.partyCode]
-                    .totalSeats++;
+                    partySeats[seat.partyCode]++;
+                    districtResults[seat.district].levelingSeats++;
+                    districtPartyResults[seat.district][seat.partyCode]
+                        .levelingSeats++;
+                    districtPartyResults[seat.district][seat.partyCode]
+                        .totalSeats++;
 
-                completedDistricts.add(seat.district);
+                    completedDistricts.add(seat.district);
 
-                if (partyRestQuotients[seat.partyCode] === undefined) {
-                    partyRestQuotients[seat.partyCode] = {
+                    if (partyRestQuotients[seat.partyCode] === undefined) {
+                        partyRestQuotients[seat.partyCode] = {
+                            partyCode: seat.partyCode,
+                            levelingSeats: [seat]
+                        };
+                    } else {
+                        partyRestQuotients[seat.partyCode].levelingSeats.push(
+                            seat
+                        );
+                    }
+
+                    const adjustedQuotient = calculateAdjustedQuotient(payload.algorithm, districtPartyResults[seat.district][seat.partyCode], districtResults[seat.district]);
+                    remainingLevelingSeats.push({
+                        district: seat.district,
                         partyCode: seat.partyCode,
-                        levelingSeats: [seat]
-                    };
+                        quotient: adjustedQuotient,
+                        seatNumber: 0
+                    });
                 } else {
-                    partyRestQuotients[seat.partyCode].levelingSeats.push(seat);
+                    remainingLevelingSeats.push(seat);
                 }
-            } else {
-                remainingLevelingSeats.push(seat);
             }
         }
 
