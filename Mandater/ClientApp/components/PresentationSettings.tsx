@@ -1,8 +1,10 @@
 ﻿import * as React from "react";
 import { SmartNumericInput } from "./SmartNumericInput";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
+import { PresentationType } from "../types/PresentationType";
 
 export interface PresentationSettingsProps {
+    currentPresentation: PresentationType;
     displayedDecimals?: number;
     decimals: string;
     showPartiesWithoutSeats: boolean;
@@ -19,10 +21,25 @@ export class PresentationSettings extends React.Component<
     onChange() {
         // TODO: Complete function
     }
+    /**
+     * Helper function for reducing code in render(), allows conditional
+     * rendering.
+     */
+    needsDecimals(): boolean {
+        if (
+            this.props.currentPresentation === PresentationType.DistrictTable ||
+            this.props.currentPresentation === PresentationType.ElectionTable
+        ) {
+            return true;
+        }
+        return false;
+    }
     createPartyList(): React.ReactNode[] {
         const options = [] as React.ReactNode[];
         this.props.results.partyResults.forEach(party => {
-            options.push(<option key={party.partyCode}>{party.partyName}</option>);
+            options.push(
+                <option key={party.partyCode}>{party.partyName}</option>
+            );
         });
         return options;
     }
@@ -45,6 +62,7 @@ export class PresentationSettings extends React.Component<
                         </label>
                     </div>
                     <SmartNumericInput
+                        hidden={!this.needsDecimals()}
                         name="decimalPlaces"
                         defaultValue={2}
                         min={0}
