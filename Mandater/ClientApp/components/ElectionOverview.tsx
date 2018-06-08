@@ -1,17 +1,17 @@
 ﻿import * as React from "react";
 import ReactTable from "react-table";
 import { getPartyTableData } from "../logic/PresentationUtilities";
-import { LagueDhontResult } from "../interfaces/LagueDhontResult";
+import { PartyResult } from "../interfaces/PartyResult";
 
 export interface ElectionOverviewProps {
     decimals: number;
     showPartiesWithoutSeats: boolean;
-    results: LagueDhontResult;
+    partyResults: PartyResult[];
 }
 
 export class ElectionOverview extends React.Component<ElectionOverviewProps, {}> {
     render() {
-        const results = this.props.results;
+        const partyResults = this.props.partyResults;
         const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
         const decimals = this.props.decimals;
 
@@ -19,7 +19,7 @@ export class ElectionOverview extends React.Component<ElectionOverviewProps, {}>
             <ReactTable
                 className="-highlight -striped"
                 data={getPartyTableData(
-                    results.partyResults,
+                    partyResults,
                     showPartiesWithoutSeats,
                     decimals
                 )}

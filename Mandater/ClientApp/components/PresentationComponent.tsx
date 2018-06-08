@@ -25,7 +25,7 @@ export class PresentationComponent extends React.Component<
 
         switch (tableType) {
             case PresentationType.ElectionTable:
-                return <ElectionOverview decimals={decimals} showPartiesWithoutSeats={showPartiesWithoutSeats} results={results} />;
+                return <ElectionOverview decimals={decimals} showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
             case PresentationType.DistrictTable:
                 return <DistrictOverview showPartiesWithoutSeats={showPartiesWithoutSeats} districtResults={results.districtResults} />;
             case PresentationType.SeatsPerParty:
