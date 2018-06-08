@@ -168,6 +168,7 @@ export function distributeLevelingSeats(
         }
 
         levelingSeats = remainingLevelingSeats;
+        levelingSeats.sort((v, t) => t.quotient - v.quotient);
     }
 
     for (const seat of levelingSeats) {
