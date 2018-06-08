@@ -58,6 +58,10 @@ export class ElectionOverview extends React.Component<
                     {
                         Header: "Sum",
                         accessor: "totalSeats"
+                    },
+                    {
+                        Header: "Prop.",
+                        accessor: "proportionality"
                     }
                 ]}
                 defaultSorted={[

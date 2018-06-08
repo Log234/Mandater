@@ -21,7 +21,7 @@ export function getPartyTableData(partyResults: PartyResult[], showPartiesWithou
             districtSeats: partyResult.districtSeats,
             levelingSeats: partyResult.levelingSeats,
             totalSeats: partyResult.totalSeats,
-            proportionality: partyResult.proportionality
+            proportionality: roundNumber(partyResult.proportionality, numberOfDecimals)
         });
     }
 
