@@ -1,16 +1,8 @@
 ﻿import * as React from "react";
 import { VictoryChart, VictoryBar } from "victory";
-import ReactTable, { Column, RowInfo } from "react-table";
+import ReactTable, {  } from "react-table";
 import { PresentationType } from "../types/PresentationType";
-import { TableComponent } from "./TableComponent";
 import { ComputationResults } from "../logic/ComputationResult";
-import {
-    filterZeroColumns,
-    roundDecimals,
-    filterRowByValue
-} from "../logic/TableFilters";
-import { DecomposedTable } from "../interfaces/DecomposedTable";
-import { NumberToNumberFilter } from "../interfaces/ArrayFilters";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 import { getPartyTableData } from "../logic/PresentationUtilities";
 
@@ -45,10 +37,8 @@ export class PresentationComponent extends React.Component<
         const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
         const decimals = this.props.decimals;
 
-        const results = this.props.results;
         const tableType = this.props.currentPresentation;
 
-        const ntnFilters: NumberToNumberFilter[] = [];
 
         switch (tableType) {
             case PresentationType.ElectionTable:
