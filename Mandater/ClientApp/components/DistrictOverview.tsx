@@ -7,15 +7,18 @@ export interface DistrictOverviewProps {
     showPartiesWithoutSeats: boolean;
 }
 
-export class DistrictOverview extends React.Component<DistrictOverviewProps, {}> {
+export class DistrictOverview extends React.Component<
+    DistrictOverviewProps,
+    {}
+> {
     render() {
         return (
             <ReactTable
-            data={this.props.districtResults}
+                data={this.props.districtResults}
                 columns={[
                     {
-                Header: "Fylke",
-                accessor: "name"
+                        Header: "Fylke",
+                        accessor: "name"
                     }
                 ]}
             />

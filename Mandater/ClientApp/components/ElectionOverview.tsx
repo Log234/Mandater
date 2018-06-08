@@ -9,7 +9,10 @@ export interface ElectionOverviewProps {
     partyResults: PartyResult[];
 }
 
-export class ElectionOverview extends React.Component<ElectionOverviewProps, {}> {
+export class ElectionOverview extends React.Component<
+    ElectionOverviewProps,
+    {}
+> {
     render() {
         const partyResults = this.props.partyResults;
         const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
