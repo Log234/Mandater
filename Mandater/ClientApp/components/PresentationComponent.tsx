@@ -9,7 +9,7 @@ export interface PresentationProps {
     currentPresentation: PresentationType;
     decimals: number;
     showPartiesWithoutSeats: boolean;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 
 export class PresentationComponent extends React.Component<
@@ -22,16 +22,16 @@ export class PresentationComponent extends React.Component<
      */
     getData() {
         if (this.props.showPartiesWithoutSeats) {
-            return this.props.newResults.partyResults;
+            return this.props.results.partyResults;
         } else {
-            return this.props.newResults.partyResults.filter(
+            return this.props.results.partyResults.filter(
                 party => party.totalSeats > 0
             );
         }
     }
 
     render() {
-        const newResults = this.props.newResults;
+        const results = this.props.results;
         const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
         const decimals = this.props.decimals;
 
@@ -44,7 +44,7 @@ export class PresentationComponent extends React.Component<
                     <ReactTable
                         className="-highlight -striped"
                         data={getPartyTableData(
-                            newResults.partyResults,
+                            results.partyResults,
                             showPartiesWithoutSeats,
                             decimals
                         )}
@@ -93,7 +93,7 @@ export class PresentationComponent extends React.Component<
             case PresentationType.DistrictTable:
                 return (
                     <ReactTable
-                    data={this.props.newResults.districtResults}
+                    data={this.props.results.districtResults}
                         columns={[
                             {
                         Header: "Fylke",

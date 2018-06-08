@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 const mapStateToProps = (state: ApplicationState) => {
     console.log("PresentationContainer mapped state to props");
     return {
-        newResults: state.computationState.newResults,
+        results: state.computationState.results,
         currentPresentation: state.presentationState.currentPresentation,
         decimals: state.presentationState.decimalsNumber,
         showPartiesWithoutSeats: state.presentationState.showPartiesWithoutSeats

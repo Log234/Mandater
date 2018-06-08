@@ -9,7 +9,7 @@ export interface ComputationState {
     electionThreshold: number;
     districtSeats: number;
     levelingSeats: number;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 
 export const unloadedState: ComputationState = {
@@ -30,7 +30,7 @@ export const unloadedState: ComputationState = {
     electionThreshold: -1,
     districtSeats: -1,
     levelingSeats: -1,
-    newResults: {
+    results: {
         districtResults: [],
         partyResults: [],
         levelingSeatDistribution: []

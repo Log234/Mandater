@@ -10,7 +10,7 @@ export interface PresentationSettingsProps {
     toggleShowPartiesWithoutSeats: (
         event: React.ChangeEvent<HTMLInputElement>
     ) => void;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 export class PresentationSettings extends React.Component<
     PresentationSettingsProps
@@ -21,7 +21,7 @@ export class PresentationSettings extends React.Component<
     }
     createPartyList(): React.ReactNode[] {
         const options = [] as React.ReactNode[];
-        this.props.newResults.partyResults.forEach(party => {
+        this.props.results.partyResults.forEach(party => {
             options.push(<option key={party.partyCode}>{party.partyName}</option>);
         });
         return options;

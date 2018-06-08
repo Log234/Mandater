@@ -8,12 +8,12 @@ import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 
 export interface InitializeComputationAction extends ComputationPayload {
     type: ComputationAction.InitializeComputation;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 
 export interface UpdateResultsAction extends ComputationPayload {
     type: ComputationAction.UpdateResults;
-    newResults: LagueDhontResult;
+    results: LagueDhontResult;
 }
 
 export function initializeComputation(electionType: ElectionType) {
@@ -27,22 +27,22 @@ export function initializeComputation(electionType: ElectionType) {
         levelingSeats: election.levelingSeats
     };
 
-    const newResults = lagueDhont(payload);
+    const results = lagueDhont(payload);
     const initializeAction: InitializeComputationAction = {
         type: ComputationAction.InitializeComputation,
         ...payload,
-        newResults
+        results
     };
     return initializeAction;
 }
 
 export function updateElectionData(payload: ComputationPayload) {
-    const newResults = lagueDhont(payload);
+    const results = lagueDhont(payload);
 
     const updateCalculationAction: UpdateResultsAction = {
         ...payload,
         type: ComputationAction.UpdateResults,
-        newResults
+        results
     };
     return updateCalculationAction;
 }
