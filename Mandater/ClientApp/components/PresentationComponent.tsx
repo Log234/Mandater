@@ -122,17 +122,6 @@ export class PresentationComponent extends React.Component<
                         />
                     </VictoryChart>
                 );
-            case PresentationType.FancyElectionTable:
-                return (
-                    <ReactTable
-                        data={this.getData()}
-                        columns={[
-                            { Header: "Partyname", accessor: "partyName" },
-                            { Header: "Seats", accessor: "totalSeats" }
-                        ]}
-                        defaultPageSize={Math.min(10, this.getData().length)}
-                    />
-                );
             default:
                 console.log(`Could not find presentation type ${tableType}`);
                 return <g />;
