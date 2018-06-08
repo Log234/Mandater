@@ -6,6 +6,7 @@ import { ComputationPayload } from "../interfaces/ComputationPayload";
 import { Election } from "../interfaces/Election";
 import { ElectionType } from "../interfaces/ElectionType";
 import { SmartNumericInput } from "./SmartNumericInput";
+import { AlgorithmType } from "../types/AlgorithmType";
 
 export interface SettingMenuProps {
     electionType: ElectionType;
@@ -19,6 +20,9 @@ export interface SettingMenuProps {
 
 
 export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> {
+    shouldHideFirstDivisor(): boolean {
+        return (this.props.computationPayload.algorithm === AlgorithmType.DHondt);
+    }
     render() {
         return (
             <div className="settings-menu">
@@ -86,6 +90,7 @@ export class SettingMenuComponent extends React.Component<SettingMenuProps, {}> 
                         </div>
                     </div>
                     <SmartNumericInput
+                        hidden={this.shouldHideFirstDivisor()}
                         name="firstDivisor"
                         title="Første delingstall"
                         value={this.props.settingsPayload.firstDivisor}

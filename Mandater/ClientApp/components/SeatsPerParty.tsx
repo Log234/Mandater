@@ -26,7 +26,16 @@ export class SeatsPerParty extends React.Component<SeatsPerPartyProps, {}> {
         return (
             <VictoryChart animate={false} domainPadding={{ x: 20 }}>
                 <VictoryBar
-                    animate={{ duration: 666 }}
+                    animate={{
+                        duration: 200,
+                        onEntry: {
+                            duration: 800
+                        },
+                        onLoad: {
+                            duration: 800
+                        },
+                        onExit: { duration: 800 }
+                    }}
                     data={this.getData().sort((a, b) => {
                         return b.totalSeats - a.totalSeats;
                     })}

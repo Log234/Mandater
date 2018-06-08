@@ -60,7 +60,7 @@ export class ElectionOverview extends React.Component<
                         accessor: "totalSeats"
                     },
                     {
-                        Header: "Prop.",
+                        Header: "Proporsjonalitet",
                         accessor: "proportionality"
                     }
                 ]}

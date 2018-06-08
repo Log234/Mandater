@@ -6,6 +6,7 @@ import { PresentationAction } from "../types/ActionTypes";
 
 function mapStateToProps(state: ApplicationState) {
     return {
+        currentPresentation: state.presentationState.currentPresentation,
         decimals: state.presentationState.decimals,
         results: state.computationState.results,
         showPartiesWithoutSeats: state.presentationState.showPartiesWithoutSeats
