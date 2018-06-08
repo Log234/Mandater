@@ -1,4 +1,4 @@
-﻿import { ComputationSets } from "../interfaces/ComputationSets";
+import { ComputationSets } from "../interfaces/ComputationSets";
 import { NumberToNumberFilter, NumberToStringFilter, StringToStringFilter } from "../interfaces/ArrayFilters";
 import { composeTable } from "../logic/TableFunctions";
 import { DecomposedTable } from "../interfaces/DecomposedTable";
@@ -43,7 +43,7 @@ export class ComputationResults {
 
     /**
      * Returns a table of the type specified in string[][] format.
-     * 
+     *
      * @param tabletype The type of table to request, must be in the list returned by getPresentationTypes()
      * @param district [optional] If the type of table requested is related to a specific district, it should be specified here.
      * @param ntnFilters [optional] Allows you to apply filters to manipulate the data based on the numerical values
@@ -61,7 +61,7 @@ export class ComputationResults {
         // Filter out rows or collumns depending on their numerical values
         let numberData = decomposedTable;
         if (ntnFilters !== undefined) {
-            for (let curNtn of ntnFilters) {
+            for (const curNtn of ntnFilters) {
                 numberData = curNtn(numberData);
             }
         }
@@ -75,9 +75,9 @@ export class ComputationResults {
                 header: numberData.header,
                 rowId: numberData.rowId,
                 body: []
-            }
+            };
 
-            for (let row of numberData.body) {
+            for (const row of numberData.body) {
                 const stringRow = row.map(String);
                 stringData.body.push(stringRow);
             }
@@ -85,7 +85,7 @@ export class ComputationResults {
 
         // Filter out rows or collumns depending on their string values
         if (stsFilters !== undefined) {
-            for (let curSts of stsFilters) {
+            for (const curSts of stsFilters) {
                 stringData = curSts(stringData);
             }
         }

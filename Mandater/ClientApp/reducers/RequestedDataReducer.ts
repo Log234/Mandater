@@ -15,7 +15,8 @@ export default function (state: RequestedDataState, incomingAction: Action) {
             console.log(`Action of type ${action.type} reduced`);
             return {
                 ...state,
-                electionType: action.electionType
+                electionType: action.electionType,
+                enableAutoSave: true,
             };
         default:
             console.log(`Action of type ${incomingAction.type} reduced to default`);

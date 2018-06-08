@@ -15,17 +15,30 @@ export class PresentationSelection extends React.Component {
     }
 
     render() {
-        return <div className="presentation-selection">
-            <h2>Presentasjonstyper</h2>
-            <PresentationSelectionButton
-                className="btn-block"
-                title={"Landsoversikt"}
-                presentationSelected={PresentationType.ElectionTable} />
-            <PresentationSelectionButton
-                className="btn-block"
-                title={"Distriktsoversikt"}
-                presentationSelected={PresentationType.DistrictTable} />
-        </div>;
-
+        return (
+            <div className="presentation-selection">
+                <h2>Presentasjonstyper</h2>
+                <PresentationSelectionButton
+                    className="btn-block"
+                    title={"Landsoversikt"}
+                    presentationSelected={PresentationType.ElectionTable}
+                />
+                <PresentationSelectionButton
+                    className="btn-block"
+                    title={"Distriktsoversikt"}
+                    presentationSelected={PresentationType.DistrictTable}
+                />
+                <PresentationSelectionButton
+                    className="btn-block"
+                    title={"Mandater per parti"}
+                    presentationSelected={PresentationType.SeatsPerParty}
+                />
+                <PresentationSelectionButton
+                    className="btn-block"
+                    title={"Fancy tabell"}
+                    presentationSelected={PresentationType.FancyElectionTable}
+                />
+            </div>
+        );
     }
 }

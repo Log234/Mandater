@@ -1,13 +1,13 @@
-﻿import { Action } from "redux";
+import { Action } from "redux";
 import { InitializeSettingsAction, UpdateSettingsAction, ToggleAutoComputeAction } from "../actions/SettingActions";
-import { SettingsState, unloadedState } from "../states/SettingState";
+import { SettingsState, unloadedState } from "../states/SettingsState";
 import { SettingAction } from "../types/ActionTypes";
 
 // TODO: Make actions for updates of elections etc...
 
 type KnownAction = InitializeSettingsAction
     | UpdateSettingsAction
-    | ToggleAutoComputeAction
+    | ToggleAutoComputeAction;
 
 // NB: BaseReducer Typescript (Reducer<State>) definition changes as of redux 4.0.0
 // https://github.com/rt2zz/redux-persist/pull/778
@@ -49,4 +49,4 @@ export default function (state: SettingsState, incomingAction: Action) {
             console.log(`Action of type ${incomingAction.type} reduced to default`);
             return state || unloadedState;
     }
-};
+}

@@ -1,9 +1,9 @@
-﻿import { PresentationType } from "../types/PresentationType";
+import { PresentationType } from "../types/PresentationType";
 
 export interface PresentationState {
-    currentPresentation: PresentationType,
-    decimals: string,
-    decimalsNumber: number,
+    currentPresentation: PresentationType;
+    decimals: string;
+    decimalsNumber: number;
     showPartiesWithoutSeats: boolean;
 }
 

@@ -1,6 +1,6 @@
-import ComputationReducer from "../reducers/ComputationReducer"
-import { ComputationState } from "../states/ComputationState"
-import { SettingsState } from "../states/SettingState";
+import ComputationReducer from "../reducers/ComputationReducer";
+import { ComputationState } from "../states/ComputationState";
+import { SettingsState } from "../states/SettingsState";
 import { RequestedDataState } from "../states/RequestedDataState";
 import RequestedDataReducer from "../reducers/RequestedDataReducer";
 import SettingsReducer from "../reducers/SettingsReducer";
@@ -21,9 +21,9 @@ import { PresentationState } from "../states/PresentationState";
 
 
 export interface ApplicationState {
-    settingsState: SettingsState,
-    computationState: ComputationState,
-    requestedDataState: RequestedDataState,
+    settingsState: SettingsState;
+    computationState: ComputationState;
+    requestedDataState: RequestedDataState;
     presentationState: PresentationState;
 }
 
@@ -37,10 +37,10 @@ export const reducers = {
     presentationState: PresentationReducer
 };
 
-//export const store = createStore(reducers);
-//console.log(store.getState(
+// export const store = createStore(reducers);
+// console.log(store.getState(
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are
 // correctly typed to match your store.
-//export interface AppThunkAction<TAction> {
+// export interface AppThunkAction<TAction> {
 //    (dispatch: (action: TAction) => void, getState: () => ApplicationState): void;
-//}
+// }

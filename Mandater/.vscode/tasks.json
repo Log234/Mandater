@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": ["build", "${workspaceFolder}/Mandater.csproj"],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "TSLint Project",
+            "type": "shell",
+            "command": "./node_modules/.bin/tslint --fix -p . -c ./.vscode/tslint.json -t prose",
+            "problemMatcher": {"base":"$tslint5", "fileLocation":"absolute"}
+        }
+    ]
+}

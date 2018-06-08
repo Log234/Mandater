@@ -29,7 +29,9 @@ module.exports = (env) => {
                 "redux",
                 "redux-thunk",
                 "react-router-redux",
-                "jquery"
+                "jquery",
+                "react-table",
+                "react-table/react-table.css"
             ],
         },
         output: {

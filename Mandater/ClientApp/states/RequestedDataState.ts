@@ -1,10 +1,12 @@
-﻿import { ElectionType } from "../interfaces/ElectionType";
+import { ElectionType } from "../interfaces/ElectionType";
 
 export interface RequestedDataState {
-    electionType: ElectionType
+    enableAutoSave: boolean;
+    electionType: ElectionType;
 }
 
 export const unloadedState: RequestedDataState = {
+    enableAutoSave: false,
     electionType: {
         countryId: -1,
         electionTypeId: -1,
