@@ -18,12 +18,12 @@ export class PresentationComponent extends React.Component<
 > {
 
     render() {
-        const tableType = this.props.currentPresentation;
+        const currentPresentation = this.props.currentPresentation;
         const decimals = this.props.decimals;
         const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
         const results = this.props.results;
 
-        switch (tableType) {
+        switch (currentPresentation) {
             case PresentationType.ElectionTable:
                 return <ElectionOverview decimals={decimals} showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
             case PresentationType.DistrictTable:
@@ -31,7 +31,7 @@ export class PresentationComponent extends React.Component<
             case PresentationType.SeatsPerParty:
                 return <SeatsPerParty showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
             default:
-                console.log(`Could not find presentation type ${tableType}`);
+                console.log(`Could not find presentation type ${currentPresentation}`);
                 return <g />;
         }
     }
