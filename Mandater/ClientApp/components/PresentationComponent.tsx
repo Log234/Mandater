@@ -80,6 +80,10 @@ export class PresentationComponent extends React.Component<
                             {
                                 Header: "Sum",
                                 accessor: "totalSeats"
+                            },
+                            {
+                                Header: "Proporsjonalitet",
+                                accessor: "proportionality"
                             }
                         ]}
                         defaultSorted={[
