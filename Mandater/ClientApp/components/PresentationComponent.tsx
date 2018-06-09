@@ -1,9 +1,9 @@
 ﻿import * as React from "react";
-import { VictoryChart, VictoryBar } from "victory";
-import ReactTable, {  } from "react-table";
 import { PresentationType } from "../types/PresentationType";
 import { LagueDhontResult } from "../interfaces/LagueDhontResult";
-import { getPartyTableData } from "../logic/PresentationUtilities";
+import { ElectionOverview } from "./ElectionOverview";
+import { DistrictOverview } from "./DistrictOverview";
+import { SeatsPerParty } from "./SeatsPerParty";
 
 export interface PresentationProps {
     currentPresentation: PresentationType;
@@ -16,118 +16,22 @@ export class PresentationComponent extends React.Component<
     PresentationProps,
     {}
 > {
-    /**
-     * Takes raw data from property/properties, and converts them to more
-     * presentable things.
-     */
-    getData() {
-        if (this.props.showPartiesWithoutSeats) {
-            return this.props.results.partyResults;
-        } else {
-            return this.props.results.partyResults.filter(
-                party => party.totalSeats > 0
-            );
-        }
-    }
 
     render() {
-        const results = this.props.results;
-        const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
+        const currentPresentation = this.props.currentPresentation;
         const decimals = this.props.decimals;
+        const showPartiesWithoutSeats = this.props.showPartiesWithoutSeats;
+        const results = this.props.results;
 
-        const tableType = this.props.currentPresentation;
-
-
-        switch (tableType) {
+        switch (currentPresentation) {
             case PresentationType.ElectionTable:
-                return (
-                    <ReactTable
-                        className="-highlight -striped"
-                        data={getPartyTableData(
-                            results.partyResults,
-                            showPartiesWithoutSeats,
-                            decimals
-                        )}
-                        defaultPageSize={10}
-                        showPaginationBottom={false}
-                        showPaginationTop={true}
-                        rowsText="rader"
-                        pageText="Side"
-                        ofText="av"
-                        nextText="Neste"
-                        previousText="Forrige"
-                        columns={[
-                            {
-                                Header: "Parti",
-                                accessor: "partyName"
-                            },
-                            {
-                                Header: "Stemmer",
-                                accessor: "votes"
-                            },
-                            {
-                                Header: "Prosent",
-                                accessor: "percentVotes"
-                            },
-                            {
-                                Header: "Distrikt",
-                                accessor: "districtSeats"
-                            },
-                            {
-                                Header: "Utjevning",
-                                accessor: "levelingSeats"
-                            },
-                            {
-                                Header: "Sum",
-                                accessor: "totalSeats"
-                            },
-                            {
-                                Header: "Proporsjonalitet",
-                                accessor: "proportionality"
-                            }
-                        ]}
-                        defaultSorted={[
-                            {
-                                id: "totalSeats",
-                                desc: true
-                            }
-                        ]}
-                    />
-                );
+                return <ElectionOverview decimals={decimals} showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
             case PresentationType.DistrictTable:
-                return (
-                    <ReactTable
-                    data={this.props.results.districtResults}
-                        columns={[
-                            {
-                        Header: "Fylke",
-                        accessor: "name"
-                            }
-                        ]}
-                    />
-                );
+                return <DistrictOverview showPartiesWithoutSeats={showPartiesWithoutSeats} districtResults={results.districtResults} />;
             case PresentationType.SeatsPerParty:
-                return (
-                    <VictoryChart animate={false}
-                        domainPadding={{ x: 20 }}>
-                        <VictoryBar
-                            animate={{ duration: 200, onEntry: {
-                                duration: 800
-                            }, onLoad: {
-                                duration: 800
-                            },
-                        onExit: {duration: 800} }}
-                            data={this.getData().sort((a, b) => {
-                                return b.totalSeats - a.totalSeats;
-                            })}
-                            sortKey="t"
-                            x="partyCode"
-                            y="totalSeats"
-                        />
-                    </VictoryChart>
-                );
+                return <SeatsPerParty showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
             default:
-                console.log(`Could not find presentation type ${tableType}`);
+                console.log(`Could not find presentation type ${currentPresentation}`);
                 return <g />;
         }
     }
