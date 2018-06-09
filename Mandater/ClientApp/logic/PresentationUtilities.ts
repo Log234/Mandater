@@ -1,9 +1,12 @@
 import { PartyResult } from "../interfaces/PartyResult";
 import { roundNumber } from "./NumberUtilities";
 import { DistrictResult } from "../interfaces/DistrictResult";
-import { Column } from "react-table";
 
-export function getPartyTableData(partyResults: PartyResult[], showPartiesWithoutSeats: boolean, numberOfDecimals: number): PartyResult[] {
+export function getPartyTableData(
+    partyResults: PartyResult[],
+    showPartiesWithoutSeats: boolean,
+    numberOfDecimals: number
+): PartyResult[] {
     let filteredResults = [...partyResults];
 
     if (!showPartiesWithoutSeats) {
@@ -17,11 +20,41 @@ export function getPartyTableData(partyResults: PartyResult[], showPartiesWithou
             partyCode: partyResult.partyCode,
             partyName: partyResult.partyName,
             votes: partyResult.votes,
-            percentVotes: roundNumber(partyResult.percentVotes, numberOfDecimals),
+            percentVotes: roundNumber(
+                partyResult.percentVotes,
+                numberOfDecimals
+            ),
             districtSeats: partyResult.districtSeats,
             levelingSeats: partyResult.levelingSeats,
             totalSeats: partyResult.totalSeats,
-            proportionality: roundNumber(partyResult.proportionality, numberOfDecimals)
+            proportionality: roundNumber(
+                partyResult.proportionality,
+                numberOfDecimals
+            )
+        });
+    }
+
+    return roundedResults;
+}
+
+export function getDistrictTableData(
+    districtResults: DistrictResult[],
+    numberOfDecimals: number
+): DistrictResult[] {
+    const roundedResults: DistrictResult[] = [];
+
+    for (const districtResult of districtResults) {
+        roundedResults.push({
+            name: districtResult.name,
+            votes: districtResult.votes,
+            percentVotes: roundNumber(
+                districtResult.percentVotes,
+                numberOfDecimals
+            ),
+            districtSeats: districtResult.districtSeats,
+            levelingSeats: districtResult.levelingSeats,
+            districtSeatResult: districtResult.districtSeatResult,
+            partyResults: districtResult.partyResults
         });
     }
 

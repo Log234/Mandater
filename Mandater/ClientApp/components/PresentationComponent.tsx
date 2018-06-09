@@ -4,6 +4,7 @@ import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 import { ElectionOverview } from "./ElectionOverview";
 import { DistrictOverview } from "./DistrictOverview";
 import { SeatsPerParty } from "./SeatsPerParty";
+import { getDistrictTableData } from "../logic/PresentationUtilities";
 
 export interface PresentationProps {
     currentPresentation: PresentationType;
@@ -27,7 +28,7 @@ export class PresentationComponent extends React.Component<
             case PresentationType.ElectionTable:
                 return <ElectionOverview decimals={decimals} showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
             case PresentationType.DistrictTable:
-                return <DistrictOverview showPartiesWithoutSeats={showPartiesWithoutSeats} districtResults={results.districtResults} />;
+                return <DistrictOverview districtResults={getDistrictTableData(results.districtResults, decimals)} />;
             case PresentationType.SeatsPerParty:
                 return <SeatsPerParty showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
             default:
