@@ -40,9 +40,11 @@ export class DistrictOverview extends React.Component<
                     },
                     {
                         Header: "Sum",
-                        id: "Sum",
-                        accessor: (row: DistrictResult) =>
-                            row.districtSeats + row.levelingSeats
+                        accessor: "totalSeats"
+                    },
+                    {
+                        Header: "Stemmer/mandat",
+                        accessor: "votesPerSeat"
                     }
                 ]}
             />

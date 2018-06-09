@@ -53,6 +53,11 @@ export function getDistrictTableData(
             ),
             districtSeats: districtResult.districtSeats,
             levelingSeats: districtResult.levelingSeats,
+            totalSeats: districtResult.totalSeats,
+            votesPerSeat: roundNumber(
+                districtResult.votesPerSeat,
+                numberOfDecimals
+            ),
             districtSeatResult: districtResult.districtSeatResult,
             partyResults: districtResult.partyResults
         });

@@ -179,6 +179,15 @@ export function calculateAdjustedQuotient(algorithm: AlgorithmType, partyResult:
     return quotient / averageSeatsPerVote;
 }
 
+export function finalizeDistrictCalculations(districtResults: Dictionary<DistrictResult>) {
+    for (const district in districtResults) {
+        if (districtResults.hasOwnProperty(district)) {
+            districtResults[district].totalSeats = districtResults[district].districtSeats + districtResults[district].levelingSeats;
+            districtResults[district].votesPerSeat = districtResults[district].votes / districtResults[district].totalSeats;
+        }
+    }
+}
+
 /**
  * Converts numerical IDs into their matching algorithm types
  *
