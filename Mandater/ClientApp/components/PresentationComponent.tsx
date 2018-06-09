@@ -4,7 +4,7 @@ import { LagueDhontResult } from "../interfaces/LagueDhontResult";
 import { ElectionOverview } from "./ElectionOverview";
 import { DistrictOverview } from "./DistrictOverview";
 import { SeatsPerParty } from "./SeatsPerParty";
-import { getDistrictTableData } from "../logic/PresentationUtilities";
+import { getDistrictTableData, getPartyTableData, getSeatsPerPartyData } from "../logic/PresentationUtilities";
 
 export interface PresentationProps {
     currentPresentation: PresentationType;
@@ -26,11 +26,11 @@ export class PresentationComponent extends React.Component<
 
         switch (currentPresentation) {
             case PresentationType.ElectionTable:
-                return <ElectionOverview decimals={decimals} showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
+                return <ElectionOverview partyResults={getPartyTableData(results.partyResults, showPartiesWithoutSeats, decimals)} />;
             case PresentationType.DistrictTable:
                 return <DistrictOverview districtResults={getDistrictTableData(results.districtResults, decimals)} />;
             case PresentationType.SeatsPerParty:
-                return <SeatsPerParty showPartiesWithoutSeats={showPartiesWithoutSeats} partyResults={results.partyResults} />;
+                return <SeatsPerParty partyResults={getSeatsPerPartyData(results.partyResults, showPartiesWithoutSeats)} />;
             default:
                 console.log(`Could not find presentation type ${currentPresentation}`);
                 return <g />;

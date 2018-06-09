@@ -60,3 +60,11 @@ export function getDistrictTableData(
 
     return roundedResults;
 }
+
+export function getSeatsPerPartyData(partyResults: PartyResult[], showPartiesWithoutSeats: boolean): PartyResult[] {
+    if (showPartiesWithoutSeats) {
+        return partyResults;
+    } else {
+        return partyResults.filter(party => party.totalSeats > 0);
+    }
+}
