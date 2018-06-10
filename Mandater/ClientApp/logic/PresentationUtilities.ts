@@ -1,6 +1,7 @@
 import { PartyResult } from "../interfaces/PartyResult";
 import { roundNumber } from "./NumberUtilities";
 import { DistrictResult } from "../interfaces/DistrictResult";
+import { Dictionary } from "../interfaces/Dictionary";
 
 export function getPartyTableData(
     partyResults: PartyResult[],
@@ -66,7 +67,45 @@ export function getDistrictTableData(
     return roundedResults;
 }
 
-export function getSeatsPerPartyData(partyResults: PartyResult[], showPartiesWithoutSeats: boolean): PartyResult[] {
+export function getSeatDistributionData(
+    districtResults: DistrictResult[],
+    partyResults: PartyResult[],
+    showPartiesWithoutSeats: boolean
+) {
+    if (showPartiesWithoutSeats) {
+        return districtResults;
+    } else {
+        const partySeats: Dictionary<number> = {};
+        const newDistrictResults: DistrictResult[] = [];
+
+        for (const party of partyResults) {
+            partySeats[party.partyCode] = party.totalSeats;
+        }
+
+        for (const district of districtResults) {
+            newDistrictResults.push({
+                name: district.name,
+                votes: district.votes,
+                percentVotes: district.percentVotes,
+                districtSeats: district.districtSeats,
+                levelingSeats: district.levelingSeats,
+                totalSeats: district.totalSeats,
+                votesPerSeat: district.votesPerSeat,
+                districtSeatResult: district.districtSeatResult,
+                partyResults: district.partyResults.filter(
+                    party => partySeats[party.partyCode] > 0
+                )
+            });
+        }
+
+        return newDistrictResults;
+    }
+}
+
+export function getSeatsPerPartyData(
+    partyResults: PartyResult[],
+    showPartiesWithoutSeats: boolean
+): PartyResult[] {
     if (showPartiesWithoutSeats) {
         return partyResults;
     } else {
