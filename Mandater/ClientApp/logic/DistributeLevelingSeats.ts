@@ -112,8 +112,8 @@ export function distributeLevelingSeats(
         const seat = levelingSeats[0];
         let numberOfSeats = partySeats[seat.partyCode];
         if (numberOfSeats === undefined) {
-            numberOfSeats = 0;
-            partySeats[seat.partyCode] = 0;
+            numberOfSeats = 1;
+            partySeats[seat.partyCode] = 1;
         }
 
         seat.seatNumber = seatIndex++;
