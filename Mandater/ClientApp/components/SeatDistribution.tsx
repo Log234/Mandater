@@ -19,14 +19,14 @@ export class SeatDistribution extends React.Component<
         ];
 
         for (const districtResult of this.props.districtResults) {
-            districtResult.partyResults.sort((v, t) => v.partyName.localeCompare(t.partyName));
+            districtResult.partyResults.sort((v, t) => v.partyCode.localeCompare(t.partyCode));
         }
 
         if (this.props.districtResults.length > 0) {
             for (let partyIndex = 0; partyIndex < this.props.districtResults[0].partyResults.length; partyIndex++) {
                 const element = this.props.districtResults[0].partyResults[partyIndex];
                 columns.push({
-                    Header: element.partyName,
+                    Header: element.partyCode,
                     accessor: `partyResults[${partyIndex}].totalSeats`
                 });
             }
