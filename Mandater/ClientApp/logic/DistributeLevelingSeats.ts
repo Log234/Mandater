@@ -4,7 +4,9 @@ import { Dictionary } from "../interfaces/Dictionary";
 import {
     distributeSeats,
     getDenominator,
-    calculateAdjustedQuotient
+    calculateAdjustedQuotient,
+    sortLevelingSeats,
+    generateLevelingSeatArray
 } from "./AlgorithmUtils";
 import { PartyResult } from "../interfaces/PartyResult";
 import { LevelingSeat } from "../interfaces/LevelingSeat";
@@ -91,87 +93,56 @@ export function distributeLevelingSeats(
     );
 
     let levelingSeats: LevelingSeat[] = [];
-
-    for (const countyName in districtResults) {
-        if (districtPartyResults.hasOwnProperty(countyName)) {
-            for (const partyCode of levelingPartyCodes) {
-                const partyResult = districtPartyResults[countyName][partyCode];
-                if (partyResult !== undefined) {
-                    const adjustedQuotient = calculateAdjustedQuotient(
-                        payload.algorithm,
-                        partyResult,
-                        districtResults[countyName]
-                    );
-                    const seat: LevelingSeat = {
-                        district: countyName,
-                        partyCode,
-                        quotient: adjustedQuotient,
-                        seatNumber: 0
-                    };
-                    levelingSeats.push(seat);
-                }
-            }
-        }
-    }
-
-    levelingSeats.sort((v, t) => t.quotient - v.quotient);
+    let finalLevelingSeats: LevelingSeat[] = [];
     const partyRestQuotients: Dictionary<PartyRestQuotients> = {};
 
     const partySeats: Dictionary<number> = {};
     let seatIndex = 1;
     while (seatIndex <= payload.levelingSeats) {
-        const completedDistricts: Set<string> = new Set();
-        const remainingLevelingSeats: LevelingSeat[] = [];
-
-        for (const seat of levelingSeats) {
-            let numberOfSeats = partySeats[seat.partyCode];
-            if (numberOfSeats === undefined) {
-                numberOfSeats = 0;
-                partySeats[seat.partyCode] = 0;
-            }
-
-            if (numberOfSeats < partyResults[seat.partyCode].levelingSeats) {
-                if (!completedDistricts.has(seat.district)) {
-                    seat.seatNumber = seatIndex++;
-
-                    partySeats[seat.partyCode]++;
-                    districtResults[seat.district].levelingSeats++;
-                    districtPartyResults[seat.district][seat.partyCode]
-                        .levelingSeats++;
-                    districtPartyResults[seat.district][seat.partyCode]
-                        .totalSeats++;
-
-                    completedDistricts.add(seat.district);
-
-                    if (partyRestQuotients[seat.partyCode] === undefined) {
-                        partyRestQuotients[seat.partyCode] = {
-                            partyCode: seat.partyCode,
-                            levelingSeats: [seat]
-                        };
-                    } else {
-                        partyRestQuotients[seat.partyCode].levelingSeats.push(
-                            seat
-                        );
-                    }
-
-                    const adjustedQuotient = calculateAdjustedQuotient(payload.algorithm, districtPartyResults[seat.district][seat.partyCode], districtResults[seat.district]);
-                    remainingLevelingSeats.push({
-                        district: seat.district,
-                        partyCode: seat.partyCode,
-                        quotient: adjustedQuotient,
-                        seatNumber: 0
-                    });
-                } else {
-                    remainingLevelingSeats.push(seat);
-                }
-            }
+        if (levelingSeats.length === 0) {
+            levelingSeats = generateLevelingSeatArray(
+                payload.algorithm,
+                levelingPartyCodes,
+                partyResults,
+                districtResults,
+                districtPartyResults
+            );
+            finalLevelingSeats = [...levelingSeats];
+        }
+        const seat = levelingSeats[0];
+        let numberOfSeats = partySeats[seat.partyCode];
+        if (numberOfSeats === undefined) {
+            numberOfSeats = 0;
+            partySeats[seat.partyCode] = 0;
         }
 
-        levelingSeats = remainingLevelingSeats;
-        levelingSeats.sort((v, t) => t.quotient - v.quotient);
+        seat.seatNumber = seatIndex++;
+
+        partySeats[seat.partyCode]++;
+        districtResults[seat.district].levelingSeats++;
+        districtPartyResults[seat.district][seat.partyCode].levelingSeats++;
+        districtPartyResults[seat.district][seat.partyCode].totalSeats++;
+
+        if (partyRestQuotients[seat.partyCode] === undefined) {
+            partyRestQuotients[seat.partyCode] = {
+                partyCode: seat.partyCode,
+                levelingSeats: [seat]
+            };
+        } else {
+            partyRestQuotients[seat.partyCode].levelingSeats.push(seat);
+        }
+
+        levelingSeats = levelingSeats.filter(
+            filterSeat => filterSeat.district !== seat.district
+        );
+        if (numberOfSeats >= partyResults[seat.partyCode].levelingSeats) {
+            levelingSeats = levelingSeats.filter(
+                filterSeat => filterSeat.partyCode !== seat.partyCode
+            );
+        }
     }
 
-    for (const seat of levelingSeats) {
+    for (const seat of finalLevelingSeats) {
         if (partyRestQuotients[seat.partyCode] === undefined) {
             partyRestQuotients[seat.partyCode] = {
                 partyCode: seat.partyCode,

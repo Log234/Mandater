@@ -5,6 +5,7 @@ import { PartyResult } from "../interfaces/PartyResult";
 import { SeatResult } from "../interfaces/SeatResult";
 import { DistributionResult } from "../interfaces/DistributionResult";
 import { DistrictResult } from "../interfaces/DistrictResult";
+import { LevelingSeat } from "../interfaces/LevelingSeat";
 
 const illegalPartyCodes = new Set(["BLANKE"]);
 
@@ -167,8 +168,13 @@ export function calculateProportionality(
     }
 }
 
-export function calculateAdjustedQuotient(algorithm: AlgorithmType, partyResult: PartyResult, districtResult: DistrictResult): number {
-    const averageSeatsPerVote = districtResult.votes / districtResult.districtSeats;
+export function calculateAdjustedQuotient(
+    algorithm: AlgorithmType,
+    partyResult: PartyResult,
+    districtResult: DistrictResult
+): number {
+    const averageSeatsPerVote =
+        districtResult.votes / districtResult.districtSeats;
     const denominator = getDenominator(
         algorithm,
         partyResult.totalSeats,
@@ -179,13 +185,82 @@ export function calculateAdjustedQuotient(algorithm: AlgorithmType, partyResult:
     return quotient / averageSeatsPerVote;
 }
 
-export function finalizeDistrictCalculations(districtResults: Dictionary<DistrictResult>) {
+/**
+ * Calculates the total number of seats and the average number of votes per seat for each district
+ * @param districtResults The district results to finalize
+ */
+export function finalizeDistrictCalculations(
+    districtResults: Dictionary<DistrictResult>
+) {
     for (const district in districtResults) {
         if (districtResults.hasOwnProperty(district)) {
             districtResults[district].totalSeats = districtResults[district].districtSeats + districtResults[district].levelingSeats;
-            districtResults[district].votesPerSeat = districtResults[district].votes / districtResults[district].totalSeats;
+            districtResults[district].votesPerSeat =
+                districtResults[district].votes /
+                districtResults[district].totalSeats;
         }
     }
+}
+
+/**
+ * Sorts a list of leveling seats as described here: https://lovdata.no/NL/lov/2002-06-28-57/§11-6
+ * @param levelingSeats The list of leveling seats to be sorted
+ * @param partyResults A dictionary used to look up how many votes the parties got
+ */
+export function sortLevelingSeats(
+    levelingSeats: LevelingSeat[],
+    partyResults: Dictionary<PartyResult>
+) {
+    return levelingSeats.sort((v, t) => {
+        if (t.quotient !== v.quotient) {
+            return t.quotient - v.quotient;
+        }
+
+        if (
+            partyResults[t.partyCode].votes !== partyResults[v.partyCode].votes
+        ) {
+            return (
+                partyResults[t.partyCode].votes -
+                partyResults[v.partyCode].votes
+            );
+        }
+
+        return Math.random() - 0.5; // Random number between -0.5 and 0.5
+    });
+}
+
+export function generateLevelingSeatArray(
+    algorithm: AlgorithmType,
+    levelingPartyCodes: string[],
+    partyResults: Dictionary<PartyResult>,
+    districtResults: Dictionary<DistrictResult>,
+    districtPartyResults: Dictionary<Dictionary<PartyResult>>
+): LevelingSeat[] {
+    let levelingSeats: LevelingSeat[] = [];
+
+    for (const countyName in districtResults) {
+        if (districtPartyResults.hasOwnProperty(countyName)) {
+            for (const partyCode of levelingPartyCodes) {
+                const partyResult = districtPartyResults[countyName][partyCode];
+                if (partyResult !== undefined) {
+                    const adjustedQuotient = calculateAdjustedQuotient(
+                        algorithm,
+                        partyResult,
+                        districtResults[countyName]
+                    );
+                    const seat: LevelingSeat = {
+                        district: countyName,
+                        partyCode,
+                        quotient: adjustedQuotient,
+                        seatNumber: 0
+                    };
+                    levelingSeats.push(seat);
+                }
+            }
+        }
+    }
+    levelingSeats = sortLevelingSeats(levelingSeats, partyResults);
+    return levelingSeats;
 }
 
 /**
