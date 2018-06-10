@@ -131,13 +131,15 @@ export function distributeLevelingSeats(
         } else {
             partyRestQuotients[seat.partyCode].levelingSeats.push(seat);
         }
-
-        levelingSeats = levelingSeats.filter(
-            filterSeat => filterSeat.district !== seat.district
-        );
         if (numberOfSeats >= partyResults[seat.partyCode].levelingSeats) {
             levelingSeats = levelingSeats.filter(
-                filterSeat => filterSeat.partyCode !== seat.partyCode
+                filterSeat =>
+                    filterSeat.district !== seat.district &&
+                    filterSeat.partyCode !== seat.partyCode
+            );
+        } else {
+            levelingSeats = levelingSeats.filter(
+                filterSeat => filterSeat.district !== seat.district
             );
         }
     }
