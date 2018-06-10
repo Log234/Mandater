@@ -1,5 +1,5 @@
 ﻿import { ComputationPayload } from "../interfaces/ComputationPayload";
-import { distributeSeats, calculateProportionality } from "./AlgorithmUtils";
+import { distributeSeats, calculateProportionality, finalizeDistrictCalculations } from "./AlgorithmUtils";
 import { Dictionary } from "../interfaces/Dictionary";
 import { PartyResult } from "../interfaces/PartyResult";
 import { DistrictResult } from "../interfaces/DistrictResult";
@@ -20,8 +20,10 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontResult {
             name: county.name,
             districtSeats: county.seats,
             levelingSeats: 0,
+            totalSeats: 0,
             votes: 0,
             percentVotes: 0,
+            votesPerSeat: 0,
             districtSeatResult: [],
             partyResults: []
         };
@@ -105,6 +107,7 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontResult {
 
     const totalSeats = payload.districtSeats + payload.levelingSeats;
     calculateProportionality(totalSeats, partyResults, districtPartyResults, districtResults);
+    finalizeDistrictCalculations(districtResults);
 
     for (const countyName in districtPartyResults) {
         districtResults[countyName].partyResults = dictionaryToArray(districtPartyResults[countyName]);

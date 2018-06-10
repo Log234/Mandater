@@ -1,9 +1,13 @@
 import { PartyResult } from "../interfaces/PartyResult";
 import { roundNumber } from "./NumberUtilities";
 import { DistrictResult } from "../interfaces/DistrictResult";
-import { Column } from "react-table";
+import { Dictionary } from "../interfaces/Dictionary";
 
-export function getPartyTableData(partyResults: PartyResult[], showPartiesWithoutSeats: boolean, numberOfDecimals: number): PartyResult[] {
+export function getPartyTableData(
+    partyResults: PartyResult[],
+    showPartiesWithoutSeats: boolean,
+    numberOfDecimals: number
+): PartyResult[] {
     let filteredResults = [...partyResults];
 
     if (!showPartiesWithoutSeats) {
@@ -17,13 +21,94 @@ export function getPartyTableData(partyResults: PartyResult[], showPartiesWithou
             partyCode: partyResult.partyCode,
             partyName: partyResult.partyName,
             votes: partyResult.votes,
-            percentVotes: roundNumber(partyResult.percentVotes, numberOfDecimals),
+            percentVotes: roundNumber(
+                partyResult.percentVotes,
+                numberOfDecimals
+            ),
             districtSeats: partyResult.districtSeats,
             levelingSeats: partyResult.levelingSeats,
             totalSeats: partyResult.totalSeats,
-            proportionality: roundNumber(partyResult.proportionality, numberOfDecimals)
+            proportionality: roundNumber(
+                partyResult.proportionality,
+                numberOfDecimals
+            )
         });
     }
 
     return roundedResults;
+}
+
+export function getDistrictTableData(
+    districtResults: DistrictResult[],
+    numberOfDecimals: number
+): DistrictResult[] {
+    const roundedResults: DistrictResult[] = [];
+
+    for (const districtResult of districtResults) {
+        roundedResults.push({
+            name: districtResult.name,
+            votes: districtResult.votes,
+            percentVotes: roundNumber(
+                districtResult.percentVotes,
+                numberOfDecimals
+            ),
+            districtSeats: districtResult.districtSeats,
+            levelingSeats: districtResult.levelingSeats,
+            totalSeats: districtResult.totalSeats,
+            votesPerSeat: roundNumber(
+                districtResult.votesPerSeat,
+                numberOfDecimals
+            ),
+            districtSeatResult: districtResult.districtSeatResult,
+            partyResults: districtResult.partyResults
+        });
+    }
+
+    return roundedResults;
+}
+
+export function getSeatDistributionData(
+    districtResults: DistrictResult[],
+    partyResults: PartyResult[],
+    showPartiesWithoutSeats: boolean
+) {
+    if (showPartiesWithoutSeats) {
+        return districtResults;
+    } else {
+        const partySeats: Dictionary<number> = {};
+        const newDistrictResults: DistrictResult[] = [];
+
+        for (const party of partyResults) {
+            partySeats[party.partyCode] = party.totalSeats;
+        }
+
+        for (const district of districtResults) {
+            newDistrictResults.push({
+                name: district.name,
+                votes: district.votes,
+                percentVotes: district.percentVotes,
+                districtSeats: district.districtSeats,
+                levelingSeats: district.levelingSeats,
+                totalSeats: district.totalSeats,
+                votesPerSeat: district.votesPerSeat,
+                districtSeatResult: district.districtSeatResult,
+                partyResults: district.partyResults.filter(
+                    party => partySeats[party.partyCode] > 0
+                )
+            });
+        }
+
+        return newDistrictResults;
+    }
+}
+
+export function getSeatsPerPartyData(
+    partyResults: PartyResult[],
+    showPartiesWithoutSeats: boolean
+): PartyResult[] {
+    if (showPartiesWithoutSeats) {
+        return partyResults;
+    } else {
+        return partyResults.filter(party => party.totalSeats > 0);
+    }
 }

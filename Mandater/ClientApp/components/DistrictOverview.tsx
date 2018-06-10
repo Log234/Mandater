@@ -4,7 +4,6 @@ import { DistrictResult } from "../interfaces/DistrictResult";
 
 export interface DistrictOverviewProps {
     districtResults: DistrictResult[];
-    showPartiesWithoutSeats: boolean;
 }
 
 export class DistrictOverview extends React.Component<
@@ -14,11 +13,38 @@ export class DistrictOverview extends React.Component<
     render() {
         return (
             <ReactTable
+                className="-highlight -striped"
+                defaultPageSize={19}
+                showPaginationBottom={false}
                 data={this.props.districtResults}
                 columns={[
                     {
                         Header: "Fylke",
                         accessor: "name"
+                    },
+                    {
+                        Header: "Stemmer",
+                        accessor: "votes"
+                    },
+                    {
+                        Header: "Prosent",
+                        accessor: "percentVotes"
+                    },
+                    {
+                        Header: "Distrikt",
+                        accessor: "districtSeats"
+                    },
+                    {
+                        Header: "Utjevning",
+                        accessor: "levelingSeats"
+                    },
+                    {
+                        Header: "Sum",
+                        accessor: "totalSeats"
+                    },
+                    {
+                        Header: "Stemmer/mandat",
+                        accessor: "votesPerSeat"
                     }
                 ]}
             />
