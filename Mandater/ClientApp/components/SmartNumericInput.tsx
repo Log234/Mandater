@@ -15,17 +15,20 @@ export interface SmartNumericInputProps {
 }
 
 export class SmartNumericInput extends React.Component<SmartNumericInputProps, {}> {
-
+    hiddenStyle: React.CSSProperties = {
+        display: "none"
+    };
+    visibleStyle: React.CSSProperties = {};
     render() {
         const value = this.validateInput(this.props.value);
         return (
-            <div className="form-group row">
-                <label htmlFor={this.props.name} className="col-sm-5 col-form-label">{this.props.hidden ? "" : this.props.title}</label>
+            <div hidden={this.props.hidden} className="form-group row">
+                <label htmlFor={this.props.name} className="col-sm-7 col-form-label">{this.props.title}</label>
                 <div className="col-sm-7">
                     <input
                         className="form-control"
                         classID={this.props.name}
-                        type={this.props.hidden ? "hidden" : "number"}
+                        type={"number"}
                         style={this.props.slider ? { width: "50%" } : {}}
                         name={this.props.name}
                         onChange=
@@ -45,7 +48,7 @@ export class SmartNumericInput extends React.Component<SmartNumericInputProps, {
                         <input
                             className="form-control"
                             classID={this.props.name + "Slider"}
-                            type={this.props.hidden ? "hidden" : "range"}
+                            type={"range"}
                             style={{ width: "100%" }}
                             onChange=
                             {(event: React.ChangeEvent<HTMLInputElement>) => {
