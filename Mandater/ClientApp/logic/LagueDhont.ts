@@ -59,6 +59,26 @@ export function lagueDhont(payload: ComputationPayload): LagueDhontResult {
         }
     }
 
+    for (const county in districtPartyResults) {
+        for (const partyCode in partyResults) {
+            if (partyResults.hasOwnProperty(partyCode)) {
+                if (districtPartyResults[county][partyCode] === undefined) {
+                    const party = partyResults[partyCode];
+                    districtPartyResults[county][partyCode] = {
+                        partyCode: party.partyCode,
+                        partyName: party.partyName,
+                        votes: 0,
+                        percentVotes: 0,
+                        districtSeats: 0,
+                        levelingSeats: 0,
+                        totalSeats: 0,
+                        proportionality: 0
+                    };
+                }
+            }
+        }
+    }
+
     // Update percentages as all votes are counted
     for (const county of payload.election.counties) {
         districtResults[county.name].percentVotes =
