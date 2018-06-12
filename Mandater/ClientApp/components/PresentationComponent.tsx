@@ -44,7 +44,7 @@ export class PresentationComponent extends React.Component<
         return getSeatDistributionData(
             this.props.results.districtResults,
             this.props.results.partyResults,
-            false
+            this.props.showPartiesWithoutSeats
         );
     }
 

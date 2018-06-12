@@ -1,6 +1,7 @@
 import * as React from "react";
 import ReactTable, { Column } from "react-table";
 import { DistrictResult } from "../interfaces/DistrictResult";
+import * as _ from "lodash";
 
 export interface SeatDistributionProps {
     districtResults: DistrictResult[];
@@ -14,7 +15,8 @@ export class SeatDistribution extends React.Component<
         const columns: Column[] = [
             {
                 Header: "Fylke",
-                accessor: "name"
+                accessor: "name",
+                Footer: <span><strong>Sum</strong></span>
             }
         ];
 
@@ -27,7 +29,10 @@ export class SeatDistribution extends React.Component<
                 const element = this.props.districtResults[0].partyResults[partyIndex];
                 columns.push({
                     Header: element.partyCode,
-                    accessor: `partyResults[${partyIndex}].totalSeats`
+                    accessor: `partyResults[${partyIndex}].totalSeats`,
+                    Footer: (
+                        <span><strong>{_.sum(_.map(this.props.districtResults, d => d.partyResults[partyIndex].totalSeats))}</strong></span>
+                    )
                 });
             }
         }

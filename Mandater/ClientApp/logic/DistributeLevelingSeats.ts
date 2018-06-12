@@ -112,32 +112,32 @@ export function distributeLevelingSeats(
         const seat = levelingSeats[0];
         let numberOfSeats = partySeats[seat.partyCode];
         if (numberOfSeats === undefined) {
-            numberOfSeats = 1;
-            partySeats[seat.partyCode] = 1;
+            numberOfSeats = 0;
+            partySeats[seat.partyCode] = 0;
         }
 
-        seat.seatNumber = seatIndex++;
-
-        partySeats[seat.partyCode]++;
-        districtResults[seat.district].levelingSeats++;
-        districtPartyResults[seat.district][seat.partyCode].levelingSeats++;
-        districtPartyResults[seat.district][seat.partyCode].totalSeats++;
-
-        if (partyRestQuotients[seat.partyCode] === undefined) {
-            partyRestQuotients[seat.partyCode] = {
-                partyCode: seat.partyCode,
-                levelingSeats: [seat]
-            };
-        } else {
-            partyRestQuotients[seat.partyCode].levelingSeats.push(seat);
-        }
         if (numberOfSeats >= partyResults[seat.partyCode].levelingSeats) {
             levelingSeats = levelingSeats.filter(
                 filterSeat =>
-                    filterSeat.district !== seat.district &&
                     filterSeat.partyCode !== seat.partyCode
             );
         } else {
+            seat.seatNumber = seatIndex++;
+
+            partySeats[seat.partyCode]++;
+            districtResults[seat.district].levelingSeats++;
+            districtPartyResults[seat.district][seat.partyCode].levelingSeats++;
+            districtPartyResults[seat.district][seat.partyCode].totalSeats++;
+
+            if (partyRestQuotients[seat.partyCode] === undefined) {
+                partyRestQuotients[seat.partyCode] = {
+                    partyCode: seat.partyCode,
+                    levelingSeats: [seat]
+                };
+            } else {
+                partyRestQuotients[seat.partyCode].levelingSeats.push(seat);
+            }
+
             levelingSeats = levelingSeats.filter(
                 filterSeat => filterSeat.district !== seat.district
             );

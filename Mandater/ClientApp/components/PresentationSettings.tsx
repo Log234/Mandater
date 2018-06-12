@@ -35,16 +35,12 @@ export class PresentationSettings extends React.Component<
         return false;
     }
 
-    showHideParties(): boolean {
-        return this.props.currentPresentation === PresentationType.SeatDistribution;
-    }
-
     render() {
         return (
             <div className="presentation-settings">
                 <h2>Presentasjonsinnstillinger</h2>
                 <form>
-                    <div className="form-group row" hidden={this.showHideParties()}>
+                    <div className="form-group row">
                         <input
                             className="form-check-input"
                             type="checkbox"
